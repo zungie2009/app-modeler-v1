@@ -1,0 +1,15 @@
+{
+  "id": "cooladmin",
+  "name": "CoolAdmin",
+  "version": "3.4.0",
+  "css": [
+    "css/theme.css",
+    "css/app.css"
+  ],
+  "js": [
+    "js/vanilla-utils.js",
+    "js/bootstrap5-init.js",
+    "js/main-vanilla.js",
+    "js/modern-plugins.js"
+  ]
+}

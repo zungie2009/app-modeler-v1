@@ -1,0 +1,5 @@
+Bootstrap 5.3.6
+https://getbootstrap.com/
+Copyright 2011-2025 The Bootstrap Authors
+Licensed under the MIT License.
+The minified assets retain the upstream license header.

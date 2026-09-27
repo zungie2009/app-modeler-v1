@@ -1,0 +1,1280 @@
+{
+  "domainId": "AUTOMOBILE_ENTERPRISE_ERP",
+  "entities": {
+    "PARTY": {
+      "id": "PARTY",
+      "displayName": "Party Master",
+      "parentId": null,
+      "fields": [
+        {
+          "name": "partyCode",
+          "label": "Party Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "PRT-100",
+          "lookupEntity": null
+        },
+        {
+          "name": "name",
+          "label": "Name",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": null
+        },
+        {
+          "name": "partyType",
+          "label": "Party Type",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "ORGANIZATION",
+          "lookupEntity": null
+        },
+        {
+          "name": "status",
+          "label": "Status",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "ACTIVE",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "PERSON": {
+      "id": "PERSON",
+      "displayName": "Person",
+      "parentId": "PARTY",
+      "fields": [
+        {
+          "name": "personNumber",
+          "label": "Person Number",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "PER-101",
+          "lookupEntity": null
+        },
+        {
+          "name": "firstName",
+          "label": "First Name",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": null
+        },
+        {
+          "name": "lastName",
+          "label": "Last Name",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": null
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": null
+        }
+      ]
+    },
+    "EMPLOYEE": {
+      "id": "EMPLOYEE",
+      "displayName": "Employee",
+      "parentId": "PERSON",
+      "fields": [
+        {
+          "name": "employeeNumber",
+          "label": "Employee Number",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "EMP-201",
+          "lookupEntity": null
+        },
+        {
+          "name": "jobTitle",
+          "label": "Job Title",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": null
+        },
+        {
+          "name": "department",
+          "label": "Department",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": null
+        }
+      ]
+    },
+    "ENGINEER": {
+      "id": "ENGINEER",
+      "displayName": "Engineer",
+      "parentId": "EMPLOYEE",
+      "fields": [
+        {
+          "name": "engineerNumber",
+          "label": "Engineer Number",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "ENG-801",
+          "lookupEntity": null
+        },
+        {
+          "name": "engineeringDiscipline",
+          "label": "Discipline",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "Powertrain Systems",
+          "lookupEntity": null
+        },
+        {
+          "name": "grade",
+          "label": "Engineering Grade",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "Senior Principal",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "ORGANIZATION": {
+      "id": "ORGANIZATION",
+      "displayName": "Organization",
+      "parentId": "PARTY",
+      "fields": [
+        {
+          "name": "organizationNumber",
+          "label": "Org Number",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "ORG-100",
+          "lookupEntity": null
+        },
+        {
+          "name": "legalName",
+          "label": "Legal Name",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": null
+        },
+        {
+          "name": "taxId",
+          "label": "Tax ID",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": null
+        }
+      ]
+    },
+    "ORGANIZATION_CUSTOMER": {
+      "id": "ORGANIZATION_CUSTOMER",
+      "displayName": "Customer Organization",
+      "parentId": "ORGANIZATION",
+      "fields": [
+        {
+          "name": "customerGroupCode",
+          "label": "Customer Group",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "COMMERCIAL",
+          "lookupEntity": null
+        },
+        {
+          "name": "creditLimit",
+          "label": "Credit Limit",
+          "type": "NUMBER",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "500000.00",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "CUSTOMERS": {
+      "id": "CUSTOMERS",
+      "displayName": "Customers",
+      "parentId": "ORGANIZATION_CUSTOMER",
+      "fields": [
+        {
+          "name": "customerNumber",
+          "label": "Customer Number",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "CUST-901",
+          "lookupEntity": null
+        },
+        {
+          "name": "name",
+          "label": "Customer Name",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": null
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": null
+        }
+      ]
+    },
+    "DEALER": {
+      "id": "DEALER",
+      "displayName": "Dealer Network",
+      "parentId": "ORGANIZATION_CUSTOMER",
+      "fields": [
+        {
+          "name": "dealerCode",
+          "label": "Dealer Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "DLR-300",
+          "lookupEntity": null
+        },
+        {
+          "name": "regionCode",
+          "label": "Region",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "NORTH_AMERICA",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "SUPPLIER_ORGANIZATION": {
+      "id": "SUPPLIER_ORGANIZATION",
+      "displayName": "Supplier Organization",
+      "parentId": "ORGANIZATION",
+      "fields": [
+        {
+          "name": "supplierGroupCode",
+          "label": "Group Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "PARTS_SUPPLIER",
+          "lookupEntity": null
+        },
+        {
+          "name": "qualityRating",
+          "label": "Quality Rating",
+          "type": "NUMBER",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "98.5",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "SUPPLIERS": {
+      "id": "SUPPLIERS",
+      "displayName": "Suppliers",
+      "parentId": "SUPPLIER_ORGANIZATION",
+      "fields": [
+        {
+          "name": "supplierNumber",
+          "label": "Supplier Number",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "SUPP-101",
+          "lookupEntity": null
+        },
+        {
+          "name": "name",
+          "label": "Supplier Name",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": null
+        },
+        {
+          "name": "leadTimeDays",
+          "label": "Lead Time Days",
+          "type": "NUMBER",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "14",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "TIER_1_SUPPLIER": {
+      "id": "TIER_1_SUPPLIER",
+      "displayName": "Tier 1 Supplier",
+      "parentId": "SUPPLIER_ORGANIZATION",
+      "fields": [
+        {
+          "name": "tier1SupplierCode",
+          "label": "Tier 1 Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "T1-99",
+          "lookupEntity": null
+        },
+        {
+          "name": "commodityGroup",
+          "label": "Commodity Group",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "ELECTRONICS",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "PRODUCT": {
+      "id": "PRODUCT",
+      "displayName": "Product Master",
+      "parentId": null,
+      "fields": [
+        {
+          "name": "productCode",
+          "label": "Product Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "PRD-100",
+          "lookupEntity": null
+        },
+        {
+          "name": "name",
+          "label": "Product Name",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": null
+        }
+      ]
+    },
+    "FINISHED_PRODUCT": {
+      "id": "FINISHED_PRODUCT",
+      "displayName": "Finished Product",
+      "parentId": "PRODUCT",
+      "fields": [
+        {
+          "name": "finishedProductCode",
+          "label": "Finished Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "FP-500",
+          "lookupEntity": null
+        },
+        {
+          "name": "modelYear",
+          "label": "Model Year",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "2026",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "VEHICLE": {
+      "id": "VEHICLE",
+      "displayName": "Vehicle",
+      "parentId": "FINISHED_PRODUCT",
+      "fields": [
+        {
+          "name": "vehicleCode",
+          "label": "Vehicle Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "VEH-150",
+          "lookupEntity": null
+        },
+        {
+          "name": "platformCode",
+          "label": "Platform Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "EV_TRUCK_PLATFORM",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "TRUCK": {
+      "id": "TRUCK",
+      "displayName": "Truck Model",
+      "parentId": "VEHICLE",
+      "fields": [
+        {
+          "name": "truckModelCode",
+          "label": "Truck Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "F150-EV",
+          "lookupEntity": null
+        },
+        {
+          "name": "payloadCapacity",
+          "label": "Payload Capacity",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "2250_LBS",
+          "lookupEntity": null
+        },
+        {
+          "name": "towingCapacity",
+          "label": "Towing Capacity",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "10000_LBS",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "ASSEMBLY": {
+      "id": "ASSEMBLY",
+      "displayName": "Assembly Unit",
+      "parentId": "PRODUCT",
+      "fields": [
+        {
+          "name": "assemblyCode",
+          "label": "Assembly Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "ASM-88",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "POWERTRAIN": {
+      "id": "POWERTRAIN",
+      "displayName": "Powertrain",
+      "parentId": "ASSEMBLY",
+      "fields": [
+        {
+          "name": "powertrainCode",
+          "label": "Powertrain Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "PWR-8801",
+          "lookupEntity": null
+        },
+        {
+          "name": "ratedPower",
+          "label": "Rated Power",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "400_HP",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "ENGINE": {
+      "id": "ENGINE",
+      "displayName": "Engine Family",
+      "parentId": "POWERTRAIN",
+      "fields": [
+        {
+          "name": "engineCode",
+          "label": "Engine Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "ENG-V6-TURBO",
+          "lookupEntity": null
+        },
+        {
+          "name": "displacement",
+          "label": "Displacement",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "3500cc",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "COMPONENT": {
+      "id": "COMPONENT",
+      "displayName": "Component",
+      "parentId": "PRODUCT",
+      "fields": [
+        {
+          "name": "componentCode",
+          "label": "Component Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "CMP-300",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "PART": {
+      "id": "PART",
+      "displayName": "Part Specification",
+      "parentId": "COMPONENT",
+      "fields": [
+        {
+          "name": "partNumber",
+          "label": "Part Number",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "PRT-900",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "ITEMS": {
+      "id": "ITEMS",
+      "displayName": "Items & Parts Catalog",
+      "parentId": "PART",
+      "fields": [
+        {
+          "name": "itemCode",
+          "label": "Item Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "ITEM-ALT-90",
+          "lookupEntity": null
+        },
+        {
+          "name": "name",
+          "label": "Item Name",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": null
+        },
+        {
+          "name": "standardCost",
+          "label": "Standard Cost",
+          "type": "NUMBER",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "145.00",
+          "lookupEntity": null
+        },
+        {
+          "name": "listPrice",
+          "label": "List Price",
+          "type": "NUMBER",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "220.00",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "MATERIAL": {
+      "id": "MATERIAL",
+      "displayName": "Material Spec",
+      "parentId": "PRODUCT",
+      "fields": [
+        {
+          "name": "materialCode",
+          "label": "Material Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "MAT-01",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "RAW_MATERIAL": {
+      "id": "RAW_MATERIAL",
+      "displayName": "Raw Material",
+      "parentId": "MATERIAL",
+      "fields": [
+        {
+          "name": "rawMaterialCode",
+          "label": "Raw Material Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "RAW-STEEL-10",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "PLACE": {
+      "id": "PLACE",
+      "displayName": "Place Hierarchy",
+      "parentId": null,
+      "fields": [
+        {
+          "name": "placeCode",
+          "label": "Place Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "PLC-001",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "FACILITY": {
+      "id": "FACILITY",
+      "displayName": "Facility",
+      "parentId": "PLACE",
+      "fields": [
+        {
+          "name": "facilityCode",
+          "label": "Facility Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "FAC-DETROIT",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "MANUFACTURING_PLANT": {
+      "id": "MANUFACTURING_PLANT",
+      "displayName": "Manufacturing Plant",
+      "parentId": "FACILITY",
+      "fields": [
+        {
+          "name": "plantCode",
+          "label": "Plant Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "PLANT-DETROIT",
+          "lookupEntity": null
+        },
+        {
+          "name": "plantName",
+          "label": "Plant Name",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "Detroit Assembly Complex",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "PRODUCTION_AREA": {
+      "id": "PRODUCTION_AREA",
+      "displayName": "Production Area",
+      "parentId": "MANUFACTURING_PLANT",
+      "fields": [
+        {
+          "name": "areaCode",
+          "label": "Area Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "AREA-CHASSIS",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "PRODUCTION_LINE": {
+      "id": "PRODUCTION_LINE",
+      "displayName": "Production Line",
+      "parentId": "PRODUCTION_AREA",
+      "fields": [
+        {
+          "name": "lineCode",
+          "label": "Line Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "LINE-TRUCK-01",
+          "lookupEntity": null
+        },
+        {
+          "name": "targetRatePerHour",
+          "label": "Target Rate/Hr",
+          "type": "NUMBER",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "45",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "WORK_CENTER": {
+      "id": "WORK_CENTER",
+      "displayName": "Work Centers",
+      "parentId": "PRODUCTION_LINE",
+      "fields": [
+        {
+          "name": "workCenterCode",
+          "label": "Work Center Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "WC-ROBOTIC-WELD",
+          "lookupEntity": null
+        },
+        {
+          "name": "availableCapacity",
+          "label": "Available Capacity",
+          "type": "NUMBER",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "24.0",
+          "lookupEntity": null
+        },
+        {
+          "name": "efficiencyPercent",
+          "label": "Efficiency (%)",
+          "type": "NUMBER",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "96.5",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "STORAGE_AREA": {
+      "id": "STORAGE_AREA",
+      "displayName": "Storage Area",
+      "parentId": "FACILITY",
+      "fields": [
+        {
+          "name": "storageAreaCode",
+          "label": "Storage Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "STR-01",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "WAREHOUSES": {
+      "id": "WAREHOUSES",
+      "displayName": "Warehouses",
+      "parentId": "STORAGE_AREA",
+      "fields": [
+        {
+          "name": "warehouseCode",
+          "label": "Warehouse Code",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "WH-CENTRAL",
+          "lookupEntity": null
+        },
+        {
+          "name": "capacity",
+          "label": "Capacity (Sq Ft)",
+          "type": "NUMBER",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "500000",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "STORAGE_LOCATION": {
+      "id": "STORAGE_LOCATION",
+      "displayName": "Storage Location Bins",
+      "parentId": "STORAGE_AREA",
+      "fields": [
+        {
+          "name": "storageLocationCode",
+          "label": "Location Bin",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "BIN-A12",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "BUSINESS_DOCUMENT": {
+      "id": "BUSINESS_DOCUMENT",
+      "displayName": "Business Document Header",
+      "parentId": null,
+      "fields": [
+        {
+          "name": "documentNumber",
+          "label": "Doc Number",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "DOC-1000",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "SALES_DOCUMENT": {
+      "id": "SALES_DOCUMENT",
+      "displayName": "Sales Document Base",
+      "parentId": "BUSINESS_DOCUMENT",
+      "fields": [
+        {
+          "name": "salesDocumentNumber",
+          "label": "Sales Doc Number",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "SDOC-100",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "SALES_ORDERS": {
+      "id": "SALES_ORDERS",
+      "displayName": "Sales Orders",
+      "parentId": "SALES_DOCUMENT",
+      "fields": [
+        {
+          "name": "orderNumber",
+          "label": "Order Number",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "SO-2026-001",
+          "lookupEntity": null
+        },
+        {
+          "name": "customerId",
+          "label": "Customer",
+          "type": "LOOKUP",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": "CUSTOMERS"
+        },
+        {
+          "name": "orderDate",
+          "label": "Order Date",
+          "type": "DATE",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "2026-09-01",
+          "lookupEntity": null
+        },
+        {
+          "name": "quantity",
+          "label": "Quantity",
+          "type": "NUMBER",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "10",
+          "lookupEntity": null
+        },
+        {
+          "name": "unitPrice",
+          "label": "Unit Price",
+          "type": "NUMBER",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "150.00",
+          "lookupEntity": null
+        },
+        {
+          "name": "subtotal",
+          "label": "Subtotal",
+          "type": "NUMBER",
+          "required": false,
+          "readOnly": true,
+          "formula": "quantity * unitPrice",
+          "defaultValue": "0.00",
+          "lookupEntity": null
+        },
+        {
+          "name": "taxAmount",
+          "label": "Tax Amount",
+          "type": "NUMBER",
+          "required": false,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "15.00",
+          "lookupEntity": null
+        },
+        {
+          "name": "totalAmount",
+          "label": "Total Amount",
+          "type": "NUMBER",
+          "required": false,
+          "readOnly": true,
+          "formula": "subtotal + taxAmount",
+          "defaultValue": "0.00",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "PROCUREMENT_DOCUMENT": {
+      "id": "PROCUREMENT_DOCUMENT",
+      "displayName": "Procurement Document",
+      "parentId": "BUSINESS_DOCUMENT",
+      "fields": [
+        {
+          "name": "procurementDocumentNumber",
+          "label": "Procurement Number",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "PROC-90",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "PURCHASE_ORDERS": {
+      "id": "PURCHASE_ORDERS",
+      "displayName": "Purchase Orders",
+      "parentId": "PROCUREMENT_DOCUMENT",
+      "fields": [
+        {
+          "name": "purchaseOrderNumber",
+          "label": "PO Number",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "PO-9901",
+          "lookupEntity": null
+        },
+        {
+          "name": "supplierId",
+          "label": "Supplier",
+          "type": "LOOKUP",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": "SUPPLIERS"
+        }
+      ]
+    },
+    "MANUFACTURING_DOCUMENT": {
+      "id": "MANUFACTURING_DOCUMENT",
+      "displayName": "Manufacturing Document",
+      "parentId": "BUSINESS_DOCUMENT",
+      "fields": [
+        {
+          "name": "manufacturingDocumentNumber",
+          "label": "Mfg Doc Number",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "MFG-50",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "PRODUCTION_PLANS": {
+      "id": "PRODUCTION_PLANS",
+      "displayName": "Production Plans",
+      "parentId": "MANUFACTURING_DOCUMENT",
+      "fields": [
+        {
+          "name": "planNumber",
+          "label": "Plan Number",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "PLN-2026-01",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "PRODUCTION_ORDER": {
+      "id": "PRODUCTION_ORDER",
+      "displayName": "Production Orders",
+      "parentId": "MANUFACTURING_DOCUMENT",
+      "fields": [
+        {
+          "name": "productionOrderNumber",
+          "label": "Production Order No",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "PO-8800",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "WORK_ORDERS": {
+      "id": "WORK_ORDERS",
+      "displayName": "Work Orders",
+      "parentId": "PRODUCTION_ORDER",
+      "fields": [
+        {
+          "name": "workOrderNumber",
+          "label": "Work Order Number",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "WO-88021",
+          "lookupEntity": null
+        },
+        {
+          "name": "itemId",
+          "label": "Target Item",
+          "type": "LOOKUP",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": "ITEMS"
+        },
+        {
+          "name": "workCenterCode",
+          "label": "Work Center",
+          "type": "LOOKUP",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": "WORK_CENTER"
+        },
+        {
+          "name": "plannedQuantity",
+          "label": "Planned Qty",
+          "type": "NUMBER",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "150",
+          "lookupEntity": null
+        },
+        {
+          "name": "completedQuantity",
+          "label": "Completed Qty",
+          "type": "NUMBER",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "45",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "INVENTORY": {
+      "id": "INVENTORY",
+      "displayName": "Inventory Ledger",
+      "parentId": null,
+      "fields": [
+        {
+          "name": "itemId",
+          "label": "Item",
+          "type": "LOOKUP",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": "ITEMS"
+        },
+        {
+          "name": "warehouseId",
+          "label": "Warehouse",
+          "type": "LOOKUP",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": null,
+          "lookupEntity": "WAREHOUSES"
+        },
+        {
+          "name": "quantityOnHand",
+          "label": "Quantity On Hand",
+          "type": "NUMBER",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "450",
+          "lookupEntity": null
+        }
+      ]
+    },
+    "BOMS": {
+      "id": "BOMS",
+      "displayName": "Bills of Materials (BOM)",
+      "parentId": null,
+      "fields": [
+        {
+          "name": "bomNumber",
+          "label": "BOM Number",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "BOM-TRK-F150",
+          "lookupEntity": null
+        },
+        {
+          "name": "revision",
+          "label": "Revision Level",
+          "type": "STRING",
+          "required": true,
+          "readOnly": false,
+          "formula": null,
+          "defaultValue": "REV_C",
+          "lookupEntity": null
+        }
+      ]
+    }
+  },
+  "relations": [
+    {
+      "from": "CUSTOMERS",
+      "to": "SALES_ORDERS",
+      "type": "REFERENCES",
+      "cardinality": "1:N"
+    },
+    {
+      "from": "SUPPLIERS",
+      "to": "PURCHASE_ORDERS",
+      "type": "REFERENCES",
+      "cardinality": "1:N"
+    },
+    {
+      "from": "ITEMS",
+      "to": "INVENTORY",
+      "type": "LOCATED_AT",
+      "cardinality": "1:N"
+    },
+    {
+      "from": "WAREHOUSES",
+      "to": "INVENTORY",
+      "type": "STORES",
+      "cardinality": "1:N"
+    },
+    {
+      "from": "WORK_CENTER",
+      "to": "WORK_ORDERS",
+      "type": "EXECUTED_AT",
+      "cardinality": "1:N"
+    },
+    {
+      "from": "ITEMS",
+      "to": "WORK_ORDERS",
+      "type": "PRODUCES",
+      "cardinality": "1:N"
+    },
+    {
+      "from": "PRODUCTION_PLANS",
+      "to": "WORK_ORDERS",
+      "type": "GENERATES",
+      "cardinality": "1:N"
+    }
+  ]
+}

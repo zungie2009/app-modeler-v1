@@ -1,0 +1,15 @@
+CoolAdmin v3.4.0 assets extracted from the user-supplied cooladmin.zip.
+
+This App Modeler library uses the actual browser-ready CoolAdmin:
+- css/theme.css
+- css/app.css
+- js/vanilla-utils.js
+- js/bootstrap5-init.js
+- js/main-vanilla.js
+- js/modern-plugins.js
+
+The original reference HTML/README/changelog are retained under reference/.
+
+CoolAdmin's official site describes v3.4.0 as MIT-licensed. Keep the upstream
+license/copyright notices and review the supplied package terms before
+redistribution.

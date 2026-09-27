@@ -1,0 +1,103 @@
+{
+  "domainId": "INSURANCE_CLAIMS_ENTERPRISE",
+  "entities": {
+    "PARTY": {
+      "id": "PARTY",
+      "displayName": "Insurance Party Master",
+      "parentId": null,
+      "fields": [
+        { "name": "partyCode", "label": "Party Code", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "PRT-INS-100", "lookupEntity": null },
+        { "name": "fullName", "label": "Full Name / Org Name", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": null },
+        { "name": "status", "label": "Status", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "ACTIVE", "lookupEntity": null }
+      ]
+    },
+    "POLICYHOLDER": {
+      "id": "POLICYHOLDER",
+      "displayName": "Policyholders",
+      "parentId": "PARTY",
+      "fields": [
+        { "name": "policyholderId", "label": "Policyholder ID", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "PH-99012", "lookupEntity": null },
+        { "name": "nationalId", "label": "Tax ID / SSN", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "000-55-9911", "lookupEntity": null },
+        { "name": "creditScore", "label": "Credit / Risk Score", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "750", "lookupEntity": null }
+      ]
+    },
+    "COVERED_ASSET": {
+      "id": "COVERED_ASSET",
+      "displayName": "Insurable Assets (Vehicles/Property)",
+      "parentId": null,
+      "fields": [
+        { "name": "assetCode", "label": "Asset Code / VIN", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "VIN-1FA6P8CF9R51001", "lookupEntity": null },
+        { "name": "assetDescription", "label": "Asset Description", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "2024 Ford Mustang GT", "lookupEntity": null },
+        { "name": "declaredValue", "label": "Declared Insured Value ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "45000.00", "lookupEntity": null }
+      ]
+    },
+    "POLICY_BASE": {
+      "id": "POLICY_BASE",
+      "displayName": "Policy Contract Header",
+      "parentId": null,
+      "fields": [
+        { "name": "policyNumber", "label": "Policy Number", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "POL-2026-8801", "lookupEntity": null },
+        { "name": "effectiveDate", "label": "Effective Date", "type": "DATE", "required": true, "readOnly": false, "formula": null, "defaultValue": "2026-01-01", "lookupEntity": null },
+        { "name": "expirationDate", "label": "Expiration Date", "type": "DATE", "required": true, "readOnly": false, "formula": null, "defaultValue": "2027-01-01", "lookupEntity": null }
+      ]
+    },
+    "AUTO_POLICY": {
+      "id": "AUTO_POLICY",
+      "displayName": "Auto Insurance Policies",
+      "parentId": "POLICY_BASE",
+      "fields": [
+        { "name": "policyNumber", "label": "Policy Number", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "POL-AUTO-901", "lookupEntity": null },
+        { "name": "policyholderId", "label": "Policyholder", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "POLICYHOLDER" },
+        { "name": "assetCode", "label": "Insured Vehicle (VIN)", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "COVERED_ASSET" },
+        { "name": "basePremium", "label": "Base Annual Premium ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "1200.00", "lookupEntity": null },
+        { "name": "deductibleAmount", "label": "Policy Deductible ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "500.00", "lookupEntity": null }
+      ]
+    },
+    "PROPERTY_POLICY": {
+      "id": "PROPERTY_POLICY",
+      "displayName": "Property & Real Estate Policies",
+      "parentId": "POLICY_BASE",
+      "fields": [
+        { "name": "policyNumber", "label": "Policy Number", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "POL-PROP-401", "lookupEntity": null },
+        { "name": "policyholderId", "label": "Policyholder", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "POLICYHOLDER" },
+        { "name": "propertyAddress", "label": "Property Address", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "742 Evergreen Terrace", "lookupEntity": null },
+        { "name": "coverageLimit", "label": "Coverage Limit ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "350000.00", "lookupEntity": null }
+      ]
+    },
+    "CLAIMS": {
+      "id": "CLAIMS",
+      "displayName": "Insurance Claims",
+      "parentId": null,
+      "fields": [
+        { "name": "claimNumber", "label": "Claim Number", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "CLM-2026-0091", "lookupEntity": null },
+        { "name": "policyNumber", "label": "Policy Contract", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "AUTO_POLICY" },
+        { "name": "incidentDate", "label": "Incident Date", "type": "DATE", "required": true, "readOnly": false, "formula": null, "defaultValue": "2026-09-10", "lookupEntity": null },
+        { "name": "claimedAmount", "label": "Claimed Loss Amount ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "3200.00", "lookupEntity": null },
+        { "name": "deductibleAmount", "label": "Applied Deductible ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "500.00", "lookupEntity": null },
+        { "name": "netPayoutAmount", "label": "Net Payout Amount ($)", "type": "NUMBER", "required": false, "readOnly": true, "formula": "claimedAmount - deductibleAmount", "defaultValue": "0.00", "lookupEntity": null },
+        { "name": "claimStatus", "label": "Claim Adjudication Status", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "APPROVED", "lookupEntity": null }
+      ]
+    }
+  },
+  "relations": [
+    { "from": "POLICYHOLDER", "to": "AUTO_POLICY", "type": "HOLDS", "cardinality": "1:N" },
+    { "from": "POLICYHOLDER", "to": "PROPERTY_POLICY", "type": "HOLDS", "cardinality": "1:N" },
+    { "from": "COVERED_ASSET", "to": "AUTO_POLICY", "type": "INSURES", "cardinality": "1:1" },
+    { "from": "AUTO_POLICY", "to": "CLAIMS", "type": "FILED_AGAINST", "cardinality": "1:N" }
+  ],
+  "seedData": {
+    "POLICYHOLDER": [
+      { "fullName": "Sophia Sterling", "policyholderId": "PH-99012", "nationalId": "SSN-000-55-9911", "creditScore": "780" },
+      { "fullName": "Apex Commercial Hauling", "policyholderId": "PH-99013", "nationalId": "FEIN-88-1920811", "creditScore": "820" }
+    ],
+    "COVERED_ASSET": [
+      { "assetCode": "VIN-1FA6P8CF9R51001", "assetDescription": "2024 Ford Mustang GT Premium", "declaredValue": "45000.00" }
+    ],
+    "AUTO_POLICY": [
+      { "policyNumber": "POL-AUTO-901", "policyholderId": "PH-99012", "assetCode": "VIN-1FA6P8CF9R51001", "basePremium": "1200.00", "deductibleAmount": "500.00" }
+    ],
+    "CLAIMS": [
+      { "claimNumber": "CLM-2026-0091", "policyNumber": "POL-AUTO-901", "incidentDate": "2026-09-10", "claimedAmount": "3200.00", "deductibleAmount": "500.00", "netPayoutAmount": "2700.00", "claimStatus": "APPROVED" }
+    ]
+  }
+}

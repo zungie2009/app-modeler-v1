@@ -1,0 +1,273 @@
+:root {
+    --bg: #f6f7fb;
+    --surface: #ffffff;
+    --text: #20242b;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --accent: #2563eb;
+    --sidebar: #ffffff;
+    --sidebar-text: #344054;
+    --sidebar-muted: #667085;
+    --sidebar-hover: #f2f4f7;
+    --sidebar-active: #eef2ff;
+    --sidebar-active-text: #3538cd;
+    --sidebar-border: #eaecf0;
+    --radius: 12px;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .04);
+    font-family: var(--app-font, Inter), Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); }
+.dark { --bg:#111827; --surface:#1f2937; --text:#f9fafb; --muted:#9ca3af; --border:#374151; --sidebar:#0b1220; --sidebar-text:#d1d5db; --sidebar-muted:#94a3b8; --sidebar-hover:#263244; --sidebar-active:#263244; --sidebar-active-text:#ffffff; --sidebar-border:#1f2937; }
+.shell { display:grid; grid-template-columns:250px 1fr; min-height:100vh; }
+.sidebar { background:var(--sidebar); color:var(--text); padding:22px 16px; border-right:1px solid var(--sidebar-border); }
+.brand { font-size:21px; font-weight:700; margin:0 8px 24px; }
+.nav-section { color:var(--sidebar-muted); font-size:11px; text-transform:uppercase; letter-spacing:.08em; margin:18px 10px 7px; }
+.nav-btn { width:100%; border:0; background:transparent; color:var(--sidebar-text); padding:10px 12px; text-align:left; border-radius:8px; cursor:pointer; font-size:14px; }
+.nav-btn.child { padding-left:28px; }
+.nav-btn:hover { background:var(--sidebar-hover); color:var(--text); }
+.nav-btn.active { background:var(--sidebar-active); color:var(--sidebar-active-text); }
+.dark .nav-btn:hover { color:#fff; }
+.main { min-width:0; }
+.topbar { height:66px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 28px; }
+.content { padding:28px; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; }
+.metric { font-size:30px; font-weight:700; }
+.muted { color:var(--muted); }
+button.primary { background:var(--accent); color:#fff; border:0; border-radius:8px; padding:10px 16px; cursor:pointer; }
+select { width:100%; padding:10px; border:1px solid var(--border); border-radius:8px; background:var(--surface); color:var(--text); }
+label { display:block; font-size:12px; font-weight:700; margin:0 0 6px; }
+.form-row { margin-bottom:16px; }
+.uml { width:100%; height:70vh; border:1px solid var(--border); border-radius:10px; background:var(--surface); }
+.entity-box { fill:var(--surface); stroke:#94a3b8; stroke-width:1.2; }
+.entity-title { font-size:12px; font-weight:700; fill:var(--text); }
+.entity-field { font-size:9px; fill:var(--muted); }
+.rel { stroke:#94a3b8; stroke-width:1; fill:none; }
+.tag { display:inline-block; padding:4px 8px; border-radius:999px; background:#e8eefc; color:#2449a5; font-size:12px; }
+.admin-grid { display:grid; grid-template-columns:repeat(2,minmax(220px,1fr)); gap:16px; }
+.data-table { width:100%; border-collapse:collapse; }
+.data-table td { padding:9px; border-bottom:1px solid var(--border); }
+@media(max-width:800px) { .shell{grid-template-columns:1fr} .sidebar{display:none} .admin-grid{grid-template-columns:1fr} }
+/* Softr-like business style */
+:root { --radius:14px; --shadow:0 4px 14px rgba(15,23,42,.06); --accent:#2563eb; }
+.content { max-width:1500px; margin:0 auto; }
+
+
+/* Softr-inspired dashboard composition */
+.dashboard-page { display: grid; gap: 22px; }
+.hero-card { display:flex; justify-content:space-between; align-items:center; gap:24px; padding:30px; background:var(--surface); border:1px solid var(--border); border-radius:18px; box-shadow:0 8px 28px rgba(15,23,42,.06); }
+.hero-card h1 { margin:6px 0 8px; font-size:30px; letter-spacing:-.03em; }
+.eyebrow { font-size:11px; font-weight:800; letter-spacing:.12em; color:var(--muted); }
+.kpi-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+.kpi-card { min-height:122px; }
+.metric-text { font-size:24px; text-transform:capitalize; }
+.trend { margin-top:10px; font-size:12px; color:var(--muted); }
+.dashboard-columns { display:grid; grid-template-columns:minmax(0,1.7fr) minmax(280px,.8fr); gap:18px; align-items:start; }
+.section-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:14px; }
+.section-heading h2 { margin:4px 0 0; font-size:19px; }
+.entity-list,.activity-list { display:grid; gap:8px; }
+.entity-row { width:100%; border:0; background:transparent; display:grid; grid-template-columns:38px 1fr auto; align-items:center; gap:12px; padding:11px 8px; border-radius:10px; text-align:left; color:inherit; cursor:pointer; }
+.entity-row:hover { background:var(--soft); }
+.entity-row small { display:block; margin-top:3px; color:var(--muted); }
+.entity-icon { width:36px; height:36px; border-radius:10px; display:grid; place-items:center; background:var(--soft); font-weight:800; }
+.row-arrow { font-size:24px; color:var(--muted); }
+.activity-item { display:grid; grid-template-columns:12px 1fr; gap:10px; padding:11px 0; border-bottom:1px solid var(--border); }
+.activity-item:last-child { border-bottom:0; }
+.activity-item p { margin:4px 0 0; font-size:12px; }
+.activity-dot { width:9px; height:9px; border-radius:50%; background:currentColor; margin-top:5px; opacity:.55; }
+@media (max-width: 1050px) { .kpi-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .dashboard-columns { grid-template-columns:1fr; } }
+@media (max-width: 720px) { .hero-card { align-items:flex-start; flex-direction:column; } .kpi-grid { grid-template-columns:1fr; } }
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.sidebar-main {
+    flex: 1 1 auto;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid rgba(128, 128, 128, 0.22);
+}
+
+
+/* v0.6 Softr hierarchy landing-page experiment */
+.sidebar {
+    width: 25vw;
+    min-width: 250px;
+    max-width: 360px;
+    flex: 0 0 25vw;
+}
+
+.main {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.menu-group-canvas {
+    width: 100%;
+}
+
+.menu-group-heading {
+    margin-bottom: 20px;
+}
+
+.menu-group-heading h2 {
+    margin: 0 0 6px;
+}
+
+.menu-group-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.menu-group-card {
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 20px;
+    text-align: left;
+    background: var(--surface, #ffffff);
+    color: inherit;
+    border: 1px solid var(--border, #e5e7eb);
+    border-radius: 14px;
+    cursor: pointer;
+}
+
+.menu-group-card:hover {
+    transform: translateY(-1px);
+}
+
+.menu-group-card-title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.menu-group-card-meta {
+    margin-top: 8px;
+    opacity: 0.65;
+    font-size: 13px;
+}
+
+.menu-group-card-action {
+    margin-top: 18px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        width: 260px;
+        min-width: 220px;
+        flex-basis: 260px;
+    }
+
+    .menu-group-card-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* v0.6.1 containment fix:
+   Keep all landing-page cards inside the right-hand content canvas. */
+.shell {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.sidebar {
+    width: 25%;
+    min-width: 250px;
+    max-width: none;
+    flex: 0 0 25%;
+}
+
+.main {
+    width: 75%;
+    max-width: 75%;
+    flex: 0 0 75%;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+.content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+.menu-group-canvas {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.menu-group-card-grid {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+    gap: 16px;
+    overflow: hidden;
+}
+
+.menu-group-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        width: 260px;
+        min-width: 220px;
+        flex: 0 0 260px;
+    }
+
+    .main {
+        width: calc(100% - 260px);
+        max-width: calc(100% - 260px);
+        flex: 0 0 calc(100% - 260px);
+    }
+
+    .menu-group-card-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Softr module landing pages: fixed two-card desktop grid. */
+.menu-group-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.menu-group-card {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 700px) {
+    .menu-group-card-grid {
+        grid-template-columns: 1fr;
+    }
+}

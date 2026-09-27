@@ -1,0 +1,88 @@
+{
+  "domainId": "AUTOMOBILE_ENTERPRISE_ERP",
+  "entities": {
+    "CUSTOMERS": {
+      "id": "CUSTOMERS",
+      "displayName": "Customers",
+      "parentId": "ORGANIZATION_CUSTOMER",
+      "fields": [
+        { "name": "customerNumber", "label": "Customer Number", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "CUST-901", "lookupEntity": null },
+        { "name": "name", "label": "Customer Name", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": null },
+        { "name": "email", "label": "Email Address", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": null },
+        { "name": "phone", "label": "Phone Number", "type": "STRING", "required": false, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": null },
+        { "name": "status", "label": "Account Status", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "ACTIVE", "lookupEntity": null }
+      ]
+    },
+    "SUPPLIERS": {
+      "id": "SUPPLIERS",
+      "displayName": "Suppliers",
+      "parentId": "SUPPLIER_ORGANIZATION",
+      "fields": [
+        { "name": "supplierNumber", "label": "Supplier Number", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "SUPP-101", "lookupEntity": null },
+        { "name": "name", "label": "Supplier Name", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": null },
+        { "name": "email", "label": "Email", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": null },
+        { "name": "leadTimeDays", "label": "Lead Time (Days)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "14", "lookupEntity": null },
+        { "name": "status", "label": "Status", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "PREFERRED", "lookupEntity": null }
+      ]
+    },
+    "ITEMS": {
+      "id": "ITEMS",
+      "displayName": "Inventory Items & Parts",
+      "parentId": "PART",
+      "fields": [
+        { "name": "itemCode", "label": "Item Code", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "ITEM-ALT-90", "lookupEntity": null },
+        { "name": "name", "label": "Item Name", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": null },
+        { "name": "standardCost", "label": "Standard Cost", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "145.00", "lookupEntity": null },
+        { "name": "listPrice", "label": "List Price", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "220.00", "lookupEntity": null },
+        { "name": "status", "label": "Lifecycle Status", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "ACTIVE", "lookupEntity": null }
+      ]
+    },
+    "WORK_CENTER": {
+      "id": "WORK_CENTER",
+      "displayName": "Manufacturing Work Centers",
+      "parentId": "PRODUCTION_LINE",
+      "fields": [
+        { "name": "workCenterCode", "label": "Work Center Code", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "WC-ROBOTIC-WELD", "lookupEntity": null },
+        { "name": "workCenterName", "label": "Work Center Name", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": null },
+        { "name": "availableCapacity", "label": "Available Capacity (Hrs)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "24.0", "lookupEntity": null },
+        { "name": "efficiencyPercent", "label": "Efficiency Rating (%)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "96.5", "lookupEntity": null },
+        { "name": "status", "label": "Operational Status", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "OPERATIONAL", "lookupEntity": null }
+      ]
+    },
+    "SALES_ORDERS": {
+      "id": "SALES_ORDERS",
+      "displayName": "Sales Orders",
+      "parentId": "SALES_DOCUMENT",
+      "fields": [
+        { "name": "orderNumber", "label": "Order Number", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "SO-2026-001", "lookupEntity": null },
+        { "name": "customerId", "label": "Customer", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "CUSTOMERS" },
+        { "name": "orderDate", "label": "Order Date", "type": "DATE", "required": true, "readOnly": false, "formula": null, "defaultValue": "2026-09-01", "lookupEntity": null },
+        { "name": "quantity", "label": "Order Quantity", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "10", "lookupEntity": null },
+        { "name": "unitPrice", "label": "Unit Price", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "150.00", "lookupEntity": null },
+        { "name": "subtotal", "label": "Subtotal", "type": "NUMBER", "required": false, "readOnly": true, "formula": "quantity * unitPrice", "defaultValue": "0.00", "lookupEntity": null },
+        { "name": "taxAmount", "label": "Tax Amount", "type": "NUMBER", "required": false, "readOnly": false, "formula": null, "defaultValue": "15.00", "lookupEntity": null },
+        { "name": "totalAmount", "label": "Total Amount", "type": "NUMBER", "required": false, "readOnly": true, "formula": "subtotal + taxAmount", "defaultValue": "0.00", "lookupEntity": null },
+        { "name": "status", "label": "Approval Status", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "APPROVED", "lookupEntity": null }
+      ]
+    },
+    "WORK_ORDERS": {
+      "id": "WORK_ORDERS",
+      "displayName": "Production Work Orders",
+      "parentId": "PRODUCTION_ORDER",
+      "fields": [
+        { "name": "workOrderNumber", "label": "Work Order Number", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "WO-88021", "lookupEntity": null },
+        { "name": "itemId", "label": "Produced Item", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "ITEMS" },
+        { "name": "workCenterCode", "label": "Work Center", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "WORK_CENTER" },
+        { "name": "plannedQuantity", "label": "Planned Quantity", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "150", "lookupEntity": null },
+        { "name": "completedQuantity", "label": "Completed Quantity", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "45", "lookupEntity": null },
+        { "name": "status", "label": "Execution Status", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "IN_PROGRESS", "lookupEntity": null }
+      ]
+    }
+  },
+  "relations": [
+    { "from": "CUSTOMERS", "to": "SALES_ORDERS", "type": "REFERENCES", "cardinality": "1:N" },
+    { "from": "ITEMS", "to": "WORK_ORDERS", "type": "PRODUCES", "cardinality": "1:N" },
+    { "from": "WORK_CENTER", "to": "WORK_ORDERS", "type": "EXECUTED_AT", "cardinality": "1:N" },
+    { "from": "SUPPLIERS", "to": "ITEMS", "type": "SUPPLIES", "cardinality": "1:N" }
+  ]
+}

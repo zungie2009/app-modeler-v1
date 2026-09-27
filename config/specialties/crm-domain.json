@@ -1,0 +1,2092 @@
+{
+  "domainId": "CRM_MEDIUM_ENTERPRISE",
+  "name": "Sales CRM",
+  "description": "Medium-size CRM reference domain for App Modeler interpreter testing. Navigation uses canonical target keys and seed data is stored at the top level.",
+  "version": "1.1",
+  "displayEntity": "ACCOUNTS",
+  "entities": {
+    "USERS": {
+      "id": "USERS",
+      "label": "Users",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true,
+          "required": true
+        },
+        {
+          "name": "name",
+          "type": "STRING",
+          "required": true
+        },
+        {
+          "name": "email",
+          "type": "EMAIL",
+          "required": true
+        },
+        {
+          "name": "role",
+          "type": "STRING"
+        },
+        {
+          "name": "active",
+          "type": "BOOLEAN"
+        }
+      ]
+    },
+    "TEAMS": {
+      "id": "TEAMS",
+      "label": "Teams",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "name",
+          "type": "STRING",
+          "required": true
+        },
+        {
+          "name": "managerId",
+          "type": "LOOKUP",
+          "lookupEntity": "USERS"
+        }
+      ]
+    },
+    "TERRITORIES": {
+      "id": "TERRITORIES",
+      "label": "Territories",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "name",
+          "type": "STRING"
+        },
+        {
+          "name": "region",
+          "type": "STRING"
+        }
+      ]
+    },
+    "ACCOUNTS": {
+      "id": "ACCOUNTS",
+      "label": "Accounts",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "name",
+          "type": "STRING",
+          "required": true
+        },
+        {
+          "name": "industry",
+          "type": "STRING"
+        },
+        {
+          "name": "website",
+          "type": "URL"
+        },
+        {
+          "name": "phone",
+          "type": "PHONE"
+        },
+        {
+          "name": "annualRevenue",
+          "type": "CURRENCY"
+        },
+        {
+          "name": "employeeCount",
+          "type": "INTEGER"
+        },
+        {
+          "name": "ownerId",
+          "type": "LOOKUP",
+          "lookupEntity": "USERS"
+        },
+        {
+          "name": "territoryId",
+          "type": "LOOKUP",
+          "lookupEntity": "TERRITORIES"
+        },
+        {
+          "name": "status",
+          "type": "ENUM",
+          "values": [
+            "Lead",
+            "Prospect",
+            "Customer",
+            "Inactive"
+          ]
+        }
+      ]
+    },
+    "CONTACTS": {
+      "id": "CONTACTS",
+      "label": "Contacts",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "accountId",
+          "type": "LOOKUP",
+          "lookupEntity": "ACCOUNTS"
+        },
+        {
+          "name": "firstName",
+          "type": "STRING"
+        },
+        {
+          "name": "lastName",
+          "type": "STRING"
+        },
+        {
+          "name": "title",
+          "type": "STRING"
+        },
+        {
+          "name": "email",
+          "type": "EMAIL"
+        },
+        {
+          "name": "phone",
+          "type": "PHONE"
+        },
+        {
+          "name": "ownerId",
+          "type": "LOOKUP",
+          "lookupEntity": "USERS"
+        },
+        {
+          "name": "status",
+          "type": "ENUM",
+          "values": [
+            "Active",
+            "Inactive"
+          ]
+        }
+      ]
+    },
+    "LEADS": {
+      "id": "LEADS",
+      "label": "Leads",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "company",
+          "type": "STRING"
+        },
+        {
+          "name": "firstName",
+          "type": "STRING"
+        },
+        {
+          "name": "lastName",
+          "type": "STRING"
+        },
+        {
+          "name": "email",
+          "type": "EMAIL"
+        },
+        {
+          "name": "source",
+          "type": "STRING"
+        },
+        {
+          "name": "status",
+          "type": "ENUM",
+          "values": [
+            "New",
+            "Working",
+            "Qualified",
+            "Converted",
+            "Disqualified"
+          ]
+        },
+        {
+          "name": "rating",
+          "type": "ENUM",
+          "values": [
+            "Cold",
+            "Warm",
+            "Hot"
+          ]
+        },
+        {
+          "name": "ownerId",
+          "type": "LOOKUP",
+          "lookupEntity": "USERS"
+        }
+      ]
+    },
+    "PIPELINE_STAGES": {
+      "id": "PIPELINE_STAGES",
+      "label": "Pipeline Stages",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "name",
+          "type": "STRING"
+        },
+        {
+          "name": "sequence",
+          "type": "INTEGER"
+        },
+        {
+          "name": "probability",
+          "type": "PERCENT"
+        },
+        {
+          "name": "closed",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "won",
+          "type": "BOOLEAN"
+        }
+      ]
+    },
+    "OPPORTUNITIES": {
+      "id": "OPPORTUNITIES",
+      "label": "Deals / Opportunities",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "name",
+          "type": "STRING"
+        },
+        {
+          "name": "accountId",
+          "type": "LOOKUP",
+          "lookupEntity": "ACCOUNTS"
+        },
+        {
+          "name": "contactId",
+          "type": "LOOKUP",
+          "lookupEntity": "CONTACTS"
+        },
+        {
+          "name": "stageId",
+          "type": "LOOKUP",
+          "lookupEntity": "PIPELINE_STAGES"
+        },
+        {
+          "name": "amount",
+          "type": "CURRENCY"
+        },
+        {
+          "name": "probability",
+          "type": "PERCENT"
+        },
+        {
+          "name": "closeDate",
+          "type": "DATE"
+        },
+        {
+          "name": "ownerId",
+          "type": "LOOKUP",
+          "lookupEntity": "USERS"
+        },
+        {
+          "name": "source",
+          "type": "STRING"
+        }
+      ]
+    },
+    "ACTIVITIES": {
+      "id": "ACTIVITIES",
+      "label": "Activities",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "opportunityId",
+          "type": "LOOKUP",
+          "lookupEntity": "OPPORTUNITIES"
+        },
+        {
+          "name": "contactId",
+          "type": "LOOKUP",
+          "lookupEntity": "CONTACTS"
+        },
+        {
+          "name": "type",
+          "type": "ENUM",
+          "values": [
+            "Call",
+            "Email",
+            "Meeting",
+            "Demo"
+          ]
+        },
+        {
+          "name": "subject",
+          "type": "STRING"
+        },
+        {
+          "name": "activityDate",
+          "type": "DATETIME"
+        },
+        {
+          "name": "ownerId",
+          "type": "LOOKUP",
+          "lookupEntity": "USERS"
+        },
+        {
+          "name": "outcome",
+          "type": "TEXT"
+        }
+      ]
+    },
+    "TASKS": {
+      "id": "TASKS",
+      "label": "Tasks",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "subject",
+          "type": "STRING"
+        },
+        {
+          "name": "opportunityId",
+          "type": "LOOKUP",
+          "lookupEntity": "OPPORTUNITIES"
+        },
+        {
+          "name": "assignedToId",
+          "type": "LOOKUP",
+          "lookupEntity": "USERS"
+        },
+        {
+          "name": "dueDate",
+          "type": "DATE"
+        },
+        {
+          "name": "priority",
+          "type": "ENUM",
+          "values": [
+            "Low",
+            "Medium",
+            "High"
+          ]
+        },
+        {
+          "name": "status",
+          "type": "ENUM",
+          "values": [
+            "Open",
+            "In Progress",
+            "Completed",
+            "Deferred"
+          ]
+        }
+      ]
+    },
+    "MEETINGS": {
+      "id": "MEETINGS",
+      "label": "Meetings",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "opportunityId",
+          "type": "LOOKUP",
+          "lookupEntity": "OPPORTUNITIES"
+        },
+        {
+          "name": "title",
+          "type": "STRING"
+        },
+        {
+          "name": "startAt",
+          "type": "DATETIME"
+        },
+        {
+          "name": "endAt",
+          "type": "DATETIME"
+        },
+        {
+          "name": "ownerId",
+          "type": "LOOKUP",
+          "lookupEntity": "USERS"
+        },
+        {
+          "name": "location",
+          "type": "STRING"
+        }
+      ]
+    },
+    "NOTES": {
+      "id": "NOTES",
+      "label": "Notes",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "accountId",
+          "type": "LOOKUP",
+          "lookupEntity": "ACCOUNTS"
+        },
+        {
+          "name": "contactId",
+          "type": "LOOKUP",
+          "lookupEntity": "CONTACTS"
+        },
+        {
+          "name": "body",
+          "type": "TEXT"
+        },
+        {
+          "name": "createdById",
+          "type": "LOOKUP",
+          "lookupEntity": "USERS"
+        },
+        {
+          "name": "createdAt",
+          "type": "DATETIME"
+        }
+      ]
+    },
+    "CAMPAIGNS": {
+      "id": "CAMPAIGNS",
+      "label": "Campaigns",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "name",
+          "type": "STRING"
+        },
+        {
+          "name": "type",
+          "type": "STRING"
+        },
+        {
+          "name": "status",
+          "type": "ENUM",
+          "values": [
+            "Planned",
+            "Active",
+            "Completed",
+            "Cancelled"
+          ]
+        },
+        {
+          "name": "startDate",
+          "type": "DATE"
+        },
+        {
+          "name": "endDate",
+          "type": "DATE"
+        },
+        {
+          "name": "budget",
+          "type": "CURRENCY"
+        }
+      ]
+    },
+    "CAMPAIGN_MEMBERS": {
+      "id": "CAMPAIGN_MEMBERS",
+      "label": "Campaign Members",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "campaignId",
+          "type": "LOOKUP",
+          "lookupEntity": "CAMPAIGNS"
+        },
+        {
+          "name": "contactId",
+          "type": "LOOKUP",
+          "lookupEntity": "CONTACTS"
+        },
+        {
+          "name": "leadId",
+          "type": "LOOKUP",
+          "lookupEntity": "LEADS"
+        },
+        {
+          "name": "status",
+          "type": "STRING"
+        }
+      ]
+    },
+    "PRODUCTS": {
+      "id": "PRODUCTS",
+      "label": "Products",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "sku",
+          "type": "STRING"
+        },
+        {
+          "name": "name",
+          "type": "STRING"
+        },
+        {
+          "name": "category",
+          "type": "STRING"
+        },
+        {
+          "name": "unitPrice",
+          "type": "CURRENCY"
+        },
+        {
+          "name": "active",
+          "type": "BOOLEAN"
+        }
+      ]
+    },
+    "PRICE_BOOKS": {
+      "id": "PRICE_BOOKS",
+      "label": "Price Books",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "name",
+          "type": "STRING"
+        },
+        {
+          "name": "currency",
+          "type": "STRING"
+        },
+        {
+          "name": "active",
+          "type": "BOOLEAN"
+        }
+      ]
+    },
+    "QUOTES": {
+      "id": "QUOTES",
+      "label": "Quotes",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "quoteNumber",
+          "type": "STRING"
+        },
+        {
+          "name": "opportunityId",
+          "type": "LOOKUP",
+          "lookupEntity": "OPPORTUNITIES"
+        },
+        {
+          "name": "accountId",
+          "type": "LOOKUP",
+          "lookupEntity": "ACCOUNTS"
+        },
+        {
+          "name": "status",
+          "type": "ENUM",
+          "values": [
+            "Draft",
+            "Presented",
+            "Accepted",
+            "Rejected",
+            "Expired"
+          ]
+        },
+        {
+          "name": "validUntil",
+          "type": "DATE"
+        },
+        {
+          "name": "subtotal",
+          "type": "CURRENCY"
+        },
+        {
+          "name": "discount",
+          "type": "CURRENCY"
+        },
+        {
+          "name": "tax",
+          "type": "CURRENCY"
+        },
+        {
+          "name": "total",
+          "type": "CURRENCY"
+        }
+      ]
+    },
+    "QUOTE_LINES": {
+      "id": "QUOTE_LINES",
+      "label": "Quote Lines",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "quoteId",
+          "type": "LOOKUP",
+          "lookupEntity": "QUOTES"
+        },
+        {
+          "name": "productId",
+          "type": "LOOKUP",
+          "lookupEntity": "PRODUCTS"
+        },
+        {
+          "name": "quantity",
+          "type": "INTEGER"
+        },
+        {
+          "name": "unitPrice",
+          "type": "CURRENCY"
+        },
+        {
+          "name": "discountPercent",
+          "type": "PERCENT"
+        },
+        {
+          "name": "lineTotal",
+          "type": "CURRENCY",
+          "calculated": true
+        }
+      ]
+    },
+    "SALES_ORDERS": {
+      "id": "SALES_ORDERS",
+      "label": "Sales Orders",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "orderNumber",
+          "type": "STRING"
+        },
+        {
+          "name": "accountId",
+          "type": "LOOKUP",
+          "lookupEntity": "ACCOUNTS"
+        },
+        {
+          "name": "opportunityId",
+          "type": "LOOKUP",
+          "lookupEntity": "OPPORTUNITIES"
+        },
+        {
+          "name": "orderDate",
+          "type": "DATE"
+        },
+        {
+          "name": "status",
+          "type": "ENUM",
+          "values": [
+            "Draft",
+            "Confirmed",
+            "Fulfillment",
+            "Completed",
+            "Cancelled"
+          ]
+        },
+        {
+          "name": "subtotal",
+          "type": "CURRENCY"
+        },
+        {
+          "name": "tax",
+          "type": "CURRENCY"
+        },
+        {
+          "name": "total",
+          "type": "CURRENCY"
+        }
+      ]
+    },
+    "ORDER_LINES": {
+      "id": "ORDER_LINES",
+      "label": "Order Lines",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "orderId",
+          "type": "LOOKUP",
+          "lookupEntity": "SALES_ORDERS"
+        },
+        {
+          "name": "productId",
+          "type": "LOOKUP",
+          "lookupEntity": "PRODUCTS"
+        },
+        {
+          "name": "quantity",
+          "type": "INTEGER"
+        },
+        {
+          "name": "unitPrice",
+          "type": "CURRENCY"
+        },
+        {
+          "name": "lineTotal",
+          "type": "CURRENCY",
+          "calculated": true
+        }
+      ]
+    },
+    "INVOICES": {
+      "id": "INVOICES",
+      "label": "Invoices",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "invoiceNumber",
+          "type": "STRING"
+        },
+        {
+          "name": "accountId",
+          "type": "LOOKUP",
+          "lookupEntity": "ACCOUNTS"
+        },
+        {
+          "name": "orderId",
+          "type": "LOOKUP",
+          "lookupEntity": "SALES_ORDERS"
+        },
+        {
+          "name": "invoiceDate",
+          "type": "DATE"
+        },
+        {
+          "name": "dueDate",
+          "type": "DATE"
+        },
+        {
+          "name": "status",
+          "type": "ENUM",
+          "values": [
+            "Draft",
+            "Open",
+            "Partially Paid",
+            "Paid",
+            "Overdue",
+            "Void"
+          ]
+        },
+        {
+          "name": "subtotal",
+          "type": "CURRENCY"
+        },
+        {
+          "name": "tax",
+          "type": "CURRENCY"
+        },
+        {
+          "name": "total",
+          "type": "CURRENCY"
+        },
+        {
+          "name": "balance",
+          "type": "CURRENCY"
+        }
+      ]
+    },
+    "INVOICE_LINES": {
+      "id": "INVOICE_LINES",
+      "label": "Invoice Lines",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "invoiceId",
+          "type": "LOOKUP",
+          "lookupEntity": "INVOICES"
+        },
+        {
+          "name": "productId",
+          "type": "LOOKUP",
+          "lookupEntity": "PRODUCTS"
+        },
+        {
+          "name": "quantity",
+          "type": "INTEGER"
+        },
+        {
+          "name": "unitPrice",
+          "type": "CURRENCY"
+        },
+        {
+          "name": "lineTotal",
+          "type": "CURRENCY",
+          "calculated": true
+        }
+      ]
+    },
+    "PAYMENTS": {
+      "id": "PAYMENTS",
+      "label": "Payments",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "invoiceId",
+          "type": "LOOKUP",
+          "lookupEntity": "INVOICES"
+        },
+        {
+          "name": "paymentDate",
+          "type": "DATE"
+        },
+        {
+          "name": "amount",
+          "type": "CURRENCY"
+        },
+        {
+          "name": "method",
+          "type": "ENUM",
+          "values": [
+            "ACH",
+            "Wire",
+            "Card",
+            "Check"
+          ]
+        },
+        {
+          "name": "reference",
+          "type": "STRING"
+        },
+        {
+          "name": "status",
+          "type": "ENUM",
+          "values": [
+            "Pending",
+            "Settled",
+            "Failed",
+            "Refunded"
+          ]
+        }
+      ]
+    },
+    "TAGS": {
+      "id": "TAGS",
+      "label": "Tags",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "name",
+          "type": "STRING"
+        },
+        {
+          "name": "color",
+          "type": "STRING"
+        }
+      ]
+    },
+    "ATTACHMENTS": {
+      "id": "ATTACHMENTS",
+      "label": "Attachments",
+      "fields": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "primaryKey": true
+        },
+        {
+          "name": "entityType",
+          "type": "STRING"
+        },
+        {
+          "name": "entityId",
+          "type": "STRING"
+        },
+        {
+          "name": "fileName",
+          "type": "STRING"
+        },
+        {
+          "name": "contentType",
+          "type": "STRING"
+        },
+        {
+          "name": "uploadedById",
+          "type": "LOOKUP",
+          "lookupEntity": "USERS"
+        },
+        {
+          "name": "uploadedAt",
+          "type": "DATETIME"
+        }
+      ]
+    }
+  },
+  "relations": [
+    {
+      "fromEntity": "TEAMS",
+      "fromField": "managerId",
+      "toEntity": "USERS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "ACCOUNTS",
+      "fromField": "ownerId",
+      "toEntity": "USERS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "ACCOUNTS",
+      "fromField": "territoryId",
+      "toEntity": "TERRITORIES",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "CONTACTS",
+      "fromField": "accountId",
+      "toEntity": "ACCOUNTS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "CONTACTS",
+      "fromField": "ownerId",
+      "toEntity": "USERS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "LEADS",
+      "fromField": "ownerId",
+      "toEntity": "USERS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "OPPORTUNITIES",
+      "fromField": "accountId",
+      "toEntity": "ACCOUNTS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "OPPORTUNITIES",
+      "fromField": "contactId",
+      "toEntity": "CONTACTS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "OPPORTUNITIES",
+      "fromField": "stageId",
+      "toEntity": "PIPELINE_STAGES",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "OPPORTUNITIES",
+      "fromField": "ownerId",
+      "toEntity": "USERS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "ACTIVITIES",
+      "fromField": "opportunityId",
+      "toEntity": "OPPORTUNITIES",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "ACTIVITIES",
+      "fromField": "contactId",
+      "toEntity": "CONTACTS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "ACTIVITIES",
+      "fromField": "ownerId",
+      "toEntity": "USERS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "TASKS",
+      "fromField": "opportunityId",
+      "toEntity": "OPPORTUNITIES",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "TASKS",
+      "fromField": "assignedToId",
+      "toEntity": "USERS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "MEETINGS",
+      "fromField": "opportunityId",
+      "toEntity": "OPPORTUNITIES",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "MEETINGS",
+      "fromField": "ownerId",
+      "toEntity": "USERS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "NOTES",
+      "fromField": "accountId",
+      "toEntity": "ACCOUNTS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "NOTES",
+      "fromField": "contactId",
+      "toEntity": "CONTACTS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "NOTES",
+      "fromField": "createdById",
+      "toEntity": "USERS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "CAMPAIGN_MEMBERS",
+      "fromField": "campaignId",
+      "toEntity": "CAMPAIGNS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "CAMPAIGN_MEMBERS",
+      "fromField": "contactId",
+      "toEntity": "CONTACTS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "CAMPAIGN_MEMBERS",
+      "fromField": "leadId",
+      "toEntity": "LEADS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "QUOTES",
+      "fromField": "opportunityId",
+      "toEntity": "OPPORTUNITIES",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "QUOTES",
+      "fromField": "accountId",
+      "toEntity": "ACCOUNTS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "QUOTE_LINES",
+      "fromField": "quoteId",
+      "toEntity": "QUOTES",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "QUOTE_LINES",
+      "fromField": "productId",
+      "toEntity": "PRODUCTS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "SALES_ORDERS",
+      "fromField": "accountId",
+      "toEntity": "ACCOUNTS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "SALES_ORDERS",
+      "fromField": "opportunityId",
+      "toEntity": "OPPORTUNITIES",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "ORDER_LINES",
+      "fromField": "orderId",
+      "toEntity": "SALES_ORDERS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "ORDER_LINES",
+      "fromField": "productId",
+      "toEntity": "PRODUCTS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "INVOICES",
+      "fromField": "accountId",
+      "toEntity": "ACCOUNTS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "INVOICES",
+      "fromField": "orderId",
+      "toEntity": "SALES_ORDERS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "INVOICE_LINES",
+      "fromField": "invoiceId",
+      "toEntity": "INVOICES",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "INVOICE_LINES",
+      "fromField": "productId",
+      "toEntity": "PRODUCTS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "PAYMENTS",
+      "fromField": "invoiceId",
+      "toEntity": "INVOICES",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    },
+    {
+      "fromEntity": "ATTACHMENTS",
+      "fromField": "uploadedById",
+      "toEntity": "USERS",
+      "toField": "id",
+      "type": "MANY_TO_ONE"
+    }
+  ],
+  "navigation": [
+    {
+      "id": "CRM_HOME",
+      "label": "CRM",
+      "children": [
+        {
+          "label": "Accounts",
+          "target": "ACCOUNTS"
+        },
+        {
+          "label": "Contacts",
+          "target": "CONTACTS"
+        },
+        {
+          "label": "Leads",
+          "target": "LEADS"
+        },
+        {
+          "label": "Deals",
+          "target": "OPPORTUNITIES"
+        },
+        {
+          "label": "Tasks",
+          "target": "TASKS"
+        },
+        {
+          "label": "Activities",
+          "target": "ACTIVITIES"
+        },
+        {
+          "label": "Meetings",
+          "target": "MEETINGS"
+        }
+      ]
+    },
+    {
+      "id": "MARKETING",
+      "label": "Marketing",
+      "children": [
+        {
+          "label": "Campaigns",
+          "target": "CAMPAIGNS"
+        },
+        {
+          "label": "Campaign Members",
+          "target": "CAMPAIGN_MEMBERS"
+        }
+      ]
+    },
+    {
+      "id": "SALES_OPERATIONS",
+      "label": "Sales Operations",
+      "children": [
+        {
+          "label": "Products",
+          "target": "PRODUCTS"
+        },
+        {
+          "label": "Price Books",
+          "target": "PRICE_BOOKS"
+        },
+        {
+          "label": "Quotes",
+          "target": "QUOTES"
+        },
+        {
+          "label": "Sales Orders",
+          "target": "SALES_ORDERS"
+        },
+        {
+          "label": "Invoices",
+          "target": "INVOICES"
+        },
+        {
+          "label": "Payments",
+          "target": "PAYMENTS"
+        }
+      ]
+    },
+    {
+      "id": "ADMIN_REFERENCE",
+      "label": "Administration",
+      "children": [
+        {
+          "label": "Users",
+          "target": "USERS"
+        },
+        {
+          "label": "Teams",
+          "target": "TEAMS"
+        },
+        {
+          "label": "Territories",
+          "target": "TERRITORIES"
+        },
+        {
+          "label": "Pipeline Stages",
+          "target": "PIPELINE_STAGES"
+        },
+        {
+          "label": "Tags",
+          "target": "TAGS"
+        },
+        {
+          "label": "Attachments",
+          "target": "ATTACHMENTS"
+        }
+      ]
+    }
+  ],
+  "seedData": {
+    "USERS": [
+      {
+        "id": "USR-001",
+        "name": "Maya Chen",
+        "email": "maya.chen@example.test",
+        "role": "Sales Manager",
+        "active": true
+      },
+      {
+        "id": "USR-002",
+        "name": "Daniel Ortiz",
+        "email": "daniel.ortiz@example.test",
+        "role": "Account Executive",
+        "active": true
+      },
+      {
+        "id": "USR-003",
+        "name": "Priya Shah",
+        "email": "priya.shah@example.test",
+        "role": "Account Executive",
+        "active": true
+      },
+      {
+        "id": "USR-004",
+        "name": "Ethan Brooks",
+        "email": "ethan.brooks@example.test",
+        "role": "Sales Development",
+        "active": true
+      }
+    ],
+    "TEAMS": [
+      {
+        "id": "TEAM-01",
+        "name": "Enterprise West",
+        "managerId": "USR-001"
+      },
+      {
+        "id": "TEAM-02",
+        "name": "Commercial",
+        "managerId": "USR-001"
+      }
+    ],
+    "TERRITORIES": [
+      {
+        "id": "TER-CA",
+        "name": "California",
+        "region": "West"
+      },
+      {
+        "id": "TER-PNW",
+        "name": "Pacific Northwest",
+        "region": "West"
+      },
+      {
+        "id": "TER-SW",
+        "name": "Southwest",
+        "region": "West"
+      }
+    ],
+    "ACCOUNTS": [
+      {
+        "id": "ACC-001",
+        "name": "Northstar Manufacturing",
+        "industry": "Manufacturing",
+        "website": "https://northstar.example.test",
+        "phone": "310-555-0101",
+        "annualRevenue": 18500000,
+        "employeeCount": 240,
+        "ownerId": "USR-002",
+        "territoryId": "TER-CA",
+        "status": "Customer"
+      },
+      {
+        "id": "ACC-002",
+        "name": "Harbor Health Group",
+        "industry": "Healthcare",
+        "website": "https://harborhealth.example.test",
+        "phone": "213-555-0112",
+        "annualRevenue": 9200000,
+        "employeeCount": 115,
+        "ownerId": "USR-003",
+        "territoryId": "TER-CA",
+        "status": "Prospect"
+      },
+      {
+        "id": "ACC-003",
+        "name": "Summit Logistics",
+        "industry": "Logistics",
+        "website": "https://summitlogistics.example.test",
+        "phone": "503-555-0188",
+        "annualRevenue": 27300000,
+        "employeeCount": 410,
+        "ownerId": "USR-002",
+        "territoryId": "TER-PNW",
+        "status": "Customer"
+      },
+      {
+        "id": "ACC-004",
+        "name": "Blue Mesa Energy",
+        "industry": "Energy",
+        "website": "https://bluemesa.example.test",
+        "phone": "602-555-0140",
+        "annualRevenue": 12600000,
+        "employeeCount": 175,
+        "ownerId": "USR-003",
+        "territoryId": "TER-SW",
+        "status": "Prospect"
+      },
+      {
+        "id": "ACC-005",
+        "name": "Cedar & Finch Retail",
+        "industry": "Retail",
+        "website": "https://cedarfinch.example.test",
+        "phone": "415-555-0164",
+        "annualRevenue": 6800000,
+        "employeeCount": 88,
+        "ownerId": "USR-004",
+        "territoryId": "TER-CA",
+        "status": "Lead"
+      }
+    ],
+    "CONTACTS": [
+      {
+        "id": "CON-001",
+        "accountId": "ACC-001",
+        "firstName": "Lena",
+        "lastName": "Park",
+        "title": "VP Operations",
+        "email": "lena.park@example.test",
+        "phone": "310-555-1101",
+        "ownerId": "USR-002",
+        "status": "Active"
+      },
+      {
+        "id": "CON-002",
+        "accountId": "ACC-001",
+        "firstName": "Marcus",
+        "lastName": "Hill",
+        "title": "IT Director",
+        "email": "marcus.hill@example.test",
+        "phone": "310-555-1102",
+        "ownerId": "USR-002",
+        "status": "Active"
+      },
+      {
+        "id": "CON-003",
+        "accountId": "ACC-002",
+        "firstName": "Sofia",
+        "lastName": "Reed",
+        "title": "COO",
+        "email": "sofia.reed@example.test",
+        "phone": "213-555-1201",
+        "ownerId": "USR-003",
+        "status": "Active"
+      },
+      {
+        "id": "CON-004",
+        "accountId": "ACC-003",
+        "firstName": "Noah",
+        "lastName": "Kim",
+        "title": "Director of Logistics",
+        "email": "noah.kim@example.test",
+        "phone": "503-555-1301",
+        "ownerId": "USR-002",
+        "status": "Active"
+      },
+      {
+        "id": "CON-005",
+        "accountId": "ACC-004",
+        "firstName": "Ava",
+        "lastName": "Martinez",
+        "title": "Finance Director",
+        "email": "ava.martinez@example.test",
+        "phone": "602-555-1401",
+        "ownerId": "USR-003",
+        "status": "Active"
+      },
+      {
+        "id": "CON-006",
+        "accountId": "ACC-005",
+        "firstName": "Owen",
+        "lastName": "Price",
+        "title": "Founder",
+        "email": "owen.price@example.test",
+        "phone": "415-555-1501",
+        "ownerId": "USR-004",
+        "status": "Active"
+      }
+    ],
+    "LEADS": [
+      {
+        "id": "LEAD-001",
+        "company": "Pacific BioLabs",
+        "firstName": "Grace",
+        "lastName": "Lin",
+        "email": "grace.lin@example.test",
+        "source": "Web",
+        "status": "Qualified",
+        "rating": "Hot",
+        "ownerId": "USR-004"
+      },
+      {
+        "id": "LEAD-002",
+        "company": "Redwood Systems",
+        "firstName": "Jack",
+        "lastName": "Foster",
+        "email": "jack.foster@example.test",
+        "source": "Referral",
+        "status": "Working",
+        "rating": "Warm",
+        "ownerId": "USR-004"
+      },
+      {
+        "id": "LEAD-003",
+        "company": "Atlas Foods",
+        "firstName": "Nina",
+        "lastName": "Patel",
+        "email": "nina.patel@example.test",
+        "source": "Conference",
+        "status": "New",
+        "rating": "Warm",
+        "ownerId": "USR-003"
+      }
+    ],
+    "PIPELINE_STAGES": [
+      {
+        "id": "STG-01",
+        "name": "New Opportunity",
+        "sequence": 1,
+        "probability": 10,
+        "closed": false,
+        "won": false
+      },
+      {
+        "id": "STG-02",
+        "name": "Discovery",
+        "sequence": 2,
+        "probability": 25,
+        "closed": false,
+        "won": false
+      },
+      {
+        "id": "STG-03",
+        "name": "Proposal",
+        "sequence": 3,
+        "probability": 50,
+        "closed": false,
+        "won": false
+      },
+      {
+        "id": "STG-04",
+        "name": "Negotiation",
+        "sequence": 4,
+        "probability": 75,
+        "closed": false,
+        "won": false
+      },
+      {
+        "id": "STG-05",
+        "name": "Closed Won",
+        "sequence": 5,
+        "probability": 100,
+        "closed": true,
+        "won": true
+      },
+      {
+        "id": "STG-06",
+        "name": "Closed Lost",
+        "sequence": 6,
+        "probability": 0,
+        "closed": true,
+        "won": false
+      }
+    ],
+    "OPPORTUNITIES": [
+      {
+        "id": "OPP-001",
+        "name": "Northstar Plant Modernization",
+        "accountId": "ACC-001",
+        "contactId": "CON-001",
+        "stageId": "STG-04",
+        "amount": 240000,
+        "probability": 75,
+        "closeDate": "2026-10-15",
+        "ownerId": "USR-002",
+        "source": "Expansion"
+      },
+      {
+        "id": "OPP-002",
+        "name": "Harbor Health CRM Rollout",
+        "accountId": "ACC-002",
+        "contactId": "CON-003",
+        "stageId": "STG-03",
+        "amount": 128000,
+        "probability": 50,
+        "closeDate": "2026-11-20",
+        "ownerId": "USR-003",
+        "source": "Inbound"
+      },
+      {
+        "id": "OPP-003",
+        "name": "Summit Fleet Analytics",
+        "accountId": "ACC-003",
+        "contactId": "CON-004",
+        "stageId": "STG-05",
+        "amount": 315000,
+        "probability": 100,
+        "closeDate": "2026-09-12",
+        "ownerId": "USR-002",
+        "source": "Referral"
+      },
+      {
+        "id": "OPP-004",
+        "name": "Blue Mesa Finance Automation",
+        "accountId": "ACC-004",
+        "contactId": "CON-005",
+        "stageId": "STG-02",
+        "amount": 96000,
+        "probability": 25,
+        "closeDate": "2026-12-05",
+        "ownerId": "USR-003",
+        "source": "Conference"
+      },
+      {
+        "id": "OPP-005",
+        "name": "Cedar & Finch Commerce Upgrade",
+        "accountId": "ACC-005",
+        "contactId": "CON-006",
+        "stageId": "STG-01",
+        "amount": 54000,
+        "probability": 10,
+        "closeDate": "2027-01-18",
+        "ownerId": "USR-004",
+        "source": "Outbound"
+      }
+    ],
+    "ACTIVITIES": [
+      {
+        "id": "ACT-001",
+        "opportunityId": "OPP-001",
+        "contactId": "CON-001",
+        "type": "Call",
+        "subject": "Pricing review",
+        "activityDate": "2026-09-24T10:30:00",
+        "ownerId": "USR-002",
+        "outcome": "Follow-up scheduled"
+      },
+      {
+        "id": "ACT-002",
+        "opportunityId": "OPP-002",
+        "contactId": "CON-003",
+        "type": "Meeting",
+        "subject": "Workflow discovery",
+        "activityDate": "2026-09-25T14:00:00",
+        "ownerId": "USR-003",
+        "outcome": "Proposal requested"
+      },
+      {
+        "id": "ACT-003",
+        "opportunityId": "OPP-004",
+        "contactId": "CON-005",
+        "type": "Email",
+        "subject": "ROI worksheet",
+        "activityDate": "2026-09-26T09:15:00",
+        "ownerId": "USR-003",
+        "outcome": "Sent"
+      }
+    ],
+    "TASKS": [
+      {
+        "id": "TSK-001",
+        "subject": "Send revised proposal",
+        "opportunityId": "OPP-001",
+        "assignedToId": "USR-002",
+        "dueDate": "2026-09-29",
+        "priority": "High",
+        "status": "In Progress"
+      },
+      {
+        "id": "TSK-002",
+        "subject": "Prepare product demo",
+        "opportunityId": "OPP-002",
+        "assignedToId": "USR-003",
+        "dueDate": "2026-10-02",
+        "priority": "High",
+        "status": "Open"
+      },
+      {
+        "id": "TSK-003",
+        "subject": "Qualify Cedar & Finch",
+        "opportunityId": "OPP-005",
+        "assignedToId": "USR-004",
+        "dueDate": "2026-09-30",
+        "priority": "Medium",
+        "status": "Open"
+      }
+    ],
+    "MEETINGS": [
+      {
+        "id": "MTG-001",
+        "opportunityId": "OPP-002",
+        "title": "Harbor Health solution review",
+        "startAt": "2026-10-01T13:00:00",
+        "endAt": "2026-10-01T14:00:00",
+        "ownerId": "USR-003",
+        "location": "Video conference"
+      },
+      {
+        "id": "MTG-002",
+        "opportunityId": "OPP-001",
+        "title": "Northstar commercial review",
+        "startAt": "2026-10-03T11:00:00",
+        "endAt": "2026-10-03T12:00:00",
+        "ownerId": "USR-002",
+        "location": "Los Angeles"
+      }
+    ],
+    "NOTES": [
+      {
+        "id": "NOTE-001",
+        "accountId": "ACC-001",
+        "contactId": "CON-001",
+        "body": "Customer prefers phased rollout beginning with operations.",
+        "createdById": "USR-002",
+        "createdAt": "2026-09-23T16:20:00"
+      },
+      {
+        "id": "NOTE-002",
+        "accountId": "ACC-002",
+        "contactId": "CON-003",
+        "body": "Security review required before final procurement approval.",
+        "createdById": "USR-003",
+        "createdAt": "2026-09-25T15:10:00"
+      }
+    ],
+    "CAMPAIGNS": [
+      {
+        "id": "CAM-001",
+        "name": "Fall Enterprise Webinar",
+        "type": "Webinar",
+        "status": "Active",
+        "startDate": "2026-09-01",
+        "endDate": "2026-10-15",
+        "budget": 18000
+      },
+      {
+        "id": "CAM-002",
+        "name": "West Coast Manufacturing Outreach",
+        "type": "Outbound",
+        "status": "Planned",
+        "startDate": "2026-10-01",
+        "endDate": "2026-12-15",
+        "budget": 25000
+      }
+    ],
+    "CAMPAIGN_MEMBERS": [
+      {
+        "id": "CM-001",
+        "campaignId": "CAM-001",
+        "contactId": "CON-003",
+        "leadId": null,
+        "status": "Registered"
+      },
+      {
+        "id": "CM-002",
+        "campaignId": "CAM-001",
+        "contactId": null,
+        "leadId": "LEAD-001",
+        "status": "Attended"
+      },
+      {
+        "id": "CM-003",
+        "campaignId": "CAM-002",
+        "contactId": "CON-001",
+        "leadId": null,
+        "status": "Targeted"
+      }
+    ],
+    "PRODUCTS": [
+      {
+        "id": "PRD-001",
+        "sku": "CRM-ENT",
+        "name": "Enterprise CRM Platform",
+        "category": "Software",
+        "unitPrice": 48000,
+        "active": true
+      },
+      {
+        "id": "PRD-002",
+        "sku": "INT-PACK",
+        "name": "Integration Package",
+        "category": "Services",
+        "unitPrice": 18000,
+        "active": true
+      },
+      {
+        "id": "PRD-003",
+        "sku": "ANL-ADV",
+        "name": "Advanced Analytics",
+        "category": "Software",
+        "unitPrice": 26000,
+        "active": true
+      },
+      {
+        "id": "PRD-004",
+        "sku": "IMP-100",
+        "name": "Implementation Services",
+        "category": "Services",
+        "unitPrice": 32000,
+        "active": true
+      }
+    ],
+    "PRICE_BOOKS": [
+      {
+        "id": "PB-001",
+        "name": "Standard US",
+        "currency": "USD",
+        "active": true
+      },
+      {
+        "id": "PB-002",
+        "name": "Enterprise 2026",
+        "currency": "USD",
+        "active": true
+      }
+    ],
+    "QUOTES": [
+      {
+        "id": "QTE-001",
+        "quoteNumber": "Q-2026-1042",
+        "opportunityId": "OPP-001",
+        "accountId": "ACC-001",
+        "status": "Presented",
+        "validUntil": "2026-10-10",
+        "subtotal": 226000,
+        "discount": 12000,
+        "tax": 20565,
+        "total": 234565
+      },
+      {
+        "id": "QTE-002",
+        "quoteNumber": "Q-2026-1051",
+        "opportunityId": "OPP-002",
+        "accountId": "ACC-002",
+        "status": "Draft",
+        "validUntil": "2026-10-31",
+        "subtotal": 128000,
+        "discount": 0,
+        "tax": 11680,
+        "total": 139680
+      }
+    ],
+    "QUOTE_LINES": [
+      {
+        "id": "QL-001",
+        "quoteId": "QTE-001",
+        "productId": "PRD-001",
+        "quantity": 3,
+        "unitPrice": 48000,
+        "discountPercent": 5,
+        "lineTotal": 136800
+      },
+      {
+        "id": "QL-002",
+        "quoteId": "QTE-001",
+        "productId": "PRD-004",
+        "quantity": 2,
+        "unitPrice": 32000,
+        "discountPercent": 0,
+        "lineTotal": 64000
+      },
+      {
+        "id": "QL-003",
+        "quoteId": "QTE-001",
+        "productId": "PRD-002",
+        "quantity": 1,
+        "unitPrice": 18000,
+        "discountPercent": 0,
+        "lineTotal": 18000
+      },
+      {
+        "id": "QL-004",
+        "quoteId": "QTE-002",
+        "productId": "PRD-001",
+        "quantity": 2,
+        "unitPrice": 48000,
+        "discountPercent": 0,
+        "lineTotal": 96000
+      },
+      {
+        "id": "QL-005",
+        "quoteId": "QTE-002",
+        "productId": "PRD-004",
+        "quantity": 1,
+        "unitPrice": 32000,
+        "discountPercent": 0,
+        "lineTotal": 32000
+      }
+    ],
+    "SALES_ORDERS": [
+      {
+        "id": "ORD-001",
+        "orderNumber": "SO-2026-501",
+        "accountId": "ACC-003",
+        "opportunityId": "OPP-003",
+        "orderDate": "2026-09-13",
+        "status": "Fulfillment",
+        "subtotal": 315000,
+        "tax": 28743.75,
+        "total": 343743.75
+      }
+    ],
+    "ORDER_LINES": [
+      {
+        "id": "OL-001",
+        "orderId": "ORD-001",
+        "productId": "PRD-001",
+        "quantity": 4,
+        "unitPrice": 48000,
+        "lineTotal": 192000
+      },
+      {
+        "id": "OL-002",
+        "orderId": "ORD-001",
+        "productId": "PRD-003",
+        "quantity": 3,
+        "unitPrice": 26000,
+        "lineTotal": 78000
+      },
+      {
+        "id": "OL-003",
+        "orderId": "ORD-001",
+        "productId": "PRD-004",
+        "quantity": 1,
+        "unitPrice": 32000,
+        "lineTotal": 32000
+      }
+    ],
+    "INVOICES": [
+      {
+        "id": "INV-001",
+        "invoiceNumber": "INV-2026-882",
+        "accountId": "ACC-003",
+        "orderId": "ORD-001",
+        "invoiceDate": "2026-09-15",
+        "dueDate": "2026-10-15",
+        "status": "Partially Paid",
+        "subtotal": 315000,
+        "tax": 28743.75,
+        "total": 343743.75,
+        "balance": 193743.75
+      }
+    ],
+    "INVOICE_LINES": [
+      {
+        "id": "IL-001",
+        "invoiceId": "INV-001",
+        "productId": "PRD-001",
+        "quantity": 4,
+        "unitPrice": 48000,
+        "lineTotal": 192000
+      },
+      {
+        "id": "IL-002",
+        "invoiceId": "INV-001",
+        "productId": "PRD-003",
+        "quantity": 3,
+        "unitPrice": 26000,
+        "lineTotal": 78000
+      },
+      {
+        "id": "IL-003",
+        "invoiceId": "INV-001",
+        "productId": "PRD-004",
+        "quantity": 1,
+        "unitPrice": 32000,
+        "lineTotal": 32000
+      }
+    ],
+    "PAYMENTS": [
+      {
+        "id": "PAY-001",
+        "invoiceId": "INV-001",
+        "paymentDate": "2026-09-22",
+        "amount": 150000,
+        "method": "ACH",
+        "reference": "ACH-748201",
+        "status": "Settled"
+      }
+    ],
+    "TAGS": [
+      {
+        "id": "TAG-001",
+        "name": "Strategic",
+        "color": "Blue"
+      },
+      {
+        "id": "TAG-002",
+        "name": "Renewal",
+        "color": "Green"
+      },
+      {
+        "id": "TAG-003",
+        "name": "At Risk",
+        "color": "Red"
+      }
+    ],
+    "ATTACHMENTS": [
+      {
+        "id": "ATT-001",
+        "entityType": "OPPORTUNITIES",
+        "entityId": "OPP-001",
+        "fileName": "northstar-proposal-v3.pdf",
+        "contentType": "application/pdf",
+        "uploadedById": "USR-002",
+        "uploadedAt": "2026-09-24T12:00:00"
+      },
+      {
+        "id": "ATT-002",
+        "entityType": "ACCOUNTS",
+        "entityId": "ACC-002",
+        "fileName": "security-requirements.docx",
+        "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "uploadedById": "USR-003",
+        "uploadedAt": "2026-09-25T16:00:00"
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "bootstrap",
+  "name": "Bootstrap",
+  "version": "5.3.6",
+  "css": [
+    "bootstrap.min.css"
+  ],
+  "js": [
+    "bootstrap.bundle.min.js"
+  ]
+}

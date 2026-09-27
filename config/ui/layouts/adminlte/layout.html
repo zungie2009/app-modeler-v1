@@ -1,0 +1,201 @@
+<div id="app" class="adminlte-app">
+    <div class="page">
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <div class="sidebar-shell">
+                <div class="brand-link">
+                    <button class="brand-button" @click="showDashboard">
+                        {{ domain.name || 'App Modeler' }}
+                    </button>
+                </div>
+
+                <div class="nav nav-pills nav-sidebar flex-column">
+                    <button
+                        v-for="node in menu"
+                        :key="node.id || node.label"
+                        class="nav-link adminlte-nav-button"
+                        :class="{ active: activeMenuGroup === node }"
+                        @click="openMenu(node)">
+                        <span class="nav-link-title">
+                            {{ node.label || node.id }}
+                        </span>
+                    </button>
+                </div>
+
+                <div class="sidebar-footer">
+                    <button class="nav-link adminlte-nav-button" @click="showUml">
+                        <span class="nav-link-title">UML Design</span>
+                    </button>
+                    <button class="nav-link adminlte-nav-button" @click="view = 'ADMIN'">
+                        <span class="nav-link-title">Administration</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content-wrapper">
+            <div class="content">
+                <div class="container-fluid">
+
+                    <section v-if="view === 'HOME'">
+                        <div class="content-header">
+                            <div>
+                                <h2 class="content-title">{{ domain.name || 'Application' }}</h2>
+                                <div class="text-muted">
+                                    Select a module from the navigation.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row module-grid">
+                            <div
+                                v-for="node in menu"
+                                :key="node.id || node.label"
+                                class="col-md-6 module-col">
+                                <button class="card adminlte-module-card" @click="openMenu(node)">
+                                    <div class="card-body">
+                                        <h3 class="card-title">
+                                            {{ node.label || node.id }}
+                                        </h3>
+                                        <div class="text-muted">
+                                            {{ (node.children || []).length }} available items
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        Open module
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section v-else-if="view === 'MENU_GROUP' && activeMenuGroup">
+                        <div class="content-header">
+                            <div>
+                                <h2 class="content-title">
+                                    {{ activeMenuGroup.label || activeMenuGroup.id }}
+                                </h2>
+                                <div class="text-muted">
+                                    Select an area to continue.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row module-grid">
+                            <div
+                                v-for="child in activeMenuGroup.children || []"
+                                :key="child.id || child.label"
+                                class="col-md-6 module-col">
+                                <button class="card adminlte-module-card" @click="openMenu(child)">
+                                    <div class="card-body">
+                                        <h3 class="card-title">
+                                            {{ child.label || child.id }}
+                                        </h3>
+                                        <div class="text-muted">
+                                            {{ child.target ? 'View records' : ((child.children || []).length + ' items') }}
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        Open
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section v-else-if="view === 'ENTITY' && activeEntity">
+                        <div class="content-header">
+                            <div>
+                                <h2 class="content-title">
+                                    {{ activeEntity.displayName || activeEntity.id }}
+                                </h2>
+                                <div class="text-muted">
+                                    {{ records.length }} records
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th v-for="field in visibleFields" :key="field.name">
+                                                {{ field.label || field.name }}
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-if="recordsLoading">
+                                            <td :colspan="Math.max(1, visibleFields.length)">
+                                                Loading records...
+                                            </td>
+                                        </tr>
+                                        <tr v-else-if="records.length === 0">
+                                            <td :colspan="Math.max(1, visibleFields.length)">
+                                                No records available.
+                                            </td>
+                                        </tr>
+                                        <tr v-for="(record, rowIndex) in records" :key="record.id || rowIndex">
+                                            <td v-for="field in visibleFields" :key="field.name">
+                                                {{ displayValue(record, field) }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section v-else-if="view === 'UML'">
+                        <div class="content-header">
+                            <h2 class="content-title">UML Design</h2>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <svg id="uml" class="uml-canvas"></svg>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section v-else-if="view === 'ADMIN'">
+                        <div class="content-header">
+                            <div>
+                                <h2 class="content-title">Administration</h2>
+                                <div class="text-muted">
+                                    Select the application domain and UI layout.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Domain Template</label>
+                                    <select class="form-control" v-model="selectedDomain">
+                                        <option v-for="item in domains" :key="item.file" :value="item.file">
+                                            {{ item.label }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Layout</label>
+                                    <select class="form-control" v-model="settings.contentLayout">
+                                        <option v-for="item in layouts" :key="item" :value="item">
+                                            {{ item }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <button class="btn btn-primary" @click="applyAdmin">
+                                    Apply &amp; Interpret
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

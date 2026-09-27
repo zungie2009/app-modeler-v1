@@ -1,0 +1,9 @@
+Gentelella v4.2.0 source supplied by the user.
+Original project: ColorlibHQ/gentelella
+License: MIT (see LICENSE.txt)
+
+Important:
+This package preserves the actual Gentelella v4 source SCSS/JS under source/.
+gentelella-appmodeler.css/js are browser-ready App Modeler adapter artifacts
+derived from that source. They are NOT the official Vite-generated dist bundle.
+This avoids introducing Vite/Node into the App Modeler runtime.

@@ -1,0 +1,11 @@
+{
+  "id": "gentelella",
+  "name": "Gentelella v4.2 App Modeler Adapter",
+  "version": "4.2.0",
+  "css": [
+    "gentelella-appmodeler.css"
+  ],
+  "js": [
+    "gentelella-appmodeler.js"
+  ]
+}

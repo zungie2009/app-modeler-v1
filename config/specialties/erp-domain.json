@@ -1,0 +1,4468 @@
+{
+  "neuron": {
+    "id": "MEDIUM_MANUFACTURING_SPECIALTY_NEURON",
+    "extends": "BASE_SPECIALTY_NEURON",
+    "kind": "SPECIALTY_NEURON",
+    "ownership": "BUSINESS_SELF",
+    "offers": [
+      "SPECIALTY:MEDIUM_MANUFACTURING",
+      "SPECIALTY_APPLICATION"
+    ]
+  },
+  "domainId": "ERP_MEDIUM_MANUFACTURING",
+  "domainName": "ERP \u2014 Medium Manufacturing Enterprise",
+  "navigationModules": [
+    [
+      "DASHBOARD",
+      "Dashboard"
+    ],
+    [
+      "CUSTOMERS",
+      "Customers"
+    ],
+    [
+      "SUPPLIERS",
+      "Suppliers"
+    ],
+    [
+      "ITEMS",
+      "Items"
+    ],
+    [
+      "WAREHOUSES",
+      "Warehouses"
+    ],
+    [
+      "INVENTORY",
+      "Inventory"
+    ],
+    [
+      "SALES_ORDERS",
+      "Sales Orders"
+    ],
+    [
+      "SALES_ORDER_LINES",
+      "Sales Order Lines"
+    ],
+    [
+      "PURCHASE_ORDERS",
+      "Purchase Orders"
+    ],
+    [
+      "PURCHASE_ORDER_LINES",
+      "Purchase Order Lines"
+    ],
+    [
+      "BOMS",
+      "Bills of Materials"
+    ],
+    [
+      "BOM_LINES",
+      "Bom Lines"
+    ],
+    [
+      "PRODUCTION_PLANS",
+      "Production Plans"
+    ],
+    [
+      "WORK_ORDERS",
+      "Work Orders"
+    ],
+    [
+      "STOCK_ENTRIES",
+      "Stock Entries"
+    ],
+    [
+      "SALES_INVOICES",
+      "Sales Invoices"
+    ],
+    [
+      "PURCHASE_INVOICES",
+      "Purchase Invoices"
+    ],
+    [
+      "PAYMENTS",
+      "Payments"
+    ],
+    [
+      "ADMINISTRATION",
+      "Administration"
+    ]
+  ],
+  "mainEntity": {
+    "name": "SALES_ORDERS",
+    "fields": [
+      "orderNumber",
+      "customerId",
+      "orderDate",
+      "deliveryDate",
+      "status",
+      "subtotal",
+      "taxRate",
+      "taxAmount",
+      "total"
+    ]
+  },
+  "entityNeurons": [
+    {
+      "id": "PARTY",
+      "extends": "CRUD_ENTITY_NEURON",
+      "label": "Party",
+      "abstract": false,
+      "purpose": "A person or organization that participates in an enterprise relationship.",
+      "fields": [
+        "partyCode",
+        "name",
+        "partyType",
+        "status",
+        "effectiveFrom",
+        "effectiveTo"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "PARTY"
+    },
+    {
+      "id": "PERSON",
+      "extends": "PARTY",
+      "label": "Person",
+      "abstract": false,
+      "purpose": "An individual person who participates in an enterprise relationship.",
+      "fields": [
+        "personNumber",
+        "firstName",
+        "lastName",
+        "preferredName",
+        "email",
+        "phone",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "PERSON"
+    },
+    {
+      "id": "ORGANIZATION",
+      "extends": "PARTY",
+      "label": "Organization",
+      "abstract": false,
+      "purpose": "An organization that participates in an enterprise relationship.",
+      "fields": [
+        "organizationNumber",
+        "legalName",
+        "tradeName",
+        "taxId",
+        "countryCode",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "ORGANIZATION"
+    },
+    {
+      "id": "PRODUCT",
+      "extends": "CRUD_ENTITY_NEURON",
+      "label": "Product",
+      "abstract": false,
+      "purpose": "A product, material, component, assembly, or other enterprise item of value.",
+      "fields": [
+        "productCode",
+        "name",
+        "description",
+        "productType",
+        "baseUnit",
+        "lifecycleStatus"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "PRODUCT"
+    },
+    {
+      "id": "PLACE",
+      "extends": "CRUD_ENTITY_NEURON",
+      "label": "Place",
+      "abstract": false,
+      "purpose": "A physical or logical enterprise location such as a plant, warehouse, or distribution center.",
+      "fields": [
+        "placeCode",
+        "name",
+        "description",
+        "placeType",
+        "status",
+        "timezone",
+        "countryCode",
+        "regionCode"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "PLACE"
+    },
+    {
+      "id": "BUSINESS_DOCUMENT",
+      "extends": "CRUD_ENTITY_NEURON",
+      "label": "Business Document",
+      "abstract": false,
+      "purpose": "A business transaction or operational document that records enterprise activity.",
+      "fields": [
+        "documentNumber",
+        "documentType",
+        "documentDate",
+        "status",
+        "createdBy",
+        "createdAt",
+        "lastUpdatedAt"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "BUSINESS_DOCUMENT"
+    },
+    {
+      "id": "CUSTOMERS",
+      "extends": "ORGANIZATION_CUSTOMER",
+      "label": "Customers",
+      "fields": [
+        "customerNumber",
+        "name",
+        "email",
+        "phone",
+        "billingAddress",
+        "shippingAddress",
+        "currency",
+        "paymentTerms",
+        "creditLimit",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "CUSTOMERS",
+      "abstract": false
+    },
+    {
+      "id": "SUPPLIERS",
+      "extends": "SUPPLIER_ORGANIZATION",
+      "label": "Suppliers",
+      "fields": [
+        "supplierNumber",
+        "name",
+        "email",
+        "phone",
+        "address",
+        "currency",
+        "paymentTerms",
+        "leadTimeDays",
+        "qualityRating",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "SUPPLIERS",
+      "abstract": false
+    },
+    {
+      "id": "ITEMS",
+      "extends": "PART",
+      "label": "Items",
+      "fields": [
+        "itemCode",
+        "name",
+        "description",
+        "itemType",
+        "baseUnit",
+        "standardCost",
+        "listPrice",
+        "makeBuy",
+        "revision",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "ITEMS",
+      "abstract": false
+    },
+    {
+      "id": "WAREHOUSES",
+      "extends": "STORAGE_AREA",
+      "label": "Warehouses",
+      "fields": [
+        "warehouseCode",
+        "name",
+        "warehouseType",
+        "plantCode",
+        "address",
+        "capacity",
+        "capacityUnit",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "WAREHOUSES",
+      "abstract": false
+    },
+    {
+      "id": "INVENTORY",
+      "extends": "CRUD_ENTITY_NEURON",
+      "label": "Inventory",
+      "fields": [
+        "itemId",
+        "warehouseId",
+        "storageLocation",
+        "lotNumber",
+        "serialNumber",
+        "quantityOnHand",
+        "quantityReserved",
+        "quantityAvailable",
+        "unitOfMeasure",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "INVENTORY",
+      "abstract": false
+    },
+    {
+      "id": "SALES_ORDERS",
+      "extends": "SALES_DOCUMENT",
+      "label": "Sales Orders",
+      "fields": [
+        "orderNumber",
+        "customerId",
+        "orderDate",
+        "requestedDeliveryDate",
+        "currency",
+        "subtotal",
+        "taxAmount",
+        "totalAmount",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "SALES_ORDERS",
+      "abstract": false
+    },
+    {
+      "id": "SALES_ORDER_LINES",
+      "extends": "SALES_ORDERS",
+      "label": "Sales Order Lines",
+      "fields": [
+        "salesOrderId",
+        "lineNumber",
+        "itemId",
+        "description",
+        "quantity",
+        "unitOfMeasure",
+        "unitPrice",
+        "lineAmount",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "SALES_ORDER_LINES",
+      "abstract": false
+    },
+    {
+      "id": "PURCHASE_ORDERS",
+      "extends": "PROCUREMENT_DOCUMENT",
+      "label": "Purchase Orders",
+      "fields": [
+        "purchaseOrderNumber",
+        "supplierId",
+        "orderDate",
+        "expectedDeliveryDate",
+        "currency",
+        "subtotal",
+        "taxAmount",
+        "totalAmount",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "PURCHASE_ORDERS",
+      "abstract": false
+    },
+    {
+      "id": "PURCHASE_ORDER_LINES",
+      "extends": "PURCHASE_ORDERS",
+      "label": "Purchase Order Lines",
+      "fields": [
+        "purchaseOrderId",
+        "lineNumber",
+        "itemId",
+        "description",
+        "quantity",
+        "unitOfMeasure",
+        "unitCost",
+        "lineAmount",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "PURCHASE_ORDER_LINES",
+      "abstract": false
+    },
+    {
+      "id": "BOMS",
+      "extends": "CRUD_ENTITY_NEURON",
+      "label": "Bills of Materials",
+      "fields": [
+        "bomNumber",
+        "parentItemId",
+        "revision",
+        "effectiveFrom",
+        "effectiveTo",
+        "baseQuantity",
+        "unitOfMeasure",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "BOMS",
+      "abstract": false
+    },
+    {
+      "id": "BOM_LINES",
+      "extends": "CRUD_ENTITY_NEURON",
+      "label": "Bom Lines",
+      "fields": [
+        "bomId",
+        "lineNumber",
+        "componentItemId",
+        "quantityPer",
+        "unitOfMeasure",
+        "scrapPercent",
+        "operationSequence",
+        "effectiveFrom",
+        "effectiveTo",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "BOM_LINES",
+      "abstract": false
+    },
+    {
+      "id": "PRODUCTION_PLANS",
+      "extends": "MANUFACTURING_DOCUMENT",
+      "label": "Production Plans",
+      "fields": [
+        "planNumber",
+        "plantCode",
+        "planningHorizonStart",
+        "planningHorizonEnd",
+        "productId",
+        "plannedQuantity",
+        "unitOfMeasure",
+        "plannerId",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "PRODUCTION_PLANS",
+      "abstract": false
+    },
+    {
+      "id": "WORK_ORDERS",
+      "extends": "PRODUCTION_ORDER",
+      "label": "Work Orders",
+      "fields": [
+        "workOrderNumber",
+        "productionOrderId",
+        "itemId",
+        "plantCode",
+        "workCenterCode",
+        "plannedStart",
+        "plannedEnd",
+        "plannedQuantity",
+        "completedQuantity",
+        "status",
+        "plannedOperatingCost",
+        "actualOperatingCost",
+        "additionalOperatingCost",
+        "totalOperatingCost"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "WORK_ORDERS",
+      "abstract": false
+    },
+    {
+      "id": "STOCK_ENTRIES",
+      "extends": "INVENTORY_DOCUMENT",
+      "label": "Stock Entries",
+      "fields": [
+        "entryNumber",
+        "itemId",
+        "warehouseId",
+        "storageLocation",
+        "movementType",
+        "quantity",
+        "unitOfMeasure",
+        "referenceDocument",
+        "postingDate",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "STOCK_ENTRIES",
+      "abstract": false
+    },
+    {
+      "id": "SALES_INVOICES",
+      "extends": "FINANCE_DOCUMENT",
+      "label": "Sales Invoices",
+      "fields": [
+        "invoiceNumber",
+        "customerId",
+        "salesOrderId",
+        "invoiceDate",
+        "dueDate",
+        "currency",
+        "netAmount",
+        "taxAmount",
+        "totalAmount",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "SALES_INVOICES",
+      "abstract": false
+    },
+    {
+      "id": "PURCHASE_INVOICES",
+      "extends": "FINANCE_DOCUMENT",
+      "label": "Purchase Invoices",
+      "fields": [
+        "invoiceNumber",
+        "supplierId",
+        "purchaseOrderId",
+        "invoiceDate",
+        "dueDate",
+        "currency",
+        "netAmount",
+        "taxAmount",
+        "totalAmount",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "PURCHASE_INVOICES",
+      "abstract": false
+    },
+    {
+      "id": "PAYMENTS",
+      "extends": "FINANCE_DOCUMENT",
+      "label": "Payments",
+      "fields": [
+        "paymentNumber",
+        "partyId",
+        "paymentDate",
+        "paymentMethod",
+        "currency",
+        "amount",
+        "referenceDocument",
+        "bankReference",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "PAYMENTS",
+      "abstract": false
+    },
+    {
+      "id": "EMPLOYEE",
+      "extends": "PERSON",
+      "label": "Employee",
+      "abstract": false,
+      "purpose": "A person employed by the enterprise.",
+      "fields": [
+        "employeeNumber",
+        "firstName",
+        "lastName",
+        "email",
+        "jobTitle",
+        "department",
+        "managerId",
+        "hireDate",
+        "employmentStatus"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "EMPLOYEE"
+    },
+    {
+      "id": "ENGINEER",
+      "extends": "EMPLOYEE",
+      "label": "Engineer",
+      "abstract": false,
+      "purpose": "An employee responsible for engineering work.",
+      "fields": [
+        "engineerNumber",
+        "employeeId",
+        "engineeringDiscipline",
+        "grade",
+        "certification",
+        "homePlantCode",
+        "costCenterId",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "ENGINEER"
+    },
+    {
+      "id": "ORGANIZATION_CUSTOMER",
+      "extends": "ORGANIZATION",
+      "label": "Customer Organization",
+      "abstract": false,
+      "purpose": "An organization acting in a customer role.",
+      "fields": [
+        "customerGroupCode",
+        "organizationNumber",
+        "salesOrganization",
+        "distributionChannel",
+        "currency",
+        "paymentTerms",
+        "creditLimit",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "ORGANIZATION_CUSTOMER"
+    },
+    {
+      "id": "DEALER",
+      "extends": "ORGANIZATION_CUSTOMER",
+      "label": "Dealer",
+      "abstract": false,
+      "purpose": "A customer organization that distributes or sells vehicles.",
+      "fields": [
+        "dealerCode",
+        "dealerName",
+        "regionCode",
+        "marketCode",
+        "salesTerritory",
+        "franchiseStatus",
+        "primaryContactId",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "DEALER"
+    },
+    {
+      "id": "SUPPLIER_ORGANIZATION",
+      "extends": "ORGANIZATION",
+      "label": "Supplier Organization",
+      "abstract": false,
+      "purpose": "An organization acting in a supplier role.",
+      "fields": [
+        "supplierGroupCode",
+        "organizationNumber",
+        "purchasingOrganization",
+        "supplierCategory",
+        "currency",
+        "paymentTerms",
+        "qualityRating",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "SUPPLIER_ORGANIZATION"
+    },
+    {
+      "id": "TIER_1_SUPPLIER",
+      "extends": "SUPPLIER_ORGANIZATION",
+      "label": "Tier 1 Supplier",
+      "abstract": false,
+      "purpose": "A supplier providing assemblies, systems, or components directly to the manufacturer.",
+      "fields": [
+        "tier1SupplierCode",
+        "supplierOrganizationId",
+        "commodityGroup",
+        "primaryPlantCode",
+        "leadTimeDays",
+        "capacityRating",
+        "qualityRating",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "TIER_1_SUPPLIER"
+    },
+    {
+      "id": "FINISHED_PRODUCT",
+      "extends": "PRODUCT",
+      "label": "Finished Product",
+      "abstract": false,
+      "purpose": "A completed product available for sale or distribution.",
+      "fields": [
+        "finishedProductCode",
+        "name",
+        "modelYear",
+        "baseUnit",
+        "standardCost",
+        "listPrice",
+        "lifecycleStatus",
+        "effectiveFrom",
+        "effectiveTo"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "FINISHED_PRODUCT"
+    },
+    {
+      "id": "VEHICLE",
+      "extends": "FINISHED_PRODUCT",
+      "label": "Vehicle",
+      "abstract": false,
+      "purpose": "A finished automotive vehicle.",
+      "fields": [
+        "vinPattern",
+        "vehicleCode",
+        "modelName",
+        "modelYear",
+        "platformCode",
+        "bodyStyle",
+        "powertrainType",
+        "marketCode",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "VEHICLE"
+    },
+    {
+      "id": "TRUCK",
+      "extends": "VEHICLE",
+      "label": "Truck",
+      "abstract": false,
+      "purpose": "A vehicle classified as a truck.",
+      "fields": [
+        "truckModelCode",
+        "vehicleId",
+        "cabConfiguration",
+        "bedConfiguration",
+        "grossVehicleWeightRating",
+        "payloadCapacity",
+        "towingCapacity",
+        "drivetrain",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "TRUCK"
+    },
+    {
+      "id": "ASSEMBLY",
+      "extends": "PRODUCT",
+      "label": "Assembly",
+      "abstract": false,
+      "purpose": "A product composed of components or subassemblies.",
+      "fields": [
+        "assemblyCode",
+        "name",
+        "revision",
+        "baseUnit",
+        "makeBuy",
+        "standardCost",
+        "effectiveFrom",
+        "effectiveTo",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "ASSEMBLY"
+    },
+    {
+      "id": "POWERTRAIN",
+      "extends": "ASSEMBLY",
+      "label": "Powertrain",
+      "abstract": false,
+      "purpose": "An assembly that produces and transmits vehicle propulsion.",
+      "fields": [
+        "powertrainCode",
+        "assemblyId",
+        "powertrainType",
+        "fuelType",
+        "ratedPower",
+        "ratedTorque",
+        "emissionsFamily",
+        "revision",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "POWERTRAIN"
+    },
+    {
+      "id": "ENGINE",
+      "extends": "POWERTRAIN",
+      "label": "Engine",
+      "abstract": false,
+      "purpose": "A powertrain assembly that generates motive power.",
+      "fields": [
+        "engineCode",
+        "powertrainId",
+        "engineFamily",
+        "displacement",
+        "cylinderCount",
+        "fuelType",
+        "ratedPower",
+        "ratedTorque",
+        "emissionsStandard",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "ENGINE"
+    },
+    {
+      "id": "COMPONENT",
+      "extends": "PRODUCT",
+      "label": "Component",
+      "abstract": false,
+      "purpose": "A constituent component used in a product or assembly.",
+      "fields": [
+        "componentCode",
+        "name",
+        "revision",
+        "baseUnit",
+        "makeBuy",
+        "standardCost",
+        "commodityCode",
+        "criticality",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "COMPONENT"
+    },
+    {
+      "id": "PART",
+      "extends": "COMPONENT",
+      "label": "Part",
+      "abstract": false,
+      "purpose": "An individual manufactured or purchased component.",
+      "fields": [
+        "partNumber",
+        "componentId",
+        "description",
+        "revision",
+        "baseUnit",
+        "makeBuy",
+        "standardCost",
+        "supplierPartNumber",
+        "weight",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "PART"
+    },
+    {
+      "id": "MATERIAL",
+      "extends": "PRODUCT",
+      "label": "Material",
+      "abstract": false,
+      "purpose": "A material consumed or transformed during manufacturing.",
+      "fields": [
+        "materialCode",
+        "name",
+        "materialClass",
+        "grade",
+        "baseUnit",
+        "standardCost",
+        "hazardClass",
+        "shelfLifeDays",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "MATERIAL"
+    },
+    {
+      "id": "RAW_MATERIAL",
+      "extends": "MATERIAL",
+      "label": "Raw Material",
+      "abstract": false,
+      "purpose": "A material used as an input to manufacturing.",
+      "fields": [
+        "rawMaterialCode",
+        "materialId",
+        "specification",
+        "grade",
+        "form",
+        "dimension",
+        "preferredSupplierId",
+        "leadTimeDays",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "RAW_MATERIAL"
+    },
+    {
+      "id": "FACILITY",
+      "extends": "PLACE",
+      "label": "Facility",
+      "abstract": false,
+      "purpose": "An enterprise physical facility.",
+      "fields": [
+        "facilityCode",
+        "facilityName",
+        "facilityType",
+        "addressLine1",
+        "city",
+        "stateProvince",
+        "postalCode",
+        "countryCode",
+        "timezone",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "FACILITY"
+    },
+    {
+      "id": "MANUFACTURING_PLANT",
+      "extends": "FACILITY",
+      "label": "Manufacturing Plant",
+      "abstract": false,
+      "purpose": "A facility where manufacturing operations are performed.",
+      "fields": [
+        "plantCode",
+        "plantName",
+        "plantType",
+        "manufacturingCalendarId",
+        "companyCode",
+        "costCenterId",
+        "managerId",
+        "operatingStatus"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "MANUFACTURING_PLANT"
+    },
+    {
+      "id": "PRODUCTION_AREA",
+      "extends": "MANUFACTURING_PLANT",
+      "label": "Production Area",
+      "abstract": false,
+      "purpose": "An area within a manufacturing plant.",
+      "fields": [
+        "areaCode",
+        "areaName",
+        "areaType",
+        "supervisorId",
+        "shiftPatternId",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "PRODUCTION_AREA"
+    },
+    {
+      "id": "PRODUCTION_LINE",
+      "extends": "PRODUCTION_AREA",
+      "label": "Production Line",
+      "abstract": false,
+      "purpose": "An ordered manufacturing line within a production area.",
+      "fields": [
+        "lineCode",
+        "lineName",
+        "lineType",
+        "calendarId",
+        "shiftPatternId",
+        "targetRatePerHour",
+        "ratedCapacityPerHour",
+        "efficiencyPercent",
+        "utilizationPercent",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "PRODUCTION_LINE"
+    },
+    {
+      "id": "WORK_CENTER",
+      "extends": "PRODUCTION_LINE",
+      "label": "Work Center",
+      "abstract": false,
+      "purpose": "A manufacturing resource location where operations are performed.",
+      "fields": [
+        "workCenterCode",
+        "workCenterName",
+        "workCenterCategory",
+        "description",
+        "responsiblePersonId",
+        "locationCode",
+        "standardValueKey",
+        "capacityCategory",
+        "calendarId",
+        "shiftPatternId",
+        "availableCapacity",
+        "capacityUnit",
+        "efficiencyPercent",
+        "utilizationPercent",
+        "costCenterId",
+        "activityType",
+        "schedulingFormula",
+        "processingFormula",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "WORK_CENTER"
+    },
+    {
+      "id": "STORAGE_AREA",
+      "extends": "FACILITY",
+      "label": "Storage Area",
+      "abstract": false,
+      "purpose": "An area used to hold inventory.",
+      "fields": [
+        "storageAreaCode",
+        "storageAreaName",
+        "facilityCode",
+        "storageType",
+        "temperatureZone",
+        "capacity",
+        "capacityUnit",
+        "managerId",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "STORAGE_AREA"
+    },
+    {
+      "id": "STORAGE_LOCATION",
+      "extends": "STORAGE_AREA",
+      "label": "Storage Location",
+      "abstract": false,
+      "purpose": "A specific inventory storage location.",
+      "fields": [
+        "storageLocationCode",
+        "storageAreaCode",
+        "aisle",
+        "rack",
+        "bin",
+        "storageType",
+        "capacity",
+        "capacityUnit",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "STORAGE_LOCATION"
+    },
+    {
+      "id": "SALES_DOCUMENT",
+      "extends": "BUSINESS_DOCUMENT",
+      "label": "Sales Document",
+      "abstract": false,
+      "purpose": "A business document supporting the sales process.",
+      "fields": [
+        "salesDocumentNumber",
+        "salesDocumentType",
+        "customerId",
+        "documentDate",
+        "salesOrganization",
+        "currency",
+        "netValue",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "SALES_DOCUMENT"
+    },
+    {
+      "id": "PROCUREMENT_DOCUMENT",
+      "extends": "BUSINESS_DOCUMENT",
+      "label": "Procurement Document",
+      "abstract": false,
+      "purpose": "A business document supporting procurement.",
+      "fields": [
+        "procurementDocumentNumber",
+        "procurementDocumentType",
+        "supplierId",
+        "documentDate",
+        "purchasingOrganization",
+        "currency",
+        "netValue",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "PROCUREMENT_DOCUMENT"
+    },
+    {
+      "id": "MANUFACTURING_DOCUMENT",
+      "extends": "BUSINESS_DOCUMENT",
+      "label": "Manufacturing Document",
+      "abstract": false,
+      "purpose": "A business document controlling or recording manufacturing.",
+      "fields": [
+        "manufacturingDocumentNumber",
+        "manufacturingDocumentType",
+        "plantCode",
+        "productId",
+        "plannedStart",
+        "plannedEnd",
+        "quantity",
+        "unitOfMeasure",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "MANUFACTURING_DOCUMENT"
+    },
+    {
+      "id": "PRODUCTION_ORDER",
+      "extends": "MANUFACTURING_DOCUMENT",
+      "label": "Production Order",
+      "abstract": false,
+      "purpose": "An authorization and record for producing a specified quantity.",
+      "fields": [
+        "productionOrderNumber",
+        "productId",
+        "plantCode",
+        "productionLineCode",
+        "orderType",
+        "plannedQuantity",
+        "unitOfMeasure",
+        "scheduledStart",
+        "scheduledEnd",
+        "priority",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "PRODUCTION_ORDER"
+    },
+    {
+      "id": "OPERATION",
+      "extends": "PRODUCTION_ORDER",
+      "label": "Operation",
+      "abstract": false,
+      "purpose": "A manufacturing step within a production order.",
+      "fields": [
+        "operationNumber",
+        "productionOrderId",
+        "sequenceNumber",
+        "operationCode",
+        "description",
+        "workCenterCode",
+        "setupTime",
+        "runTime",
+        "timeUnit",
+        "plannedQuantity",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "OPERATION"
+    },
+    {
+      "id": "WORK_CENTER_ASSIGNMENT",
+      "extends": "OPERATION",
+      "label": "Work Center Assignment",
+      "abstract": false,
+      "purpose": "Assignment of an operation to a work center.",
+      "fields": [
+        "assignmentNumber",
+        "operationId",
+        "workCenterCode",
+        "assignedFrom",
+        "assignedTo",
+        "requiredCapacity",
+        "capacityUnit",
+        "shiftCode",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "WORK_CENTER_ASSIGNMENT"
+    },
+    {
+      "id": "INVENTORY_DOCUMENT",
+      "extends": "BUSINESS_DOCUMENT",
+      "label": "Inventory Document",
+      "abstract": false,
+      "purpose": "A document recording inventory movement or adjustment.",
+      "fields": [
+        "inventoryDocumentNumber",
+        "movementType",
+        "postingDate",
+        "plantCode",
+        "warehouseCode",
+        "referenceDocument",
+        "createdBy",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "INVENTORY_DOCUMENT"
+    },
+    {
+      "id": "FINANCE_DOCUMENT",
+      "extends": "BUSINESS_DOCUMENT",
+      "label": "Finance Document",
+      "abstract": false,
+      "purpose": "A document recording a financial business event.",
+      "fields": [
+        "financeDocumentNumber",
+        "companyCode",
+        "fiscalYear",
+        "postingDate",
+        "documentType",
+        "currency",
+        "amount",
+        "referenceDocument",
+        "status"
+      ],
+      "crud": {
+        "create": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "storageEntity": "FINANCE_DOCUMENT"
+    }
+  ],
+  "actionConsole": {
+    "title": "Manufacturing Business Rule: Complete Work Order",
+    "buttonLabel": "Complete Work Order",
+    "buttonColor": "#2563eb",
+    "inputs": [
+      {
+        "name": "workOrderId",
+        "label": "WORK ORDER",
+        "inputType": "ENTITY_SELECTOR",
+        "sourceEntity": "WORK_ORDERS",
+        "valueField": "id",
+        "displayFields": [
+          "workOrderNumber",
+          "quantityToManufacture",
+          "actualOperatingCost",
+          "additionalOperatingCost",
+          "totalOperatingCost",
+          "status"
+        ]
+      }
+    ],
+    "pipeline": [
+      {
+        "pattern": "REQUIRE_STATE",
+        "entityType": "WORK_ORDERS",
+        "lookupField": "id",
+        "valueParam": "workOrderId",
+        "requiredState": "IN_PROGRESS"
+      },
+      {
+        "pattern": "EVALUATE_MATH",
+        "entityType": "WORK_ORDERS",
+        "lookupField": "id",
+        "valueParam": "workOrderId",
+        "expressions": "totalOperatingCost=actualOperatingCost+additionalOperatingCost"
+      },
+      {
+        "pattern": "TRANSITION_STATE",
+        "entityType": "WORK_ORDERS",
+        "lookupField": "id",
+        "valueParam": "workOrderId",
+        "fromState": "IN_PROGRESS",
+        "toState": "COMPLETED"
+      },
+      {
+        "pattern": "EMIT_EVENT",
+        "topic": "MANUFACTURING_BUS",
+        "eventType": "WORK_ORDER_COMPLETED"
+      },
+      {
+        "pattern": "RECORD_AUDIT",
+        "action": "WORK_ORDER_COMPLETED",
+        "details": "Work order completed through generic closed-vocabulary pipeline"
+      }
+    ]
+  },
+  "seedData": [
+    {
+      "entityType": "CUSTOMERS",
+      "records": [
+        {
+          "id": "CUST-001",
+          "customerNumber": "C-1001",
+          "name": "Northstar Retail",
+          "email": "purchasing@northstar.example",
+          "currency": "USD",
+          "status": "ACTIVE"
+        }
+      ]
+    },
+    {
+      "entityType": "SUPPLIERS",
+      "records": [
+        {
+          "id": "SUP-001",
+          "supplierNumber": "S-2001",
+          "name": "Apex Components",
+          "email": "sales@apex.example",
+          "currency": "USD",
+          "status": "ACTIVE"
+        }
+      ]
+    },
+    {
+      "entityType": "ITEMS",
+      "records": [
+        {
+          "id": "ITEM-FG-001",
+          "itemCode": "FG-100",
+          "name": "Industrial Control Unit",
+          "itemType": "MANUFACTURED",
+          "uom": "EA",
+          "standardRate": "850.00",
+          "status": "ACTIVE"
+        },
+        {
+          "id": "ITEM-RM-001",
+          "itemCode": "RM-110",
+          "name": "Controller Board",
+          "itemType": "PURCHASED",
+          "uom": "EA",
+          "standardRate": "180.00",
+          "status": "ACTIVE"
+        },
+        {
+          "id": "ITEM-RM-002",
+          "itemCode": "RM-120",
+          "name": "Enclosure",
+          "itemType": "PURCHASED",
+          "uom": "EA",
+          "standardRate": "75.00",
+          "status": "ACTIVE"
+        }
+      ]
+    },
+    {
+      "entityType": "WAREHOUSES",
+      "records": [
+        {
+          "id": "WH-RM",
+          "warehouseCode": "RM",
+          "name": "Raw Materials",
+          "warehouseType": "SOURCE",
+          "location": "Plant A",
+          "status": "ACTIVE"
+        },
+        {
+          "id": "WH-WIP",
+          "warehouseCode": "WIP",
+          "name": "Work In Progress",
+          "warehouseType": "WIP",
+          "location": "Plant A",
+          "status": "ACTIVE"
+        },
+        {
+          "id": "WH-FG",
+          "warehouseCode": "FG",
+          "name": "Finished Goods",
+          "warehouseType": "TARGET",
+          "location": "Plant A",
+          "status": "ACTIVE"
+        }
+      ]
+    },
+    {
+      "entityType": "INVENTORY",
+      "records": [
+        {
+          "id": "INV-001",
+          "itemId": "ITEM-RM-001",
+          "warehouseId": "WH-RM",
+          "quantityOnHand": "250",
+          "quantityReserved": "20",
+          "quantityAvailable": "230",
+          "status": "ACTIVE"
+        }
+      ]
+    },
+    {
+      "entityType": "SALES_ORDERS",
+      "records": [
+        {
+          "id": "SO-001",
+          "orderNumber": "SO-1001",
+          "customerId": "CUST-001",
+          "orderDate": "2026-09-19",
+          "deliveryDate": "2026-10-15",
+          "status": "CONFIRMED",
+          "subtotal": "8500.00",
+          "taxRate": "0.06",
+          "taxAmount": "510.00",
+          "total": "9010.00"
+        }
+      ]
+    },
+    {
+      "entityType": "SALES_ORDER_LINES",
+      "records": [
+        {
+          "id": "SOL-001",
+          "salesOrderId": "SO-001",
+          "itemId": "ITEM-FG-001",
+          "quantity": "10",
+          "unitPrice": "850.00",
+          "lineAmount": "8500.00",
+          "status": "ACTIVE"
+        }
+      ]
+    },
+    {
+      "entityType": "PURCHASE_ORDERS",
+      "records": [
+        {
+          "id": "PO-001",
+          "orderNumber": "PO-2001",
+          "supplierId": "SUP-001",
+          "orderDate": "2026-09-19",
+          "expectedDate": "2026-09-30",
+          "status": "SUBMITTED",
+          "subtotal": "3600.00",
+          "taxRate": "0.06",
+          "taxAmount": "216.00",
+          "total": "3816.00"
+        }
+      ]
+    },
+    {
+      "entityType": "PURCHASE_ORDER_LINES",
+      "records": [
+        {
+          "id": "POL-001",
+          "purchaseOrderId": "PO-001",
+          "itemId": "ITEM-RM-001",
+          "quantity": "20",
+          "unitCost": "180.00",
+          "lineAmount": "3600.00",
+          "status": "ACTIVE"
+        }
+      ]
+    },
+    {
+      "entityType": "BOMS",
+      "records": [
+        {
+          "id": "BOM-001",
+          "bomNumber": "BOM-FG-100-V1",
+          "finishedItemId": "ITEM-FG-001",
+          "quantity": "1",
+          "isActive": "TRUE",
+          "status": "ACTIVE"
+        }
+      ]
+    },
+    {
+      "entityType": "BOM_LINES",
+      "records": [
+        {
+          "id": "BOML-001",
+          "bomId": "BOM-001",
+          "componentItemId": "ITEM-RM-001",
+          "quantityPerUnit": "1",
+          "scrapPercent": "0.00",
+          "status": "ACTIVE"
+        },
+        {
+          "id": "BOML-002",
+          "bomId": "BOM-001",
+          "componentItemId": "ITEM-RM-002",
+          "quantityPerUnit": "1",
+          "scrapPercent": "0.00",
+          "status": "ACTIVE"
+        }
+      ]
+    },
+    {
+      "entityType": "PRODUCTION_PLANS",
+      "records": [
+        {
+          "id": "PP-001",
+          "planNumber": "PP-1001",
+          "salesOrderId": "SO-001",
+          "plannedStartDate": "2026-09-25",
+          "plannedQuantity": "10",
+          "status": "APPROVED"
+        }
+      ]
+    },
+    {
+      "entityType": "WORK_ORDERS",
+      "records": [
+        {
+          "id": "WO-001",
+          "workOrderNumber": "WO-1001",
+          "productionPlanId": "PP-001",
+          "bomId": "BOM-001",
+          "finishedItemId": "ITEM-FG-001",
+          "sourceWarehouseId": "WH-RM",
+          "wipWarehouseId": "WH-WIP",
+          "targetWarehouseId": "WH-FG",
+          "quantityToManufacture": "10",
+          "plannedOperatingCost": "500.00",
+          "actualOperatingCost": "475.00",
+          "additionalOperatingCost": "25.00",
+          "totalOperatingCost": "0.00",
+          "status": "IN_PROGRESS"
+        }
+      ]
+    },
+    {
+      "entityType": "STOCK_ENTRIES",
+      "records": [
+        {
+          "id": "SE-001",
+          "entryNumber": "SE-1001",
+          "purpose": "MATERIAL_TRANSFER_FOR_MANUFACTURE",
+          "workOrderId": "WO-001",
+          "itemId": "ITEM-RM-001",
+          "sourceWarehouseId": "WH-RM",
+          "targetWarehouseId": "WH-WIP",
+          "quantity": "10",
+          "basicRate": "180.00",
+          "amount": "1800.00",
+          "postingDate": "2026-09-25",
+          "status": "SUBMITTED"
+        }
+      ]
+    },
+    {
+      "entityType": "SALES_INVOICES",
+      "records": [
+        {
+          "id": "SI-001",
+          "invoiceNumber": "SI-1001",
+          "customerId": "CUST-001",
+          "salesOrderId": "SO-001",
+          "postingDate": "2026-10-15",
+          "dueDate": "2026-11-14",
+          "amount": "8500.00",
+          "taxRate": "0.06",
+          "taxAmount": "510.00",
+          "total": "9010.00",
+          "outstandingAmount": "9010.00",
+          "status": "UNPAID"
+        }
+      ]
+    },
+    {
+      "entityType": "PURCHASE_INVOICES",
+      "records": [
+        {
+          "id": "PI-001",
+          "invoiceNumber": "PI-2001",
+          "supplierId": "SUP-001",
+          "purchaseOrderId": "PO-001",
+          "postingDate": "2026-09-30",
+          "dueDate": "2026-10-30",
+          "amount": "3600.00",
+          "taxRate": "0.06",
+          "taxAmount": "216.00",
+          "total": "3816.00",
+          "outstandingAmount": "3816.00",
+          "status": "UNPAID"
+        }
+      ]
+    },
+    {
+      "entityType": "PAYMENTS",
+      "records": [
+        {
+          "id": "PAY-001",
+          "paymentNumber": "PAY-1001",
+          "paymentType": "RECEIVE",
+          "customerId": "CUST-001",
+          "supplierId": "",
+          "salesInvoiceId": "SI-001",
+          "purchaseInvoiceId": "",
+          "amount": "2500.00",
+          "postingDate": "2026-10-20",
+          "status": "SUBMITTED"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "id": "CUSTOMER_HAS_SALES_ORDERS",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "CUSTOMERS",
+      "to": "SALES_ORDERS",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "customerId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "SALES_ORDER_HAS_LINES",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "SALES_ORDERS",
+      "to": "SALES_ORDER_LINES",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "salesOrderId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "ITEM_HAS_SALES_LINES",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "ITEMS",
+      "to": "SALES_ORDER_LINES",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "itemId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "SUPPLIER_HAS_PURCHASE_ORDERS",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "SUPPLIERS",
+      "to": "PURCHASE_ORDERS",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "supplierId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "PURCHASE_ORDER_HAS_LINES",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "PURCHASE_ORDERS",
+      "to": "PURCHASE_ORDER_LINES",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "purchaseOrderId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "ITEM_HAS_PURCHASE_LINES",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "ITEMS",
+      "to": "PURCHASE_ORDER_LINES",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "itemId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "ITEM_HAS_INVENTORY",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "ITEMS",
+      "to": "INVENTORY",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "itemId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "WAREHOUSE_HAS_INVENTORY",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "WAREHOUSES",
+      "to": "INVENTORY",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "warehouseId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "ITEM_HAS_BOM",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "ITEMS",
+      "to": "BOMS",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "finishedItemId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "BOM_HAS_LINES",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "BOMS",
+      "to": "BOM_LINES",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "bomId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "ITEM_IS_BOM_COMPONENT",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "ITEMS",
+      "to": "BOM_LINES",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "componentItemId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "SALES_ORDER_HAS_PRODUCTION_PLAN",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "SALES_ORDERS",
+      "to": "PRODUCTION_PLANS",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "salesOrderId",
+      "required": false,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "PRODUCTION_PLAN_HAS_WORK_ORDER",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "PRODUCTION_PLANS",
+      "to": "WORK_ORDERS",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "productionPlanId",
+      "required": false,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "BOM_HAS_WORK_ORDER",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "BOMS",
+      "to": "WORK_ORDERS",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "bomId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "ITEM_IS_WORK_ORDER_OUTPUT",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "ITEMS",
+      "to": "WORK_ORDERS",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "finishedItemId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "SOURCE_WAREHOUSE_FOR_WORK_ORDER",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "WAREHOUSES",
+      "to": "WORK_ORDERS",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "sourceWarehouseId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "WIP_WAREHOUSE_FOR_WORK_ORDER",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "WAREHOUSES",
+      "to": "WORK_ORDERS",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "wipWarehouseId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "TARGET_WAREHOUSE_FOR_WORK_ORDER",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "WAREHOUSES",
+      "to": "WORK_ORDERS",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "targetWarehouseId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "WORK_ORDER_HAS_STOCK_ENTRIES",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "WORK_ORDERS",
+      "to": "STOCK_ENTRIES",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "workOrderId",
+      "required": false,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "ITEM_HAS_STOCK_ENTRIES",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "ITEMS",
+      "to": "STOCK_ENTRIES",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "itemId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "STOCK_ENTRY_SOURCE_WAREHOUSE",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "WAREHOUSES",
+      "to": "STOCK_ENTRIES",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "sourceWarehouseId",
+      "required": false,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "STOCK_ENTRY_TARGET_WAREHOUSE",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "WAREHOUSES",
+      "to": "STOCK_ENTRIES",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "targetWarehouseId",
+      "required": false,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "CUSTOMER_HAS_SALES_INVOICES",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "CUSTOMERS",
+      "to": "SALES_INVOICES",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "customerId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "SALES_ORDER_HAS_INVOICE",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "SALES_ORDERS",
+      "to": "SALES_INVOICES",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "salesOrderId",
+      "required": false,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "SUPPLIER_HAS_PURCHASE_INVOICES",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "SUPPLIERS",
+      "to": "PURCHASE_INVOICES",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "supplierId",
+      "required": true,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "PURCHASE_ORDER_HAS_INVOICE",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "PURCHASE_ORDERS",
+      "to": "PURCHASE_INVOICES",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "purchaseOrderId",
+      "required": false,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "CUSTOMER_HAS_PAYMENTS",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "CUSTOMERS",
+      "to": "PAYMENTS",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "customerId",
+      "required": false,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "SUPPLIER_HAS_PAYMENTS",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "SUPPLIERS",
+      "to": "PAYMENTS",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "supplierId",
+      "required": false,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "SALES_INVOICE_HAS_PAYMENTS",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "SALES_INVOICES",
+      "to": "PAYMENTS",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "salesInvoiceId",
+      "required": false,
+      "onDelete": "RESTRICT"
+    },
+    {
+      "id": "PURCHASE_INVOICE_HAS_PAYMENTS",
+      "extends": "BASE_SYNAPSE_NEURON",
+      "from": "PURCHASE_INVOICES",
+      "to": "PAYMENTS",
+      "type": "REFERENCES",
+      "cardinality": "ONE_TO_MANY",
+      "fromKey": "id",
+      "toKey": "purchaseInvoiceId",
+      "required": false,
+      "onDelete": "RESTRICT"
+    }
+  ],
+  "businessRuleNeurons": [
+    {
+      "id": "INVENTORY_AVAILABLE_QUANTITY",
+      "extends": "BUSINESS_RULE_NEURON",
+      "entity": "INVENTORY",
+      "description": "Available inventory is on-hand quantity minus reserved quantity.",
+      "trigger": "ON_DEMAND",
+      "operations": [
+        {
+          "target": "quantityAvailable",
+          "operator": "SUBTRACT",
+          "operands": [
+            {
+              "field": "quantityOnHand"
+            },
+            {
+              "field": "quantityReserved"
+            }
+          ]
+        }
+      ],
+      "pipeline": [
+        {
+          "pattern": "EVALUATE_MATH",
+          "entityType": "INVENTORY",
+          "operations": [
+            {
+              "target": "quantityAvailable",
+              "operator": "SUBTRACT",
+              "operands": [
+                {
+                  "field": "quantityOnHand"
+                },
+                {
+                  "field": "quantityReserved"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SALES_ORDER_LINE_AMOUNT",
+      "extends": "BUSINESS_RULE_NEURON",
+      "entity": "SALES_ORDER_LINES",
+      "description": "Sales order line amount is quantity multiplied by unit price.",
+      "trigger": "ON_DEMAND",
+      "operations": [
+        {
+          "target": "lineAmount",
+          "operator": "MULTIPLY",
+          "operands": [
+            {
+              "field": "quantity"
+            },
+            {
+              "field": "unitPrice"
+            }
+          ]
+        }
+      ],
+      "pipeline": [
+        {
+          "pattern": "EVALUATE_MATH",
+          "entityType": "SALES_ORDER_LINES",
+          "operations": [
+            {
+              "target": "lineAmount",
+              "operator": "MULTIPLY",
+              "operands": [
+                {
+                  "field": "quantity"
+                },
+                {
+                  "field": "unitPrice"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PURCHASE_ORDER_LINE_AMOUNT",
+      "extends": "BUSINESS_RULE_NEURON",
+      "entity": "PURCHASE_ORDER_LINES",
+      "description": "Purchase order line amount is quantity multiplied by unit cost.",
+      "trigger": "ON_DEMAND",
+      "operations": [
+        {
+          "target": "lineAmount",
+          "operator": "MULTIPLY",
+          "operands": [
+            {
+              "field": "quantity"
+            },
+            {
+              "field": "unitCost"
+            }
+          ]
+        }
+      ],
+      "pipeline": [
+        {
+          "pattern": "EVALUATE_MATH",
+          "entityType": "PURCHASE_ORDER_LINES",
+          "operations": [
+            {
+              "target": "lineAmount",
+              "operator": "MULTIPLY",
+              "operands": [
+                {
+                  "field": "quantity"
+                },
+                {
+                  "field": "unitCost"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "WORK_ORDER_TOTAL_OPERATING_COST",
+      "extends": "BUSINESS_RULE_NEURON",
+      "entity": "WORK_ORDERS",
+      "description": "Total operating cost is actual operating cost plus additional operating cost.",
+      "trigger": "ON_DEMAND",
+      "operations": [
+        {
+          "target": "totalOperatingCost",
+          "operator": "ADD",
+          "operands": [
+            {
+              "field": "actualOperatingCost"
+            },
+            {
+              "field": "additionalOperatingCost"
+            }
+          ]
+        }
+      ],
+      "pipeline": [
+        {
+          "pattern": "EVALUATE_MATH",
+          "entityType": "WORK_ORDERS",
+          "operations": [
+            {
+              "target": "totalOperatingCost",
+              "operator": "ADD",
+              "operands": [
+                {
+                  "field": "actualOperatingCost"
+                },
+                {
+                  "field": "additionalOperatingCost"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SALES_ORDER_TOTAL_CALCULATION",
+      "extends": "BUSINESS_RULE_NEURON",
+      "entity": "SALES_ORDERS",
+      "description": "Calculate tax and total from subtotal and tax rate.",
+      "trigger": "ON_DEMAND",
+      "operations": [
+        {
+          "target": "taxAmount",
+          "operator": "MULTIPLY",
+          "operands": [
+            {
+              "field": "subtotal"
+            },
+            {
+              "field": "taxRate"
+            }
+          ]
+        },
+        {
+          "target": "total",
+          "operator": "ADD",
+          "operands": [
+            {
+              "field": "subtotal"
+            },
+            {
+              "field": "taxAmount"
+            }
+          ]
+        }
+      ],
+      "pipeline": [
+        {
+          "pattern": "EVALUATE_MATH",
+          "entityType": "SALES_ORDERS",
+          "operations": [
+            {
+              "target": "taxAmount",
+              "operator": "MULTIPLY",
+              "operands": [
+                {
+                  "field": "subtotal"
+                },
+                {
+                  "field": "taxRate"
+                }
+              ]
+            },
+            {
+              "target": "total",
+              "operator": "ADD",
+              "operands": [
+                {
+                  "field": "subtotal"
+                },
+                {
+                  "field": "taxAmount"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PURCHASE_ORDER_TOTAL_CALCULATION",
+      "extends": "BUSINESS_RULE_NEURON",
+      "entity": "PURCHASE_ORDERS",
+      "description": "Calculate tax and total from subtotal and tax rate.",
+      "trigger": "ON_DEMAND",
+      "operations": [
+        {
+          "target": "taxAmount",
+          "operator": "MULTIPLY",
+          "operands": [
+            {
+              "field": "subtotal"
+            },
+            {
+              "field": "taxRate"
+            }
+          ]
+        },
+        {
+          "target": "total",
+          "operator": "ADD",
+          "operands": [
+            {
+              "field": "subtotal"
+            },
+            {
+              "field": "taxAmount"
+            }
+          ]
+        }
+      ],
+      "pipeline": [
+        {
+          "pattern": "EVALUATE_MATH",
+          "entityType": "PURCHASE_ORDERS",
+          "operations": [
+            {
+              "target": "taxAmount",
+              "operator": "MULTIPLY",
+              "operands": [
+                {
+                  "field": "subtotal"
+                },
+                {
+                  "field": "taxRate"
+                }
+              ]
+            },
+            {
+              "target": "total",
+              "operator": "ADD",
+              "operands": [
+                {
+                  "field": "subtotal"
+                },
+                {
+                  "field": "taxAmount"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SALES_INVOICE_TOTAL_CALCULATION",
+      "extends": "BUSINESS_RULE_NEURON",
+      "entity": "SALES_INVOICES",
+      "description": "Calculate invoice tax and total from amount and tax rate.",
+      "trigger": "ON_DEMAND",
+      "operations": [
+        {
+          "target": "taxAmount",
+          "operator": "MULTIPLY",
+          "operands": [
+            {
+              "field": "amount"
+            },
+            {
+              "field": "taxRate"
+            }
+          ]
+        },
+        {
+          "target": "total",
+          "operator": "ADD",
+          "operands": [
+            {
+              "field": "amount"
+            },
+            {
+              "field": "taxAmount"
+            }
+          ]
+        }
+      ],
+      "pipeline": [
+        {
+          "pattern": "EVALUATE_MATH",
+          "entityType": "SALES_INVOICES",
+          "operations": [
+            {
+              "target": "taxAmount",
+              "operator": "MULTIPLY",
+              "operands": [
+                {
+                  "field": "amount"
+                },
+                {
+                  "field": "taxRate"
+                }
+              ]
+            },
+            {
+              "target": "total",
+              "operator": "ADD",
+              "operands": [
+                {
+                  "field": "amount"
+                },
+                {
+                  "field": "taxAmount"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "crudCapabilities": {
+    "extends": "CRUD_NEURON",
+    "create": true,
+    "read": true,
+    "update": true,
+    "delete": true,
+    "selection": "CLICK_RECORD"
+  },
+  "extends": "BASE_SPECIALTY_NEURON",
+  "kind": "SPECIALTY_NEURON",
+  "self": {
+    "wants": [
+      "EXPRESS_BUSINESS_SELF"
+    ],
+    "needs": [
+      "APPLICATION_RUNTIME",
+      "CRUD_NEURON",
+      "BASE_UI_NEURON",
+      "BASE_BUSINESS_RULE_NEURON"
+    ],
+    "offers": [
+      "SPECIALTY_APPLICATION",
+      "BUSINESS_SELF"
+    ]
+  },
+  "space": {
+    "inherit": true,
+    "localOverrides": {}
+  },
+  "time": {
+    "inherit": true,
+    "localOverrides": {}
+  },
+  "navigationHierarchy": [
+    {
+      "module": "DASHBOARD",
+      "label": "Dashboard"
+    },
+    {
+      "id": "SALES",
+      "label": "Sales",
+      "children": [
+        {
+          "module": "CUSTOMERS",
+          "label": "Customers"
+        },
+        {
+          "module": "SALES_ORDERS",
+          "label": "Sales Orders"
+        },
+        {
+          "module": "SALES_ORDER_LINES",
+          "label": "Sales Order Lines"
+        },
+        {
+          "module": "SALES_INVOICES",
+          "label": "Sales Invoices"
+        }
+      ]
+    },
+    {
+      "id": "PROCUREMENT",
+      "label": "Procurement",
+      "children": [
+        {
+          "module": "SUPPLIERS",
+          "label": "Suppliers"
+        },
+        {
+          "module": "PURCHASE_ORDERS",
+          "label": "Purchase Orders"
+        },
+        {
+          "module": "PURCHASE_ORDER_LINES",
+          "label": "Purchase Order Lines"
+        },
+        {
+          "module": "PURCHASE_INVOICES",
+          "label": "Purchase Invoices"
+        }
+      ]
+    },
+    {
+      "id": "INVENTORY_MANAGEMENT",
+      "label": "Inventory Management",
+      "children": [
+        {
+          "module": "ITEMS",
+          "label": "Items"
+        },
+        {
+          "module": "WAREHOUSES",
+          "label": "Warehouses"
+        },
+        {
+          "module": "INVENTORY",
+          "label": "Inventory"
+        },
+        {
+          "module": "STOCK_ENTRIES",
+          "label": "Stock Entries"
+        }
+      ]
+    },
+    {
+      "id": "MANUFACTURING",
+      "label": "Manufacturing",
+      "children": [
+        {
+          "module": "BOMS",
+          "label": "Bills of Materials",
+          "children": [
+            {
+              "module": "BOM_LINES",
+              "label": "Bom Lines"
+            }
+          ]
+        },
+        {
+          "module": "PRODUCTION_PLANS",
+          "label": "Production Plans",
+          "children": [
+            {
+              "module": "WORK_ORDERS",
+              "label": "Work Orders"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FINANCE",
+      "label": "Finance",
+      "children": [
+        {
+          "module": "PAYMENTS",
+          "label": "Payments"
+        }
+      ]
+    },
+    {
+      "module": "ADMINISTRATION",
+      "label": "Administration"
+    },
+    {
+      "module": "DESIGN",
+      "label": "Design"
+    }
+  ],
+  "fieldSemantics": {
+    "CUSTOMERS": {
+      "status": {
+        "semanticType": "ENUM"
+      },
+      "customerNumber": {
+        "type": "DATE"
+      },
+      "name": {
+        "type": "STRING"
+      },
+      "email": {
+        "type": "STRING"
+      },
+      "phone": {
+        "type": "STRING"
+      },
+      "billingAddress": {
+        "type": "STRING"
+      },
+      "shippingAddress": {
+        "type": "STRING"
+      },
+      "currency": {
+        "type": "STRING"
+      },
+      "paymentTerms": {
+        "type": "STRING"
+      },
+      "creditLimit": {
+        "type": "DECIMAL"
+      }
+    },
+    "SUPPLIERS": {
+      "status": {
+        "semanticType": "ENUM"
+      },
+      "supplierNumber": {
+        "type": "STRING"
+      },
+      "name": {
+        "type": "STRING"
+      },
+      "email": {
+        "type": "STRING"
+      },
+      "phone": {
+        "type": "STRING"
+      },
+      "address": {
+        "type": "STRING"
+      },
+      "currency": {
+        "type": "STRING"
+      },
+      "paymentTerms": {
+        "type": "STRING"
+      },
+      "leadTimeDays": {
+        "type": "INTEGER"
+      },
+      "qualityRating": {
+        "type": "DATE_TIME"
+      }
+    },
+    "ITEMS": {
+      "itemType": {
+        "semanticType": "ENUM"
+      },
+      "status": {
+        "semanticType": "ENUM"
+      },
+      "itemCode": {
+        "type": "STRING"
+      },
+      "name": {
+        "type": "STRING"
+      },
+      "description": {
+        "type": "STRING"
+      },
+      "baseUnit": {
+        "type": "STRING"
+      },
+      "standardCost": {
+        "type": "DECIMAL"
+      },
+      "listPrice": {
+        "type": "DECIMAL"
+      },
+      "makeBuy": {
+        "type": "STRING"
+      },
+      "revision": {
+        "type": "STRING"
+      }
+    },
+    "WAREHOUSES": {
+      "warehouseType": {
+        "semanticType": "ENUM"
+      },
+      "status": {
+        "semanticType": "ENUM"
+      },
+      "warehouseCode": {
+        "type": "STRING"
+      },
+      "name": {
+        "type": "STRING"
+      },
+      "plantCode": {
+        "type": "STRING"
+      },
+      "address": {
+        "type": "STRING"
+      },
+      "capacity": {
+        "type": "DECIMAL"
+      },
+      "capacityUnit": {
+        "type": "DECIMAL"
+      }
+    },
+    "INVENTORY": {
+      "status": {
+        "semanticType": "ENUM"
+      },
+      "itemId": {
+        "type": "STRING"
+      },
+      "warehouseId": {
+        "type": "STRING"
+      },
+      "storageLocation": {
+        "type": "DATE_TIME"
+      },
+      "lotNumber": {
+        "type": "INTEGER"
+      },
+      "serialNumber": {
+        "type": "INTEGER"
+      },
+      "quantityOnHand": {
+        "type": "DECIMAL"
+      },
+      "quantityReserved": {
+        "type": "DECIMAL"
+      },
+      "quantityAvailable": {
+        "type": "DECIMAL"
+      },
+      "unitOfMeasure": {
+        "type": "DATE"
+      }
+    },
+    "SALES_ORDERS": {
+      "orderDate": {
+        "semanticType": "DATE"
+      },
+      "deliveryDate": {
+        "semanticType": "DATE"
+      },
+      "status": {
+        "semanticType": "ENUM"
+      },
+      "orderNumber": {
+        "type": "STRING"
+      },
+      "customerId": {
+        "type": "DATE"
+      },
+      "requestedDeliveryDate": {
+        "type": "DATE_TIME"
+      },
+      "currency": {
+        "type": "STRING"
+      },
+      "subtotal": {
+        "type": "DATE"
+      },
+      "taxAmount": {
+        "type": "DECIMAL"
+      },
+      "totalAmount": {
+        "type": "DECIMAL"
+      }
+    },
+    "SALES_ORDER_LINES": {
+      "status": {
+        "semanticType": "ENUM"
+      },
+      "salesOrderId": {
+        "type": "STRING"
+      },
+      "lineNumber": {
+        "type": "INTEGER"
+      },
+      "itemId": {
+        "type": "STRING"
+      },
+      "description": {
+        "type": "STRING"
+      },
+      "quantity": {
+        "type": "DECIMAL"
+      },
+      "unitOfMeasure": {
+        "type": "DATE"
+      },
+      "unitPrice": {
+        "type": "DECIMAL"
+      },
+      "lineAmount": {
+        "type": "DECIMAL"
+      }
+    },
+    "PURCHASE_ORDERS": {
+      "orderDate": {
+        "semanticType": "DATE"
+      },
+      "expectedDate": {
+        "semanticType": "DATE"
+      },
+      "status": {
+        "semanticType": "ENUM"
+      },
+      "purchaseOrderNumber": {
+        "type": "STRING"
+      },
+      "supplierId": {
+        "type": "STRING"
+      },
+      "expectedDeliveryDate": {
+        "type": "DATE_TIME"
+      },
+      "currency": {
+        "type": "STRING"
+      },
+      "subtotal": {
+        "type": "DATE"
+      },
+      "taxAmount": {
+        "type": "DECIMAL"
+      },
+      "totalAmount": {
+        "type": "DECIMAL"
+      }
+    },
+    "PURCHASE_ORDER_LINES": {
+      "status": {
+        "semanticType": "ENUM"
+      },
+      "purchaseOrderId": {
+        "type": "STRING"
+      },
+      "lineNumber": {
+        "type": "INTEGER"
+      },
+      "itemId": {
+        "type": "STRING"
+      },
+      "description": {
+        "type": "STRING"
+      },
+      "quantity": {
+        "type": "DECIMAL"
+      },
+      "unitOfMeasure": {
+        "type": "DATE"
+      },
+      "unitCost": {
+        "type": "DECIMAL"
+      },
+      "lineAmount": {
+        "type": "DECIMAL"
+      }
+    },
+    "BOMS": {
+      "status": {
+        "semanticType": "ENUM"
+      },
+      "bomNumber": {
+        "type": "STRING"
+      },
+      "parentItemId": {
+        "type": "STRING"
+      },
+      "revision": {
+        "type": "STRING"
+      },
+      "effectiveFrom": {
+        "type": "DATE"
+      },
+      "effectiveTo": {
+        "type": "DATE"
+      },
+      "baseQuantity": {
+        "type": "DECIMAL"
+      },
+      "unitOfMeasure": {
+        "type": "DATE"
+      }
+    },
+    "BOM_LINES": {
+      "status": {
+        "semanticType": "ENUM"
+      },
+      "bomId": {
+        "type": "STRING"
+      },
+      "lineNumber": {
+        "type": "INTEGER"
+      },
+      "componentItemId": {
+        "type": "STRING"
+      },
+      "quantityPer": {
+        "type": "DECIMAL"
+      },
+      "unitOfMeasure": {
+        "type": "DATE"
+      },
+      "scrapPercent": {
+        "type": "DECIMAL"
+      },
+      "operationSequence": {
+        "type": "INTEGER"
+      },
+      "effectiveFrom": {
+        "type": "DATE"
+      },
+      "effectiveTo": {
+        "type": "DATE"
+      }
+    },
+    "PRODUCTION_PLANS": {
+      "plannedStartDate": {
+        "semanticType": "DATE"
+      },
+      "status": {
+        "semanticType": "ENUM"
+      },
+      "planNumber": {
+        "type": "INTEGER"
+      },
+      "plantCode": {
+        "type": "STRING"
+      },
+      "planningHorizonStart": {
+        "type": "DATE_TIME"
+      },
+      "planningHorizonEnd": {
+        "type": "DATE_TIME"
+      },
+      "productId": {
+        "type": "STRING"
+      },
+      "plannedQuantity": {
+        "type": "DECIMAL"
+      },
+      "unitOfMeasure": {
+        "type": "DATE"
+      },
+      "plannerId": {
+        "type": "STRING"
+      }
+    },
+    "WORK_ORDERS": {
+      "status": {
+        "semanticType": "ENUM"
+      },
+      "workOrderNumber": {
+        "type": "INTEGER"
+      },
+      "productionOrderId": {
+        "type": "STRING"
+      },
+      "itemId": {
+        "type": "STRING"
+      },
+      "plantCode": {
+        "type": "STRING"
+      },
+      "workCenterCode": {
+        "type": "STRING"
+      },
+      "plannedStart": {
+        "type": "DATE_TIME"
+      },
+      "plannedEnd": {
+        "type": "DATE_TIME"
+      },
+      "plannedQuantity": {
+        "type": "DECIMAL"
+      },
+      "completedQuantity": {
+        "type": "DECIMAL"
+      }
+    },
+    "STOCK_ENTRIES": {
+      "postingDate": {
+        "semanticType": "DATE"
+      },
+      "status": {
+        "semanticType": "ENUM"
+      },
+      "entryNumber": {
+        "type": "STRING"
+      },
+      "itemId": {
+        "type": "STRING"
+      },
+      "warehouseId": {
+        "type": "STRING"
+      },
+      "storageLocation": {
+        "type": "DATE_TIME"
+      },
+      "movementType": {
+        "type": "STRING"
+      },
+      "quantity": {
+        "type": "DECIMAL"
+      },
+      "unitOfMeasure": {
+        "type": "DATE"
+      },
+      "referenceDocument": {
+        "type": "STRING"
+      }
+    },
+    "SALES_INVOICES": {
+      "postingDate": {
+        "semanticType": "DATE"
+      },
+      "dueDate": {
+        "semanticType": "DATE"
+      },
+      "status": {
+        "semanticType": "ENUM"
+      },
+      "invoiceNumber": {
+        "type": "STRING"
+      },
+      "customerId": {
+        "type": "DATE"
+      },
+      "salesOrderId": {
+        "type": "STRING"
+      },
+      "invoiceDate": {
+        "type": "DATE_TIME"
+      },
+      "currency": {
+        "type": "STRING"
+      },
+      "netAmount": {
+        "type": "DECIMAL"
+      },
+      "taxAmount": {
+        "type": "DECIMAL"
+      },
+      "totalAmount": {
+        "type": "DECIMAL"
+      }
+    },
+    "PURCHASE_INVOICES": {
+      "postingDate": {
+        "semanticType": "DATE"
+      },
+      "dueDate": {
+        "semanticType": "DATE"
+      },
+      "status": {
+        "semanticType": "ENUM"
+      },
+      "invoiceNumber": {
+        "type": "STRING"
+      },
+      "supplierId": {
+        "type": "STRING"
+      },
+      "purchaseOrderId": {
+        "type": "STRING"
+      },
+      "invoiceDate": {
+        "type": "DATE_TIME"
+      },
+      "currency": {
+        "type": "STRING"
+      },
+      "netAmount": {
+        "type": "DECIMAL"
+      },
+      "taxAmount": {
+        "type": "DECIMAL"
+      },
+      "totalAmount": {
+        "type": "DECIMAL"
+      }
+    },
+    "PAYMENTS": {
+      "paymentType": {
+        "semanticType": "ENUM"
+      },
+      "postingDate": {
+        "semanticType": "DATE"
+      },
+      "status": {
+        "semanticType": "ENUM"
+      },
+      "paymentNumber": {
+        "type": "STRING"
+      },
+      "partyId": {
+        "type": "STRING"
+      },
+      "paymentDate": {
+        "type": "DATE_TIME"
+      },
+      "paymentMethod": {
+        "type": "STRING"
+      },
+      "currency": {
+        "type": "STRING"
+      },
+      "amount": {
+        "type": "DECIMAL"
+      },
+      "referenceDocument": {
+        "type": "STRING"
+      },
+      "bankReference": {
+        "type": "STRING"
+      }
+    },
+    "PARTY": {
+      "partyCode": {
+        "type": "STRING"
+      },
+      "name": {
+        "type": "STRING"
+      },
+      "partyType": {
+        "type": "STRING"
+      },
+      "status": {
+        "type": "STRING"
+      },
+      "effectiveFrom": {
+        "type": "DATE"
+      },
+      "effectiveTo": {
+        "type": "DATE"
+      }
+    },
+    "PERSON": {
+      "personNumber": {
+        "type": "INTEGER"
+      },
+      "firstName": {
+        "type": "STRING"
+      },
+      "lastName": {
+        "type": "STRING"
+      },
+      "preferredName": {
+        "type": "STRING"
+      },
+      "email": {
+        "type": "STRING"
+      },
+      "phone": {
+        "type": "STRING"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "ORGANIZATION": {
+      "organizationNumber": {
+        "type": "INTEGER"
+      },
+      "legalName": {
+        "type": "STRING"
+      },
+      "tradeName": {
+        "type": "STRING"
+      },
+      "taxId": {
+        "type": "STRING"
+      },
+      "countryCode": {
+        "type": "INTEGER"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "PRODUCT": {
+      "productCode": {
+        "type": "STRING"
+      },
+      "name": {
+        "type": "STRING"
+      },
+      "description": {
+        "type": "STRING"
+      },
+      "productType": {
+        "type": "STRING"
+      },
+      "baseUnit": {
+        "type": "STRING"
+      },
+      "lifecycleStatus": {
+        "type": "STRING"
+      }
+    },
+    "PLACE": {
+      "placeCode": {
+        "type": "STRING"
+      },
+      "name": {
+        "type": "STRING"
+      },
+      "description": {
+        "type": "STRING"
+      },
+      "placeType": {
+        "type": "STRING"
+      },
+      "status": {
+        "type": "STRING"
+      },
+      "timezone": {
+        "type": "STRING"
+      },
+      "countryCode": {
+        "type": "INTEGER"
+      },
+      "regionCode": {
+        "type": "STRING"
+      }
+    },
+    "BUSINESS_DOCUMENT": {
+      "documentNumber": {
+        "type": "STRING"
+      },
+      "documentType": {
+        "type": "STRING"
+      },
+      "documentDate": {
+        "type": "DATE_TIME"
+      },
+      "status": {
+        "type": "STRING"
+      },
+      "createdBy": {
+        "type": "DATE_TIME"
+      },
+      "createdAt": {
+        "type": "DATE_TIME"
+      },
+      "lastUpdatedAt": {
+        "type": "DATE_TIME"
+      }
+    },
+    "EMPLOYEE": {
+      "employeeNumber": {
+        "type": "STRING"
+      },
+      "firstName": {
+        "type": "STRING"
+      },
+      "lastName": {
+        "type": "STRING"
+      },
+      "email": {
+        "type": "STRING"
+      },
+      "jobTitle": {
+        "type": "STRING"
+      },
+      "department": {
+        "type": "STRING"
+      },
+      "managerId": {
+        "type": "STRING"
+      },
+      "hireDate": {
+        "type": "DATE_TIME"
+      },
+      "employmentStatus": {
+        "type": "STRING"
+      }
+    },
+    "ENGINEER": {
+      "engineerNumber": {
+        "type": "STRING"
+      },
+      "employeeId": {
+        "type": "STRING"
+      },
+      "engineeringDiscipline": {
+        "type": "STRING"
+      },
+      "grade": {
+        "type": "STRING"
+      },
+      "certification": {
+        "type": "DATE_TIME"
+      },
+      "homePlantCode": {
+        "type": "STRING"
+      },
+      "costCenterId": {
+        "type": "DECIMAL"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "ORGANIZATION_CUSTOMER": {
+      "customerGroupCode": {
+        "type": "DATE"
+      },
+      "organizationNumber": {
+        "type": "INTEGER"
+      },
+      "salesOrganization": {
+        "type": "DATE_TIME"
+      },
+      "distributionChannel": {
+        "type": "STRING"
+      },
+      "currency": {
+        "type": "STRING"
+      },
+      "paymentTerms": {
+        "type": "STRING"
+      },
+      "creditLimit": {
+        "type": "DECIMAL"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "DEALER": {
+      "dealerCode": {
+        "type": "STRING"
+      },
+      "dealerName": {
+        "type": "STRING"
+      },
+      "regionCode": {
+        "type": "STRING"
+      },
+      "marketCode": {
+        "type": "STRING"
+      },
+      "salesTerritory": {
+        "type": "DATE"
+      },
+      "franchiseStatus": {
+        "type": "STRING"
+      },
+      "primaryContactId": {
+        "type": "STRING"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "SUPPLIER_ORGANIZATION": {
+      "supplierGroupCode": {
+        "type": "STRING"
+      },
+      "organizationNumber": {
+        "type": "INTEGER"
+      },
+      "purchasingOrganization": {
+        "type": "DATE_TIME"
+      },
+      "supplierCategory": {
+        "type": "DATE_TIME"
+      },
+      "currency": {
+        "type": "STRING"
+      },
+      "paymentTerms": {
+        "type": "STRING"
+      },
+      "qualityRating": {
+        "type": "DATE_TIME"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "TIER_1_SUPPLIER": {
+      "tier1SupplierCode": {
+        "type": "STRING"
+      },
+      "supplierOrganizationId": {
+        "type": "DATE_TIME"
+      },
+      "commodityGroup": {
+        "type": "STRING"
+      },
+      "primaryPlantCode": {
+        "type": "STRING"
+      },
+      "leadTimeDays": {
+        "type": "INTEGER"
+      },
+      "capacityRating": {
+        "type": "DECIMAL"
+      },
+      "qualityRating": {
+        "type": "DATE_TIME"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "FINISHED_PRODUCT": {
+      "finishedProductCode": {
+        "type": "STRING"
+      },
+      "name": {
+        "type": "STRING"
+      },
+      "modelYear": {
+        "type": "INTEGER"
+      },
+      "baseUnit": {
+        "type": "STRING"
+      },
+      "standardCost": {
+        "type": "DECIMAL"
+      },
+      "listPrice": {
+        "type": "DECIMAL"
+      },
+      "lifecycleStatus": {
+        "type": "STRING"
+      },
+      "effectiveFrom": {
+        "type": "DATE"
+      },
+      "effectiveTo": {
+        "type": "DATE"
+      }
+    },
+    "VEHICLE": {
+      "vinPattern": {
+        "type": "DATE_TIME"
+      },
+      "vehicleCode": {
+        "type": "STRING"
+      },
+      "modelName": {
+        "type": "STRING"
+      },
+      "modelYear": {
+        "type": "INTEGER"
+      },
+      "platformCode": {
+        "type": "DATE_TIME"
+      },
+      "bodyStyle": {
+        "type": "STRING"
+      },
+      "powertrainType": {
+        "type": "DECIMAL"
+      },
+      "marketCode": {
+        "type": "STRING"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "TRUCK": {
+      "truckModelCode": {
+        "type": "STRING"
+      },
+      "vehicleId": {
+        "type": "STRING"
+      },
+      "cabConfiguration": {
+        "type": "DATE_TIME"
+      },
+      "bedConfiguration": {
+        "type": "DATE_TIME"
+      },
+      "grossVehicleWeightRating": {
+        "type": "DECIMAL"
+      },
+      "payloadCapacity": {
+        "type": "DECIMAL"
+      },
+      "towingCapacity": {
+        "type": "DECIMAL"
+      },
+      "drivetrain": {
+        "type": "STRING"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "ASSEMBLY": {
+      "assemblyCode": {
+        "type": "STRING"
+      },
+      "name": {
+        "type": "STRING"
+      },
+      "revision": {
+        "type": "STRING"
+      },
+      "baseUnit": {
+        "type": "STRING"
+      },
+      "makeBuy": {
+        "type": "STRING"
+      },
+      "standardCost": {
+        "type": "DECIMAL"
+      },
+      "effectiveFrom": {
+        "type": "DATE"
+      },
+      "effectiveTo": {
+        "type": "DATE"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "POWERTRAIN": {
+      "powertrainCode": {
+        "type": "DECIMAL"
+      },
+      "assemblyId": {
+        "type": "STRING"
+      },
+      "powertrainType": {
+        "type": "DECIMAL"
+      },
+      "fuelType": {
+        "type": "STRING"
+      },
+      "ratedPower": {
+        "type": "DECIMAL"
+      },
+      "ratedTorque": {
+        "type": "DECIMAL"
+      },
+      "emissionsFamily": {
+        "type": "STRING"
+      },
+      "revision": {
+        "type": "STRING"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "ENGINE": {
+      "engineCode": {
+        "type": "STRING"
+      },
+      "powertrainId": {
+        "type": "DECIMAL"
+      },
+      "engineFamily": {
+        "type": "STRING"
+      },
+      "displacement": {
+        "type": "DECIMAL"
+      },
+      "cylinderCount": {
+        "type": "INTEGER"
+      },
+      "fuelType": {
+        "type": "STRING"
+      },
+      "ratedPower": {
+        "type": "DECIMAL"
+      },
+      "ratedTorque": {
+        "type": "DECIMAL"
+      },
+      "emissionsStandard": {
+        "type": "STRING"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "COMPONENT": {
+      "componentCode": {
+        "type": "STRING"
+      },
+      "name": {
+        "type": "STRING"
+      },
+      "revision": {
+        "type": "STRING"
+      },
+      "baseUnit": {
+        "type": "STRING"
+      },
+      "makeBuy": {
+        "type": "STRING"
+      },
+      "standardCost": {
+        "type": "DECIMAL"
+      },
+      "commodityCode": {
+        "type": "STRING"
+      },
+      "criticality": {
+        "type": "STRING"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "PART": {
+      "partNumber": {
+        "type": "INTEGER"
+      },
+      "componentId": {
+        "type": "STRING"
+      },
+      "description": {
+        "type": "STRING"
+      },
+      "revision": {
+        "type": "STRING"
+      },
+      "baseUnit": {
+        "type": "STRING"
+      },
+      "makeBuy": {
+        "type": "STRING"
+      },
+      "standardCost": {
+        "type": "DECIMAL"
+      },
+      "supplierPartNumber": {
+        "type": "INTEGER"
+      },
+      "weight": {
+        "type": "DECIMAL"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "MATERIAL": {
+      "materialCode": {
+        "type": "DATE_TIME"
+      },
+      "name": {
+        "type": "STRING"
+      },
+      "materialClass": {
+        "type": "DATE_TIME"
+      },
+      "grade": {
+        "type": "STRING"
+      },
+      "baseUnit": {
+        "type": "STRING"
+      },
+      "standardCost": {
+        "type": "DECIMAL"
+      },
+      "hazardClass": {
+        "type": "STRING"
+      },
+      "shelfLifeDays": {
+        "type": "INTEGER"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "RAW_MATERIAL": {
+      "rawMaterialCode": {
+        "type": "DATE_TIME"
+      },
+      "materialId": {
+        "type": "DATE_TIME"
+      },
+      "specification": {
+        "type": "DATE_TIME"
+      },
+      "grade": {
+        "type": "STRING"
+      },
+      "form": {
+        "type": "STRING"
+      },
+      "dimension": {
+        "type": "STRING"
+      },
+      "preferredSupplierId": {
+        "type": "STRING"
+      },
+      "leadTimeDays": {
+        "type": "INTEGER"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "FACILITY": {
+      "facilityCode": {
+        "type": "STRING"
+      },
+      "facilityName": {
+        "type": "STRING"
+      },
+      "facilityType": {
+        "type": "STRING"
+      },
+      "addressLine1": {
+        "type": "STRING"
+      },
+      "city": {
+        "type": "STRING"
+      },
+      "stateProvince": {
+        "type": "DATE_TIME"
+      },
+      "postalCode": {
+        "type": "STRING"
+      },
+      "countryCode": {
+        "type": "INTEGER"
+      },
+      "timezone": {
+        "type": "STRING"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "MANUFACTURING_PLANT": {
+      "plantCode": {
+        "type": "STRING"
+      },
+      "plantName": {
+        "type": "STRING"
+      },
+      "plantType": {
+        "type": "STRING"
+      },
+      "manufacturingCalendarId": {
+        "type": "DATE_TIME"
+      },
+      "companyCode": {
+        "type": "STRING"
+      },
+      "costCenterId": {
+        "type": "DECIMAL"
+      },
+      "managerId": {
+        "type": "STRING"
+      },
+      "operatingStatus": {
+        "type": "STRING"
+      }
+    },
+    "PRODUCTION_AREA": {
+      "areaCode": {
+        "type": "STRING"
+      },
+      "areaName": {
+        "type": "STRING"
+      },
+      "areaType": {
+        "type": "DATE_TIME"
+      },
+      "supervisorId": {
+        "type": "STRING"
+      },
+      "shiftPatternId": {
+        "type": "DATE_TIME"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "PRODUCTION_LINE": {
+      "lineCode": {
+        "type": "STRING"
+      },
+      "lineName": {
+        "type": "STRING"
+      },
+      "lineType": {
+        "type": "STRING"
+      },
+      "calendarId": {
+        "type": "DATE_TIME"
+      },
+      "shiftPatternId": {
+        "type": "DATE_TIME"
+      },
+      "targetRatePerHour": {
+        "type": "DECIMAL"
+      },
+      "ratedCapacityPerHour": {
+        "type": "DECIMAL"
+      },
+      "efficiencyPercent": {
+        "type": "DECIMAL"
+      },
+      "utilizationPercent": {
+        "type": "DECIMAL"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "WORK_CENTER": {
+      "workCenterCode": {
+        "type": "STRING"
+      },
+      "workCenterName": {
+        "type": "STRING"
+      },
+      "workCenterCategory": {
+        "type": "DATE_TIME"
+      },
+      "description": {
+        "type": "STRING"
+      },
+      "responsiblePersonId": {
+        "type": "STRING"
+      },
+      "locationCode": {
+        "type": "DATE_TIME"
+      },
+      "standardValueKey": {
+        "type": "DECIMAL"
+      },
+      "capacityCategory": {
+        "type": "DECIMAL"
+      },
+      "calendarId": {
+        "type": "DATE_TIME"
+      },
+      "shiftPatternId": {
+        "type": "DATE_TIME"
+      },
+      "availableCapacity": {
+        "type": "DECIMAL"
+      },
+      "capacityUnit": {
+        "type": "DECIMAL"
+      },
+      "efficiencyPercent": {
+        "type": "DECIMAL"
+      },
+      "utilizationPercent": {
+        "type": "DECIMAL"
+      },
+      "costCenterId": {
+        "type": "DECIMAL"
+      },
+      "activityType": {
+        "type": "STRING"
+      },
+      "schedulingFormula": {
+        "type": "STRING"
+      },
+      "processingFormula": {
+        "type": "STRING"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "STORAGE_AREA": {
+      "storageAreaCode": {
+        "type": "DATE"
+      },
+      "storageAreaName": {
+        "type": "DATE"
+      },
+      "facilityCode": {
+        "type": "STRING"
+      },
+      "storageType": {
+        "type": "DATE"
+      },
+      "temperatureZone": {
+        "type": "DATE_TIME"
+      },
+      "capacity": {
+        "type": "DECIMAL"
+      },
+      "capacityUnit": {
+        "type": "DECIMAL"
+      },
+      "managerId": {
+        "type": "STRING"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "STORAGE_LOCATION": {
+      "storageLocationCode": {
+        "type": "DATE_TIME"
+      },
+      "storageAreaCode": {
+        "type": "DATE"
+      },
+      "aisle": {
+        "type": "STRING"
+      },
+      "rack": {
+        "type": "STRING"
+      },
+      "bin": {
+        "type": "STRING"
+      },
+      "storageType": {
+        "type": "DATE"
+      },
+      "capacity": {
+        "type": "DECIMAL"
+      },
+      "capacityUnit": {
+        "type": "DECIMAL"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "SALES_DOCUMENT": {
+      "salesDocumentNumber": {
+        "type": "STRING"
+      },
+      "salesDocumentType": {
+        "type": "STRING"
+      },
+      "customerId": {
+        "type": "DATE"
+      },
+      "documentDate": {
+        "type": "DATE_TIME"
+      },
+      "salesOrganization": {
+        "type": "DATE_TIME"
+      },
+      "currency": {
+        "type": "STRING"
+      },
+      "netValue": {
+        "type": "DECIMAL"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "PROCUREMENT_DOCUMENT": {
+      "procurementDocumentNumber": {
+        "type": "STRING"
+      },
+      "procurementDocumentType": {
+        "type": "STRING"
+      },
+      "supplierId": {
+        "type": "STRING"
+      },
+      "documentDate": {
+        "type": "DATE_TIME"
+      },
+      "purchasingOrganization": {
+        "type": "DATE_TIME"
+      },
+      "currency": {
+        "type": "STRING"
+      },
+      "netValue": {
+        "type": "DECIMAL"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "MANUFACTURING_DOCUMENT": {
+      "manufacturingDocumentNumber": {
+        "type": "STRING"
+      },
+      "manufacturingDocumentType": {
+        "type": "STRING"
+      },
+      "plantCode": {
+        "type": "STRING"
+      },
+      "productId": {
+        "type": "STRING"
+      },
+      "plannedStart": {
+        "type": "DATE_TIME"
+      },
+      "plannedEnd": {
+        "type": "DATE_TIME"
+      },
+      "quantity": {
+        "type": "DECIMAL"
+      },
+      "unitOfMeasure": {
+        "type": "DATE"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "PRODUCTION_ORDER": {
+      "productionOrderNumber": {
+        "type": "STRING"
+      },
+      "productId": {
+        "type": "STRING"
+      },
+      "plantCode": {
+        "type": "STRING"
+      },
+      "productionLineCode": {
+        "type": "STRING"
+      },
+      "orderType": {
+        "type": "STRING"
+      },
+      "plannedQuantity": {
+        "type": "DECIMAL"
+      },
+      "unitOfMeasure": {
+        "type": "DATE"
+      },
+      "scheduledStart": {
+        "type": "DATE_TIME"
+      },
+      "scheduledEnd": {
+        "type": "DATE_TIME"
+      },
+      "priority": {
+        "type": "STRING"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "OPERATION": {
+      "operationNumber": {
+        "type": "DATE_TIME"
+      },
+      "productionOrderId": {
+        "type": "STRING"
+      },
+      "sequenceNumber": {
+        "type": "INTEGER"
+      },
+      "operationCode": {
+        "type": "DATE_TIME"
+      },
+      "description": {
+        "type": "STRING"
+      },
+      "workCenterCode": {
+        "type": "STRING"
+      },
+      "setupTime": {
+        "type": "STRING"
+      },
+      "runTime": {
+        "type": "STRING"
+      },
+      "timeUnit": {
+        "type": "STRING"
+      },
+      "plannedQuantity": {
+        "type": "DECIMAL"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "WORK_CENTER_ASSIGNMENT": {
+      "assignmentNumber": {
+        "type": "STRING"
+      },
+      "operationId": {
+        "type": "DATE_TIME"
+      },
+      "workCenterCode": {
+        "type": "STRING"
+      },
+      "assignedFrom": {
+        "type": "DATE"
+      },
+      "assignedTo": {
+        "type": "DATE"
+      },
+      "requiredCapacity": {
+        "type": "DECIMAL"
+      },
+      "capacityUnit": {
+        "type": "DECIMAL"
+      },
+      "shiftCode": {
+        "type": "STRING"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "INVENTORY_DOCUMENT": {
+      "inventoryDocumentNumber": {
+        "type": "DATE"
+      },
+      "movementType": {
+        "type": "STRING"
+      },
+      "postingDate": {
+        "type": "DATE_TIME"
+      },
+      "plantCode": {
+        "type": "STRING"
+      },
+      "warehouseCode": {
+        "type": "STRING"
+      },
+      "referenceDocument": {
+        "type": "STRING"
+      },
+      "createdBy": {
+        "type": "DATE_TIME"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    },
+    "FINANCE_DOCUMENT": {
+      "financeDocumentNumber": {
+        "type": "STRING"
+      },
+      "companyCode": {
+        "type": "STRING"
+      },
+      "fiscalYear": {
+        "type": "INTEGER"
+      },
+      "postingDate": {
+        "type": "DATE_TIME"
+      },
+      "documentType": {
+        "type": "STRING"
+      },
+      "currency": {
+        "type": "STRING"
+      },
+      "amount": {
+        "type": "DECIMAL"
+      },
+      "referenceDocument": {
+        "type": "STRING"
+      },
+      "status": {
+        "type": "STRING"
+      }
+    }
+  },
+  "objectModelHierarchy": {
+    "root": "ENTERPRISE",
+    "families": [
+      {
+        "id": "PARTY",
+        "children": [
+          "PERSON",
+          "ORGANIZATION"
+        ]
+      },
+      {
+        "id": "PERSON",
+        "children": [
+          "EMPLOYEE"
+        ]
+      },
+      {
+        "id": "ORGANIZATION",
+        "children": [
+          "ORGANIZATION_CUSTOMER",
+          "SUPPLIER_ORGANIZATION"
+        ]
+      },
+      {
+        "id": "PRODUCT",
+        "children": [
+          "FINISHED_PRODUCT",
+          "ASSEMBLY",
+          "COMPONENT",
+          "MATERIAL"
+        ]
+      },
+      {
+        "id": "PLACE",
+        "children": [
+          "FACILITY"
+        ]
+      },
+      {
+        "id": "BUSINESS_DOCUMENT",
+        "children": [
+          "SALES_DOCUMENT",
+          "PROCUREMENT_DOCUMENT",
+          "MANUFACTURING_DOCUMENT",
+          "INVENTORY_DOCUMENT",
+          "FINANCE_DOCUMENT"
+        ]
+      },
+      {
+        "id": "SALES_ORDERS",
+        "children": [
+          "SALES_ORDER_LINES"
+        ]
+      },
+      {
+        "id": "PURCHASE_ORDERS",
+        "children": [
+          "PURCHASE_ORDER_LINES"
+        ]
+      },
+      {
+        "id": "EMPLOYEE",
+        "children": [
+          "ENGINEER"
+        ]
+      },
+      {
+        "id": "ORGANIZATION_CUSTOMER",
+        "children": [
+          "CUSTOMERS",
+          "DEALER"
+        ]
+      },
+      {
+        "id": "SUPPLIER_ORGANIZATION",
+        "children": [
+          "SUPPLIERS",
+          "TIER_1_SUPPLIER"
+        ]
+      },
+      {
+        "id": "FINISHED_PRODUCT",
+        "children": [
+          "VEHICLE"
+        ]
+      },
+      {
+        "id": "VEHICLE",
+        "children": [
+          "TRUCK"
+        ]
+      },
+      {
+        "id": "ASSEMBLY",
+        "children": [
+          "POWERTRAIN"
+        ]
+      },
+      {
+        "id": "POWERTRAIN",
+        "children": [
+          "ENGINE"
+        ]
+      },
+      {
+        "id": "COMPONENT",
+        "children": [
+          "PART"
+        ]
+      },
+      {
+        "id": "PART",
+        "children": [
+          "ITEMS"
+        ]
+      },
+      {
+        "id": "MATERIAL",
+        "children": [
+          "RAW_MATERIAL"
+        ]
+      },
+      {
+        "id": "FACILITY",
+        "children": [
+          "MANUFACTURING_PLANT",
+          "STORAGE_AREA"
+        ]
+      },
+      {
+        "id": "MANUFACTURING_PLANT",
+        "children": [
+          "PRODUCTION_AREA"
+        ]
+      },
+      {
+        "id": "PRODUCTION_AREA",
+        "children": [
+          "PRODUCTION_LINE"
+        ]
+      },
+      {
+        "id": "PRODUCTION_LINE",
+        "children": [
+          "WORK_CENTER"
+        ]
+      },
+      {
+        "id": "STORAGE_AREA",
+        "children": [
+          "WAREHOUSES",
+          "STORAGE_LOCATION"
+        ]
+      },
+      {
+        "id": "SALES_DOCUMENT",
+        "children": [
+          "SALES_ORDERS"
+        ]
+      },
+      {
+        "id": "PROCUREMENT_DOCUMENT",
+        "children": [
+          "PURCHASE_ORDERS"
+        ]
+      },
+      {
+        "id": "MANUFACTURING_DOCUMENT",
+        "children": [
+          "PRODUCTION_PLANS",
+          "PRODUCTION_ORDER"
+        ]
+      },
+      {
+        "id": "PRODUCTION_ORDER",
+        "children": [
+          "WORK_ORDERS",
+          "OPERATION"
+        ]
+      },
+      {
+        "id": "OPERATION",
+        "children": [
+          "WORK_CENTER_ASSIGNMENT"
+        ]
+      },
+      {
+        "id": "INVENTORY_DOCUMENT",
+        "children": [
+          "STOCK_ENTRIES"
+        ]
+      },
+      {
+        "id": "FINANCE_DOCUMENT",
+        "children": [
+          "SALES_INVOICES",
+          "PURCHASE_INVOICES",
+          "PAYMENTS"
+        ]
+      }
+    ],
+    "note": "Automobile manufacturer ERP OOM with representative CRUD fields across every entity. Every hierarchy node is navigable and persistent for this experiment; inheritance remains the UML/menu organization mechanism."
+  }
+}

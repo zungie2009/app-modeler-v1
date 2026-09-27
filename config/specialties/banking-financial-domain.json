@@ -1,0 +1,118 @@
+{
+  "domainId": "BANKING_CORE_FINANCIAL",
+  "entities": {
+    "PARTY": {
+      "id": "PARTY",
+      "displayName": "Banking Party Master",
+      "parentId": null,
+      "fields": [
+        { "name": "partyCode", "label": "Party Code", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "PRT-BNK-100", "lookupEntity": null },
+        { "name": "fullName", "label": "Legal Name", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": null },
+        { "name": "kycStatus", "label": "KYC Verification", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "VERIFIED", "lookupEntity": null }
+      ]
+    },
+    "CUSTOMER": {
+      "id": "CUSTOMER",
+      "displayName": "Bank Customers",
+      "parentId": "PARTY",
+      "fields": [
+        { "name": "cifNumber", "label": "CIF Number", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "CIF-90812", "lookupEntity": null },
+        { "name": "taxIdentificationNo", "label": "Tax ID / SSN", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "000-88-1920", "lookupEntity": null },
+        { "name": "riskRating", "label": "AML Risk Rating", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "LOW_RISK", "lookupEntity": null }
+      ]
+    },
+    "ACCOUNT_BASE": {
+      "id": "ACCOUNT_BASE",
+      "displayName": "Account Base Header",
+      "parentId": null,
+      "fields": [
+        { "name": "accountNumber", "label": "Account Number", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "ACC-1000", "lookupEntity": null },
+        { "name": "currency", "label": "Currency ISO", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "USD", "lookupEntity": null },
+        { "name": "accountStatus", "label": "Account Status", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "ACTIVE", "lookupEntity": null }
+      ]
+    },
+    "DEPOSIT_ACCOUNTS": {
+      "id": "DEPOSIT_ACCOUNTS",
+      "displayName": "Deposit Accounts (Checking/Savings)",
+      "parentId": "ACCOUNT_BASE",
+      "fields": [
+        { "name": "accountNumber", "label": "Account Number", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "ACC-CHK-9001", "lookupEntity": null },
+        { "name": "cifNumber", "label": "Customer CIF", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "CUSTOMER" },
+        { "name": "productType", "label": "Product Type", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "HIGH_YIELD_SAVINGS", "lookupEntity": null },
+        { "name": "ledgerBalance", "label": "Ledger Balance ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "12500.00", "lookupEntity": null },
+        { "name": "holdAmount", "label": "Holds / Encumbrance ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "0.00", "lookupEntity": null },
+        { "name": "availableBalance", "label": "Available Balance ($)", "type": "NUMBER", "required": false, "readOnly": true, "formula": "ledgerBalance - holdAmount", "defaultValue": "0.00", "lookupEntity": null }
+      ]
+    },
+    "LOAN_ACCOUNTS": {
+      "id": "LOAN_ACCOUNTS",
+      "displayName": "Credit & Loan Accounts",
+      "parentId": "ACCOUNT_BASE",
+      "fields": [
+        { "name": "loanContractNumber", "label": "Loan Contract No", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "LN-2026-401", "lookupEntity": null },
+        { "name": "cifNumber", "label": "Borrower CIF", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "CUSTOMER" },
+        { "name": "principalAmount", "label": "Original Principal ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "35000.00", "lookupEntity": null },
+        { "name": "interestRatePercent", "label": "Annual Interest Rate (%)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "6.25", "lookupEntity": null },
+        { "name": "outstandingPrincipal", "label": "Outstanding Principal ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "28400.00", "lookupEntity": null }
+      ]
+    },
+    "GL_ACCOUNT": {
+      "id": "GL_ACCOUNT",
+      "displayName": "General Ledger Chart of Accounts",
+      "parentId": null,
+      "fields": [
+        { "name": "glCode", "label": "GL Account Code", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "GL-1010-CASH", "lookupEntity": null },
+        { "name": "glName", "label": "GL Account Name", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "Vault Cash & Clearing", "lookupEntity": null },
+        { "name": "glType", "label": "Account Classification", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "ASSET", "lookupEntity": null }
+      ]
+    },
+    "JOURNAL_BATCH": {
+      "id": "JOURNAL_BATCH",
+      "displayName": "Journal Batch Entries",
+      "parentId": null,
+      "fields": [
+        { "name": "batchRef", "label": "Batch Reference", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "BAT-2026-0923", "lookupEntity": null },
+        { "name": "postingDate", "label": "Value Date", "type": "DATE", "required": true, "readOnly": false, "formula": null, "defaultValue": "2026-09-23", "lookupEntity": null }
+      ]
+    },
+    "LEDGER_TRANSACTIONS": {
+      "id": "LEDGER_TRANSACTIONS",
+      "displayName": "Double-Entry Ledger Postings",
+      "parentId": "JOURNAL_BATCH",
+      "fields": [
+        { "name": "transactionId", "label": "Txn Reference", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "TXN-908122", "lookupEntity": null },
+        { "name": "accountNumber", "label": "Target Deposit Account", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "DEPOSIT_ACCOUNTS" },
+        { "name": "debitGlCode", "label": "Debit GL Account", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "GL_ACCOUNT" },
+        { "name": "creditGlCode", "label": "Credit GL Account", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "GL_ACCOUNT" },
+        { "name": "transactionAmount", "label": "Transaction Amount ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "500.00", "lookupEntity": null },
+        { "name": "feeAmount", "label": "Service Fee ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "2.50", "lookupEntity": null },
+        { "name": "netSettlementAmount", "label": "Net Settlement ($)", "type": "NUMBER", "required": false, "readOnly": true, "formula": "transactionAmount + feeAmount", "defaultValue": "0.00", "lookupEntity": null }
+      ]
+    }
+  },
+  "relations": [
+    { "from": "CUSTOMER", "to": "DEPOSIT_ACCOUNTS", "type": "HOLDS", "cardinality": "1:N" },
+    { "from": "CUSTOMER", "to": "LOAN_ACCOUNTS", "type": "BORROWS", "cardinality": "1:N" },
+    { "from": "DEPOSIT_ACCOUNTS", "to": "LEDGER_TRANSACTIONS", "type": "POSTED_TO", "cardinality": "1:N" },
+    { "from": "GL_ACCOUNT", "to": "LEDGER_TRANSACTIONS", "type": "DEBITS", "cardinality": "1:N" },
+    { "from": "GL_ACCOUNT", "to": "LEDGER_TRANSACTIONS", "type": "CREDITS", "cardinality": "1:N" }
+  ],
+  "seedData": {
+    "CUSTOMER": [
+      { "fullName": "Apex Logistics Capital LLC", "kycStatus": "VERIFIED", "cifNumber": "CIF-90812", "taxIdentificationNo": "88-1092811", "riskRating": "LOW_RISK" },
+      { "fullName": "Helena Vance", "kycStatus": "VERIFIED", "cifNumber": "CIF-90813", "taxIdentificationNo": "000-44-1188", "riskRating": "LOW_RISK" }
+    ],
+    "DEPOSIT_ACCOUNTS": [
+      { "accountNumber": "ACC-CHK-9001", "cifNumber": "CIF-90812", "productType": "COMMERCIAL_CHECKING", "ledgerBalance": "150000.00", "holdAmount": "5000.00", "availableBalance": "145000.00" },
+      { "accountNumber": "ACC-SAV-3022", "cifNumber": "CIF-90813", "productType": "HIGH_YIELD_SAVINGS", "ledgerBalance": "28500.00", "holdAmount": "0.00", "availableBalance": "28500.00" }
+    ],
+    "GL_ACCOUNT": [
+      { "glCode": "GL-1010-CASH", "glName": "Central Vault Cash & Clearing", "glType": "ASSET" },
+      { "glCode": "GL-2010-DEPOSITS", "glName": "Demand Deposit Customer Liabilities", "glType": "LIABILITY" },
+      { "glCode": "GL-4010-FEE-INC", "glName": "Wire & Service Fee Income", "glType": "REVENUE" }
+    ],
+    "LEDGER_TRANSACTIONS": [
+      { "transactionId": "TXN-908122", "accountNumber": "ACC-CHK-9001", "debitGlCode": "GL-1010-CASH", "creditGlCode": "GL-2010-DEPOSITS", "transactionAmount": "500.00", "feeAmount": "2.50", "netSettlementAmount": "502.50" }
+    ]
+  }
+}

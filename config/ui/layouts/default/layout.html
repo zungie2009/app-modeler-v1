@@ -1,0 +1,93 @@
+<div id="app" :class="appearanceClass">
+    <div class="shell">
+        <aside class="sidebar">
+            <div class="sidebar-main">
+                <div class="brand">App Modeler</div>
+                <button class="nav-btn" :class="{active:view==='HOME'}" @click="showDashboard">Dashboard</button>
+                <div class="nav-section">Application</div>
+                <template v-for="node in menu" :key="node.id || node.label">
+                    <button class="nav-btn" :class="{active:activeMenuGroupId === (node.id || node.label)}" @click="openMenu(node)">
+                        <span>{{node.label || node.id}}</span>
+                        <span v-if="node.children && node.children.length">›</span>
+                    </button>
+                </template>
+            </div>
+            <div class="sidebar-footer">
+                <button class="nav-btn" :class="{active:view==='UML'}" @click="showUml">UML Diagram</button>
+                <button class="nav-btn" :class="{active:view==='ADMIN'}" @click="view='ADMIN'">Admin</button>
+            </div>
+        </aside>
+
+        <main class="main">
+            <header class="topbar">
+                <div><strong>{{domain.domainId || 'Application'}}</strong><span class="muted"> · external interpreters</span></div>
+                <span class="tag">Java 21 + Vue 3</span>
+            </header>
+
+            <section class="content">
+                <div v-if="view==='HOME'" class="grid">
+                    <div class="card"><div class="muted">Entities</div><div class="metric">{{entities.length}}</div></div>
+                    <div class="card"><div class="muted">Relationships</div><div class="metric">{{relations.length}}</div></div>
+                    <div class="card"><div class="muted">Layout</div><h3>{{settings.contentLayout}}</h3></div>
+                </div>
+
+                <div v-else-if="view==='MENU_GROUP'" class="menu-group-canvas">
+                    <div class="menu-group-heading">
+                        <h2>{{activeMenuGroup?.label || activeMenuGroup?.id || 'Application'}}</h2>
+                        <p class="muted">Choose a section to continue.</p>
+                    </div>
+                    <div class="menu-group-card-grid">
+                        <button
+                            v-for="child in (activeMenuGroup?.children || [])"
+                            :key="child.id || child.label"
+                            class="menu-group-card"
+                            @click="openMenu(child)">
+                            <span class="menu-group-card-title">{{child.label || child.id}}</span>
+                            <span class="menu-group-card-action">
+                                {{child.children && child.children.length ? 'Open section' : 'View records'}} →
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <div v-else-if="view==='ENTITY'" class="card entity-data-card">
+                    <div class="entity-data-header">
+                        <div>
+                            <h2>{{activeEntity?.displayName || activeEntity?.label || activeEntity?.id || selectedEntity}}</h2>
+                            <p class="muted">Records interpreted from the selected domain JSON.</p>
+                        </div>
+                        <span class="tag">{{records.length}} records</span>
+                    </div>
+                    <p v-if="recordsLoading" class="muted">Loading records…</p>
+                    <p v-else-if="records.length === 0" class="muted">No records available.</p>
+                    <div v-else class="entity-table-wrap">
+                        <table class="data-table entity-record-table">
+                            <thead><tr><th v-for="field in visibleFields" :key="field.name">{{field.label || field.name}}</th></tr></thead>
+                            <tbody>
+                                <tr v-for="(record, rowIndex) in records" :key="record.id || rowIndex">
+                                    <td v-for="field in visibleFields" :key="field.name">{{displayValue(record, field)}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div v-else-if="view==='UML'" class="card">
+                    <h2>UML Diagram</h2>
+                    <p class="muted">The UML and menu are produced from the same interpreted domain model.</p>
+                    <svg id="uml" class="uml"></svg>
+                </div>
+
+                <div v-else-if="view==='ADMIN'" class="card">
+                    <h2>Administration</h2>
+                    <div class="admin-grid">
+                        <div class="form-row"><label>Domain template</label><select v-model="selectedDomain"><option v-for="d in domains" :value="d.file">{{d.label}}</option></select></div>
+                        <div class="form-row"><label>Content layout</label><select v-model="settings.contentLayout"><option v-for="layout in layouts" :value="layout">{{layout}}</option></select></div>
+                    </div>
+                    <button class="primary" @click="applyAdmin">Apply & Interpret</button>
+                    <p class="muted">Domain and layout are interpreted here. The selected layout supplies HTML, layout.js, and layout.css.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>

@@ -1,0 +1,115 @@
+{
+  "domainId": "ECOMMERCE_ORDER_MANAGEMENT",
+  "entities": {
+    "PARTY": {
+      "id": "PARTY",
+      "displayName": "E-Commerce Party Master",
+      "parentId": null,
+      "fields": [
+        { "name": "partyCode", "label": "Party Code", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "PRT-EC-100", "lookupEntity": null },
+        { "name": "fullName", "label": "Full Name / Org Name", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": null },
+        { "name": "status", "label": "Status", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "ACTIVE", "lookupEntity": null }
+      ]
+    },
+    "CUSTOMER": {
+      "id": "CUSTOMER",
+      "displayName": "E-Commerce Customers",
+      "parentId": "PARTY",
+      "fields": [
+        { "name": "customerId", "label": "Customer ID", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "CUST-EC-8801", "lookupEntity": null },
+        { "name": "email", "label": "Email Address", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "customer@example.com", "lookupEntity": null },
+        { "name": "loyaltyTier", "label": "Loyalty Tier", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "GOLD", "lookupEntity": null }
+      ]
+    },
+    "CATALOG_ITEM": {
+      "id": "CATALOG_ITEM",
+      "displayName": "Product Catalog Items",
+      "parentId": null,
+      "fields": [
+        { "name": "sku", "label": "Product SKU", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "SKU-WIRELESS-EARBUDS", "lookupEntity": null },
+        { "name": "productName", "label": "Product Name", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "Pro Noise-Canceling Earbuds", "lookupEntity": null },
+        { "name": "unitPrice", "label": "Unit Retail Price ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "129.99", "lookupEntity": null }
+      ]
+    },
+    "INVENTORY_STOCK": {
+      "id": "INVENTORY_STOCK",
+      "displayName": "Inventory Stock & Reservations",
+      "parentId": null,
+      "fields": [
+        { "name": "inventoryId", "label": "Inventory Record ID", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "INV-SKU-EARBUDS", "lookupEntity": null },
+        { "name": "sku", "label": "Product SKU", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "CATALOG_ITEM" },
+        { "name": "quantityOnHand", "label": "Physical Stock On Hand", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "500", "lookupEntity": null },
+        { "name": "reservedQuantity", "label": "Reserved Stock", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "45", "lookupEntity": null },
+        { "name": "availableToPromise", "label": "Available Stock (ATP)", "type": "NUMBER", "required": false, "readOnly": true, "formula": "quantityOnHand - reservedQuantity", "defaultValue": "0", "lookupEntity": null }
+      ]
+    },
+    "ORDER_LINE": {
+      "id": "ORDER_LINE",
+      "displayName": "Order Line Items",
+      "parentId": null,
+      "fields": [
+        { "name": "lineId", "label": "Line ID", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "LINE-01", "lookupEntity": null },
+        { "name": "sku", "label": "Product SKU", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "CATALOG_ITEM" },
+        { "name": "quantity", "label": "Order Quantity", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "2", "lookupEntity": null },
+        { "name": "unitPrice", "label": "Unit Price ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "129.99", "lookupEntity": null },
+        { "name": "lineSubtotal", "label": "Line Subtotal ($)", "type": "NUMBER", "required": false, "readOnly": true, "formula": "quantity * unitPrice", "defaultValue": "0.00", "lookupEntity": null }
+      ]
+    },
+    "SALES_ORDER": {
+      "id": "SALES_ORDER",
+      "displayName": "E-Commerce Sales Orders",
+      "parentId": null,
+      "fields": [
+        { "name": "orderNumber", "label": "Order Number", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "ORD-2026-9901", "lookupEntity": null },
+        { "name": "customerId", "label": "Customer", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "CUSTOMER" },
+        { "name": "orderDate", "label": "Order Date", "type": "DATE", "required": true, "readOnly": false, "formula": null, "defaultValue": "2026-09-23", "lookupEntity": null },
+        { "name": "subtotal", "label": "Merchandise Subtotal ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "259.98", "lookupEntity": null },
+        { "name": "shippingFee", "label": "Shipping Fee ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "15.00", "lookupEntity": null },
+        { "name": "grandTotal", "label": "Grand Total ($)", "type": "NUMBER", "required": false, "readOnly": true, "formula": "subtotal + shippingFee", "defaultValue": "0.00", "lookupEntity": null },
+        { "name": "orderStatus", "label": "Fulfillment Status", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "PROCESSING", "lookupEntity": null }
+      ]
+    },
+    "FULFILLMENT_SHIPMENT": {
+      "id": "FULFILLMENT_SHIPMENT",
+      "displayName": "Order Shipments",
+      "parentId": null,
+      "fields": [
+        { "name": "shipmentNumber", "label": "Shipment Number", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "SHP-2026-0041", "lookupEntity": null },
+        { "name": "orderNumber", "label": "Sales Order Number", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "SALES_ORDER" },
+        { "name": "carrier", "label": "Shipping Carrier", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "FedEx Express", "lookupEntity": null },
+        { "name": "trackingNumber", "label": "Tracking Number", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "781290812231", "lookupEntity": null },
+        { "name": "shipmentStatus", "label": "Shipment Status", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "DISPATCHED", "lookupEntity": null }
+      ]
+    }
+  },
+  "relations": [
+    { "from": "CUSTOMER", "to": "SALES_ORDER", "type": "PLACES", "cardinality": "1:N" },
+    { "from": "CATALOG_ITEM", "to": "INVENTORY_STOCK", "type": "TRACKED_BY", "cardinality": "1:1" },
+    { "from": "CATALOG_ITEM", "to": "ORDER_LINE", "type": "ORDERED_IN", "cardinality": "1:N" },
+    { "from": "SALES_ORDER", "to": "ORDER_LINE", "type": "CONTAINS", "cardinality": "1:N" },
+    { "from": "SALES_ORDER", "to": "FULFILLMENT_SHIPMENT", "type": "FULFILLED_BY", "cardinality": "1:N" }
+  ],
+  "seedData": {
+    "CUSTOMER": [
+      { "fullName": "Alex Mercer", "customerId": "CUST-EC-8801", "email": "alex.mercer@example.com", "loyaltyTier": "GOLD" },
+      { "fullName": "Samantha Reed", "customerId": "CUST-EC-8802", "email": "sreed@example.com", "loyaltyTier": "PLATINUM" }
+    ],
+    "CATALOG_ITEM": [
+      { "sku": "SKU-WIRELESS-EARBUDS", "productName": "Pro Noise-Canceling Earbuds", "unitPrice": "129.99" },
+      { "sku": "SKU-SMART-WATCH", "productName": "Fitness Tracker Smart Watch", "unitPrice": "199.50" }
+    ],
+    "INVENTORY_STOCK": [
+      { "inventoryId": "INV-SKU-EARBUDS", "sku": "SKU-WIRELESS-EARBUDS", "quantityOnHand": "500", "reservedQuantity": "45", "availableToPromise": "455" },
+      { "inventoryId": "INV-SKU-WATCH", "sku": "SKU-SMART-WATCH", "quantityOnHand": "200", "reservedQuantity": "20", "availableToPromise": "180" }
+    ],
+    "ORDER_LINE": [
+      { "lineId": "LINE-01", "sku": "SKU-WIRELESS-EARBUDS", "quantity": "2", "unitPrice": "129.99", "lineSubtotal": "259.98" }
+    ],
+    "SALES_ORDER": [
+      { "orderNumber": "ORD-2026-9901", "customerId": "CUST-EC-8801", "orderDate": "2026-09-23", "subtotal": "259.98", "shippingFee": "15.00", "grandTotal": "274.98", "orderStatus": "PROCESSING" }
+    ],
+    "FULFILLMENT_SHIPMENT": [
+      { "shipmentNumber": "SHP-2026-0041", "orderNumber": "ORD-2026-9901", "carrier": "FedEx Express", "trackingNumber": "781290812231", "shipmentStatus": "DISPATCHED" }
+    ]
+  }
+}

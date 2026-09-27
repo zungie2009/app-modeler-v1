@@ -1,0 +1,127 @@
+{
+  "domainId": "HEALTHCARE_HOSPITAL_ENTERPRISE",
+  "entities": {
+    "PARTY": {
+      "id": "PARTY",
+      "displayName": "Healthcare Party Master",
+      "parentId": null,
+      "fields": [
+        { "name": "partyCode", "label": "Party Code", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "PRT-HC-100", "lookupEntity": null },
+        { "name": "fullName", "label": "Full Name", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": null },
+        { "name": "status", "label": "Status", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "ACTIVE", "lookupEntity": null }
+      ]
+    },
+    "PERSON": {
+      "id": "PERSON",
+      "displayName": "Person Details",
+      "parentId": "PARTY",
+      "fields": [
+        { "name": "nationalId", "label": "National ID / SSN", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "SSN-000-11-99", "lookupEntity": null },
+        { "name": "gender", "label": "Gender", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "UNSPECIFIED", "lookupEntity": null },
+        { "name": "dateOfBirth", "label": "Date of Birth", "type": "DATE", "required": true, "readOnly": false, "formula": null, "defaultValue": "1988-05-12", "lookupEntity": null },
+        { "name": "contactPhone", "label": "Contact Phone", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": null }
+      ]
+    },
+    "PATIENT": {
+      "id": "PATIENT",
+      "displayName": "Registered Patients",
+      "parentId": "PERSON",
+      "fields": [
+        { "name": "patientMrn", "label": "Medical Record No (MRN)", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "MRN-88091", "lookupEntity": null },
+        { "name": "bloodGroup", "label": "Blood Group", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "O_POSITIVE", "lookupEntity": null },
+        { "name": "primaryInsurance", "label": "Primary Insurance", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "BlueCross Health", "lookupEntity": null },
+        { "name": "emergencyContact", "label": "Emergency Phone", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "555-0192", "lookupEntity": null }
+      ]
+    },
+    "PHYSICIAN": {
+      "id": "PHYSICIAN",
+      "displayName": "Attending Physicians",
+      "parentId": "PERSON",
+      "fields": [
+        { "name": "doctorLicenseNo", "label": "Medical License No", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "MD-LIC-4402", "lookupEntity": null },
+        { "name": "specialty", "label": "Clinical Specialty", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "CARDIOLOGY", "lookupEntity": null },
+        { "name": "departmentCode", "label": "Department Code", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "DEPT-CARD", "lookupEntity": null }
+      ]
+    },
+    "CLINICAL_DOCUMENT": {
+      "id": "CLINICAL_DOCUMENT",
+      "displayName": "Clinical Document Header",
+      "parentId": null,
+      "fields": [
+        { "name": "documentId", "label": "Document ID", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "DOC-CLIN-01", "lookupEntity": null },
+        { "name": "entryDate", "label": "Entry Date", "type": "DATE", "required": true, "readOnly": false, "formula": null, "defaultValue": "2026-09-23", "lookupEntity": null }
+      ]
+    },
+    "MEDICAL_ENCOUNTER": {
+      "id": "MEDICAL_ENCOUNTER",
+      "displayName": "Medical Encounters & Visits",
+      "parentId": "CLINICAL_DOCUMENT",
+      "fields": [
+        { "name": "encounterId", "label": "Encounter No", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "ENC-2026-901", "lookupEntity": null },
+        { "name": "patientMrn", "label": "Patient MRN", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "PATIENT" },
+        { "name": "attendingDoctor", "label": "Attending Physician", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "PHYSICIAN" },
+        { "name": "encounterType", "label": "Visit Type", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "INPATIENT_ADMISSION", "lookupEntity": null },
+        { "name": "diagnosisCode", "label": "ICD-11 Diagnosis", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "I21.9 - Acute Myocardial Infarction", "lookupEntity": null }
+      ]
+    },
+    "PRESCRIPTIONS": {
+      "id": "PRESCRIPTIONS",
+      "displayName": "Medication Prescriptions",
+      "parentId": "CLINICAL_DOCUMENT",
+      "fields": [
+        { "name": "prescriptionRx", "label": "Rx Number", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "RX-99012", "lookupEntity": null },
+        { "name": "patientMrn", "label": "Patient MRN", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "PATIENT" },
+        { "name": "medicationName", "label": "Medication Name", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "Atorvastatin 20mg", "lookupEntity": null },
+        { "name": "dosageFrequency", "label": "Dosage Schedule", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "1 Tablet / Day Evening", "lookupEntity": null }
+      ]
+    },
+    "LAB_ORDERS": {
+      "id": "LAB_ORDERS",
+      "displayName": "Diagnostic Lab Orders",
+      "parentId": "CLINICAL_DOCUMENT",
+      "fields": [
+        { "name": "labOrderNo", "label": "Lab Order No", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "LAB-4091", "lookupEntity": null },
+        { "name": "patientMrn", "label": "Patient MRN", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "PATIENT" },
+        { "name": "testPanel", "label": "Diagnostic Panel", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "Comprehensive Metabolic Panel", "lookupEntity": null },
+        { "name": "labStatus", "label": "Panel Status", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "COMPLETED", "lookupEntity": null }
+      ]
+    },
+    "PATIENT_INVOICES": {
+      "id": "PATIENT_INVOICES",
+      "displayName": "Patient Billing Invoices",
+      "parentId": null,
+      "fields": [
+        { "name": "invoiceNumber", "label": "Invoice Number", "type": "STRING", "required": true, "readOnly": false, "formula": null, "defaultValue": "INV-HC-2026-01", "lookupEntity": null },
+        { "name": "patientMrn", "label": "Patient MRN", "type": "LOOKUP", "required": true, "readOnly": false, "formula": null, "defaultValue": null, "lookupEntity": "PATIENT" },
+        { "name": "consultationFee", "label": "Consultation Fee ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "250.00", "lookupEntity": null },
+        { "name": "labCharges", "label": "Lab Charges ($)", "type": "NUMBER", "required": true, "readOnly": false, "formula": null, "defaultValue": "480.00", "lookupEntity": null },
+        { "name": "totalInvoiceAmount", "label": "Total Amount ($)", "type": "NUMBER", "required": false, "readOnly": true, "formula": "consultationFee + labCharges", "defaultValue": "0.00", "lookupEntity": null }
+      ]
+    }
+  },
+  "relations": [
+    { "from": "PATIENT", "to": "MEDICAL_ENCOUNTER", "type": "ATTENDS", "cardinality": "1:N" },
+    { "from": "PHYSICIAN", "to": "MEDICAL_ENCOUNTER", "type": "TREATED_BY", "cardinality": "1:N" },
+    { "from": "PATIENT", "to": "PRESCRIPTIONS", "type": "PRESCRIBED_TO", "cardinality": "1:N" },
+    { "from": "PATIENT", "to": "LAB_ORDERS", "type": "ORDERED_FOR", "cardinality": "1:N" },
+    { "from": "PATIENT", "to": "PATIENT_INVOICES", "type": "BILLED_TO", "cardinality": "1:N" }
+  ],
+  "seedData": {
+    "PATIENT": [
+      { "fullName": "Eleanor Vance", "nationalId": "SSN-901-22-3311", "gender": "FEMALE", "dateOfBirth": "1991-03-14", "contactPhone": "312-555-0144", "patientMrn": "MRN-88091", "bloodGroup": "O_POSITIVE", "primaryInsurance": "BlueCross Shield" },
+      { "fullName": "Marcus Brody", "nationalId": "SSN-441-99-8800", "gender": "MALE", "dateOfBirth": "1975-11-30", "contactPhone": "312-555-0188", "patientMrn": "MRN-88092", "bloodGroup": "A_NEGATIVE", "primaryInsurance": "Aetna Health" }
+    ],
+    "PHYSICIAN": [
+      { "fullName": "Dr. Sarah Lin, MD", "nationalId": "SSN-110-88-2233", "gender": "FEMALE", "dateOfBirth": "1980-07-22", "contactPhone": "312-555-0900", "doctorLicenseNo": "MD-LIC-4402", "specialty": "CARDIOLOGY", "departmentCode": "DEPT-CARD" }
+    ],
+    "MEDICAL_ENCOUNTER": [
+      { "encounterId": "ENC-2026-901", "patientMrn": "MRN-88091", "attendingDoctor": "MD-LIC-4402", "encounterType": "INPATIENT_ADMISSION", "diagnosisCode": "I21.9 - Acute Myocardial Infarction" }
+    ],
+    "PRESCRIPTIONS": [
+      { "prescriptionRx": "RX-99012", "patientMrn": "MRN-88091", "medicationName": "Atorvastatin 20mg", "dosageFrequency": "1 Tablet Daily at Bedtime" }
+    ],
+    "PATIENT_INVOICES": [
+      { "invoiceNumber": "INV-HC-2026-01", "patientMrn": "MRN-88091", "consultationFee": "250.00", "labCharges": "480.00", "totalInvoiceAmount": "730.00" }
+    ]
+  }
+}

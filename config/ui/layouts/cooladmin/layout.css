@@ -1,0 +1,32 @@
+/*
+ * Thin App Modeler adapter over the actual CoolAdmin v3.4 theme/app CSS.
+ * CoolAdmin remains responsible for the visual system; these rules only bridge
+ * App Modeler's dynamic Vue shell to the template's page structure.
+ */
+.cooladmin-app .page-wrapper { min-height: 100vh; }
+.cooladmin-modeler-logo { min-height: 75px; display: flex; align-items: center; padding: 0 18px; }
+.cooladmin-brand-button { width: 100%; border: 0; background: transparent; display: flex; gap: 10px; align-items: center; text-align: left; cursor: pointer; color: inherit; }
+.cooladmin-brand-button .logo-mark { width: 34px; height: 34px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; background: var(--m-primary, #4272d7); color: white; font-weight: 700; }
+.cooladmin-brand-button .logo-text { font-weight: 700; font-size: 17px; }
+.cooladmin-sidebar-body { bottom: 116px !important; }
+.cooladmin-sidebar-footer { position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 16px 16px; border-top: 1px solid var(--m-border, #e9ecef); background: inherit; }
+.cooladmin-nav-button { width: 100%; border: 0; background: transparent; padding: 11px 15px; border-radius: 8px; text-align: left; cursor: pointer; color: inherit; }
+.navbar__list li.active > .cooladmin-nav-button,
+.cooladmin-nav-button:hover { background: rgba(66,114,215,.10); color: var(--m-primary, #4272d7); }
+.cooladmin-header-wrap { min-height: 75px; display: flex; align-items: center; justify-content: space-between; }
+.cooladmin-main-content { padding-top: 105px; min-height: 100vh; }
+.cooladmin-page-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 24px; }
+.cooladmin-eyebrow, .cooladmin-card-kicker { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; font-weight: 700; color: var(--m-text-muted, #6c757d); }
+.cooladmin-module-card { border: 1px solid var(--m-border, #e9ecef); transition: transform .15s ease, box-shadow .15s ease; min-height: 155px; }
+.cooladmin-module-card:hover { transform: translateY(-2px); box-shadow: var(--m-shadow, 0 4px 12px rgba(0,0,0,.08)); }
+.cooladmin-data-card, .cooladmin-admin-card { overflow: hidden; border: 1px solid var(--m-border, #e9ecef); }
+.cooladmin-admin-card { max-width: 760px; }
+.uml-canvas { width: 100%; min-height: 600px; }
+.entity-box { fill: #fff; stroke: #b9c3cc; }
+.entity-title { font-size: 12px; font-weight: 700; }
+.entity-field { font-size: 10px; }
+.rel { stroke: #9aa8b5; stroke-width: 1.25; }
+@media (max-width: 991.98px) {
+  .page-container { padding-left: 0 !important; }
+  .cooladmin-main-content { padding-top: 30px; }
+}

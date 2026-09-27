@@ -1,0 +1,200 @@
+<div id="app" class="cooladmin-app">
+  <div class="page-wrapper">
+
+    <aside class="menu-sidebar d-none d-lg-block" id="main-sidebar">
+      <div class="logo cooladmin-modeler-logo">
+        <button class="cooladmin-brand-button" @click="showDashboard">
+          <span class="logo-mark" aria-hidden="true">A</span>
+          <span class="logo-text">{{ domain.name || 'App Modeler' }}</span>
+        </button>
+      </div>
+
+      <div class="menu-sidebar__content js-scrollbar1 cooladmin-sidebar-body">
+        <nav class="navbar-sidebar">
+          <ul class="list-unstyled navbar__list">
+            <li
+              v-for="node in menu"
+              :key="node.id || node.label"
+              :class="{ active: activeMenuGroup === node }">
+              <button class="cooladmin-nav-button" @click="openMenu(node)">
+                <span>{{ node.label || node.id }}</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="cooladmin-sidebar-footer">
+        <button class="cooladmin-nav-button" @click="showUml">UML Design</button>
+        <button class="cooladmin-nav-button" @click="view = 'ADMIN'">Administration</button>
+      </div>
+    </aside>
+
+    <div class="page-container">
+      <header class="header-desktop d-none d-lg-block">
+        <div class="section__content section__content--p30">
+          <div class="container-fluid">
+            <div class="header-wrap cooladmin-header-wrap">
+              <div>
+                <div class="cooladmin-eyebrow">Application workspace</div>
+                <strong>{{ domain.name || 'App Modeler' }}</strong>
+              </div>
+              <button class="btn btn-outline-primary btn-sm" @click="showDashboard">
+                Dashboard
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main id="main-content" class="main-content cooladmin-main-content">
+        <div class="section__content section__content--p30">
+          <div class="container-fluid">
+
+            <section v-if="view === 'HOME'">
+              <div class="cooladmin-page-heading">
+                <div>
+                  <div class="cooladmin-eyebrow">Dashboard</div>
+                  <h2 class="title-1">{{ domain.name || 'Application' }}</h2>
+                  <p class="text-muted mb-0">Select a module from the navigation.</p>
+                </div>
+              </div>
+
+              <div class="row g-4">
+                <div
+                  v-for="node in menu"
+                  :key="node.id || node.label"
+                  class="col-12 col-md-6">
+                  <button class="card cooladmin-module-card h-100 w-100 text-start" @click="openMenu(node)">
+                    <div class="card-body">
+                      <div class="cooladmin-card-kicker">Module</div>
+                      <h3 class="h5 mb-2">{{ node.label || node.id }}</h3>
+                      <div class="text-muted">
+                        {{ (node.children || []).length }} available items
+                      </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                      Open module
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <section v-else-if="view === 'MENU_GROUP' && activeMenuGroup">
+              <div class="cooladmin-page-heading">
+                <div>
+                  <div class="cooladmin-eyebrow">Module</div>
+                  <h2 class="title-1">{{ activeMenuGroup.label || activeMenuGroup.id }}</h2>
+                  <p class="text-muted mb-0">Select an area to continue.</p>
+                </div>
+              </div>
+
+              <div class="row g-4">
+                <div
+                  v-for="child in activeMenuGroup.children || []"
+                  :key="child.id || child.label"
+                  class="col-12 col-md-6">
+                  <button class="card cooladmin-module-card h-100 w-100 text-start" @click="openMenu(child)">
+                    <div class="card-body">
+                      <div class="cooladmin-card-kicker">Workspace</div>
+                      <h3 class="h5 mb-2">{{ child.label || child.id }}</h3>
+                      <div class="text-muted">
+                        {{ child.target ? 'View records' : ((child.children || []).length + ' items') }}
+                      </div>
+                    </div>
+                    <div class="card-footer bg-transparent">Open</div>
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <section v-else-if="view === 'ENTITY' && activeEntity">
+              <div class="cooladmin-page-heading">
+                <div>
+                  <div class="cooladmin-eyebrow">Records</div>
+                  <h2 class="title-1">{{ activeEntity.displayName || activeEntity.id }}</h2>
+                  <p class="text-muted mb-0">{{ records.length }} records</p>
+                </div>
+              </div>
+
+              <div class="card cooladmin-data-card">
+                <div class="table-responsive">
+                  <table class="table table-hover align-middle mb-0">
+                    <thead>
+                      <tr>
+                        <th v-for="field in visibleFields" :key="field.name">
+                          {{ field.label || field.name }}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-if="recordsLoading">
+                        <td :colspan="Math.max(1, visibleFields.length)">Loading records...</td>
+                      </tr>
+                      <tr v-else-if="records.length === 0">
+                        <td :colspan="Math.max(1, visibleFields.length)">No records available.</td>
+                      </tr>
+                      <tr v-for="(record, rowIndex) in records" :key="record.id || rowIndex">
+                        <td v-for="field in visibleFields" :key="field.name">
+                          {{ displayValue(record, field) }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <section v-else-if="view === 'UML'">
+              <div class="cooladmin-page-heading">
+                <div>
+                  <div class="cooladmin-eyebrow">Architecture</div>
+                  <h2 class="title-1">UML Design</h2>
+                </div>
+              </div>
+              <div class="card cooladmin-data-card">
+                <div class="card-body">
+                  <svg id="uml" class="uml-canvas"></svg>
+                </div>
+              </div>
+            </section>
+
+            <section v-else-if="view === 'ADMIN'">
+              <div class="cooladmin-page-heading">
+                <div>
+                  <div class="cooladmin-eyebrow">Configuration</div>
+                  <h2 class="title-1">Administration</h2>
+                  <p class="text-muted mb-0">Select the application domain and UI layout.</p>
+                </div>
+              </div>
+
+              <div class="card cooladmin-admin-card">
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label class="form-label">Domain Template</label>
+                    <select class="form-select" v-model="selectedDomain">
+                      <option v-for="item in domains" :key="item.file" :value="item.file">{{ item.label }}</option>
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label">Layout</label>
+                    <select class="form-select" v-model="settings.contentLayout">
+                      <option v-for="item in layouts" :key="item" :value="item">{{ item }}</option>
+                    </select>
+                  </div>
+
+                  <button class="btn btn-primary" @click="applyAdmin">
+                    Apply &amp; Interpret
+                  </button>
+                </div>
+              </div>
+            </section>
+
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>

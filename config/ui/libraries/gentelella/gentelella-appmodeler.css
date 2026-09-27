@@ -1,0 +1,59 @@
+/*
+ * Gentelella v4.2.0 -> App Modeler browser-ready adapter.
+ * Derived from the uploaded official Gentelella source repository.
+ * The complete source SCSS used is preserved under source/scss/v4/.
+ *
+ * This adapter uses Gentelella's v4 design tokens and class vocabulary but
+ * removes the Vite build-time requirement for App Modeler's static index.html.
+ */
+:root {
+  --primary: #1abb9c;
+  --primary-dk: #169f85;
+  --sidebar-bg: #172d44;
+  --sidebar-bg-hover: #203a54;
+  --sidebar-width: 260px;
+  --bg: #f7f7f7;
+  --card-bg: #ffffff;
+  --border: #e6e9ed;
+  --text: #34495e;
+  --text-muted: #73879c;
+  --radius: 6px;
+  --shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+html,body,#app{margin:0;min-height:100%;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+.page{min-height:100vh}
+.gt-sidebar{position:fixed;inset:0 auto 0 0;width:var(--sidebar-width);background:var(--sidebar-bg);color:#fff;display:flex;flex-direction:column;z-index:20}
+.gt-brand{padding:22px 18px;border-bottom:1px solid rgba(255,255,255,.08);font-size:19px;font-weight:600}
+.gt-brand button{all:unset;cursor:pointer;color:#fff}
+.gt-nav{padding:14px 10px;overflow:auto;flex:1}
+.gt-nav button{width:100%;border:0;background:transparent;color:#d9e3ea;text-align:left;padding:11px 14px;margin:2px 0;border-radius:var(--radius);cursor:pointer;font:inherit}
+.gt-nav button:hover{background:var(--sidebar-bg-hover);color:#fff}
+.gt-nav button.active{background:rgba(255,255,255,.08);color:#fff;box-shadow:inset 3px 0 0 var(--primary)}
+.gt-footer{padding:12px 10px 16px;border-top:1px solid rgba(255,255,255,.08)}
+.gt-main{margin-left:var(--sidebar-width);min-height:100vh}
+.gt-content{padding:28px 30px;max-width:1440px;margin:auto}
+.page-header{display:flex;justify-content:space-between;align-items:end;margin-bottom:24px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.page-pretitle{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);font-weight:600}
+.page-title{margin:4px 0 0;font-size:26px;font-weight:500}
+.row{display:flex;flex-wrap:wrap;margin:-10px}
+.col-2>*{width:50%;padding:10px}
+.card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+.module-card{min-height:150px;display:flex;flex-direction:column;cursor:pointer;border-top:3px solid var(--primary)}
+.module-card:hover{box-shadow:0 5px 18px rgba(52,73,94,.12);transform:translateY(-1px)}
+.card-body{padding:20px;flex:1}
+.card-title{font-size:17px;font-weight:600;margin:0 0 8px}
+.card-footer{padding:11px 20px;border-top:1px solid var(--border);color:var(--primary-dk);font-weight:600;font-size:13px}
+.table-responsive{overflow:auto}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:12px 15px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}
+.table th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);background:#fafbfc}
+.table tbody tr:hover{background:#fafcfc}
+.form-label{display:block;margin:0 0 6px;font-size:13px;font-weight:600}
+.form-select{width:100%;min-height:40px;border:1px solid #ccd0d7;border-radius:var(--radius);padding:8px 11px;background:#fff}
+.btn{border:1px solid transparent;border-radius:var(--radius);padding:9px 15px;font-weight:600;cursor:pointer}
+.btn-primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.text-muted{color:var(--text-muted)}
+.uml-canvas{width:100%;min-height:600px}
+.entity-box{fill:#fff;stroke:#b9c3cc}.entity-title{font-size:12px;font-weight:700}.entity-field{font-size:10px}.rel{stroke:#9aa8b5;stroke-width:1.25}
+@media(max-width:900px){:root{--sidebar-width:220px}.col-2>*{width:100%}.gt-content{padding:18px}}

@@ -1,0 +1,6 @@
+{
+  "id": "coreui",
+  "requires": [
+    "bootstrap"
+  ]
+}
